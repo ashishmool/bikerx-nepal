@@ -22,7 +22,7 @@ public interface SystemUserService {
 
     String update(Long id, SystemUserPojo systemUserPojo);
 
-    List<Map<String, Object>> getAllStudentsWithoutPassword();
+    List<Map<String, Object>> getAllUsersWithoutPassword();
 
     String setNewPassword(NewPasswordPojo newPasswordPojo);
 

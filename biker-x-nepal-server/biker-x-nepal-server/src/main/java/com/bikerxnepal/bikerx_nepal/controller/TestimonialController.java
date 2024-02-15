@@ -1,6 +1,7 @@
 package com.bikerxnepal.bikerx_nepal.controller;
 
 import com.bikerxnepal.bikerx_nepal.entity.Testimonial;
+import com.bikerxnepal.bikerx_nepal.pojo.TestimonialPojo;
 import com.bikerxnepal.bikerx_nepal.service.TestimonialService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -17,8 +18,8 @@ public class TestimonialController {
     private final TestimonialService testimonialService;
 
     @PostMapping(value = "/save")
-    public String saveTestimonial(@RequestBody Testimonial testimonial) {
-        testimonialService.save(testimonial);
+    public String saveTestimonial(@RequestBody TestimonialPojo testimonialPojo) {
+        testimonialService.save(testimonialPojo);
         return "Saved Successfully!";
     }
 

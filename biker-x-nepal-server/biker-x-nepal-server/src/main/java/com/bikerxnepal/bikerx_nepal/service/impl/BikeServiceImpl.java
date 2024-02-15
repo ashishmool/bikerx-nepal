@@ -41,7 +41,7 @@ public class BikeServiceImpl implements BikeService {
     }
 
     private String saveImage(MultipartFile image) throws IOException {
-        String uploadDir = "bike_images";
+        String uploadDir = "image_uploads";
         Path uploadPath = Paths.get(uploadDir);
         if (!Files.exists(uploadPath)) {
             Files.createDirectories(uploadPath);

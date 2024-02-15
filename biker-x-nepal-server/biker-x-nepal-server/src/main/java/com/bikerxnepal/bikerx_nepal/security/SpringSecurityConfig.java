@@ -48,6 +48,7 @@ public class SpringSecurityConfig {
                         "/dashboard/**",
                         "/tour",
                         "/tour/**",
+                        "/bike/**",
                         "/authenticate",
                         "/authenticate/**",
                         "/recover/**",

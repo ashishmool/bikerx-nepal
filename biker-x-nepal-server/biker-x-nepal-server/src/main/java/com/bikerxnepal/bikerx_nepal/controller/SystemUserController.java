@@ -57,4 +57,10 @@ public class SystemUserController {
         systemUserService.setNewPassword(newPasswordPojo);
         return "password changed";
     }
+
+    @GetMapping("/getAllWithoutPassword")
+    public ResponseEntity<List<Map<String, Object>>> getAllUsersWithoutPassword() {
+        List<Map<String, Object>> users = systemUserService.getAllUsersWithoutPassword();
+        return ResponseEntity.ok(users);
+    }
 }

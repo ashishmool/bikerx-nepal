@@ -51,15 +51,15 @@ public class SystemUserServiceImpl implements SystemUserService {
         }
     }
 
-    public List<Map<String, Object>> getAllStudentsWithoutPassword() {
+    public List<Map<String, Object>> getAllUsersWithoutPassword() {
         List<SystemUser> customers = systemUserRepo.findAll();
 
         List<Map<String, Object>> customersWithoutPassword = new ArrayList<>();
         for (SystemUser customer : customers) {
             Map<String, Object> customerMap = new HashMap<>();
             customerMap.put("userId", customer.getUserId());
-            customerMap.put("first_name", customer.getFirstName());
-            customerMap.put("last_name", customer.getLastName());
+            customerMap.put("firstName", customer.getFirstName());
+            customerMap.put("lastName", customer.getLastName());
             customerMap.put("email", customer.getEmail());
             customerMap.put("role", customer.getRole());
             // Add other fields as needed
