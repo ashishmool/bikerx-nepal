@@ -4,6 +4,7 @@ import com.bikerxnepal.bikerx_nepal.entity.Bike;
 import com.bikerxnepal.bikerx_nepal.pojo.BikePojo;
 import com.bikerxnepal.bikerx_nepal.repo.BikeRepo;
 import com.bikerxnepal.bikerx_nepal.service.BikeService;
+import com.bikerxnepal.bikerx_nepal.utils.ImageToBase64;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -15,6 +16,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -22,6 +24,7 @@ public class BikeServiceImpl implements BikeService {
 
     private final BikeRepo bikeRepo;
 
+    ImageToBase64 imageToBase64=new ImageToBase64();
 
     @Override
     public String save(BikePojo bikePojo) throws IOException {
@@ -54,7 +57,14 @@ public class BikeServiceImpl implements BikeService {
 
     @Override
     public List<Bike> getAll() {
-        return bikeRepo.findAll();
+
+
+        return bikeRepo.findAll().stream().map(item -> {
+            item.setImage(imageToBase64.getImageBase64(item.getImage()));
+            return item;
+        }).collect(Collectors.toList());
+
+
     }
 
     @Override

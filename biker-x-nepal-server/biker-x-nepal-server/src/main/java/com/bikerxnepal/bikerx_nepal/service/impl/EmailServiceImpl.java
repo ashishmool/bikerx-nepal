@@ -35,38 +35,6 @@ public class EmailServiceImpl implements EmailService {
     @Qualifier("emailConfigBean")
     private Configuration emailConfig;
 
-    @Override
-    public void sendCustomerConfirmationEmail(EmailRequest emailRequest) {
-//        try {
-//            Map<String, Object> model = new HashMap<>(); // Using Object as the value type
-//
-//            MimeMessage message = getJavaMailSender.createMimeMessage();
-//            MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(message, MimeMessageHelper.MULTIPART_MODE_MIXED_RELATED, StandardCharsets.UTF_8.name());
-//
-//            if (emailRequest.getSendToEmail() != null) {
-//                mimeMessageHelper.setTo(emailRequest.getSendToEmail());
-//            } else {
-//                // Handle the case when the email address is null
-//            }
-//            model.put("url", "localhost:8080/");
-//
-//            Template template = emailConfig.getTemplate("email.ftl");
-//            String html = FreeMarkerTemplateUtils.processTemplateIntoString(template, model);
-//
-//            mimeMessageHelper.setTo(emailRequest.getSendToEmail());
-//            mimeMessageHelper.setFrom("abroad.dreams.com@gmail.com");
-//            mimeMessageHelper.setText(html, true);
-//            mimeMessageHelper.setSubject("Registration");
-//
-//            taskExecutor.execute(new Thread() {
-//                public void run() {
-//                    getJavaMailSender.send(message);
-//                }
-//            });
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-    }
 
     @Override
     public void resetPassword(EmailRequest emailRequest) {

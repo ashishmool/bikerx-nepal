@@ -16,11 +16,6 @@ public class EmailController {
 
     private final EmailService emailService;
 
-    @PostMapping("/by-email")
-    public void sendEmail(@RequestBody EmailRequest emailRequest) {
-        this.emailService.sendCustomerConfirmationEmail(emailRequest);
-    }
-
 
     @PostMapping("/reset-password")
     public void resetPassword(@RequestBody EmailRequest emailRequest){
