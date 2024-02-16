@@ -11,7 +11,7 @@ import java.util.Date;
 
 @Getter
 @Setter
-public class UserPurchasedTourPojo {
+public class BookingPojo {
 
     private Long purchaseId;
 

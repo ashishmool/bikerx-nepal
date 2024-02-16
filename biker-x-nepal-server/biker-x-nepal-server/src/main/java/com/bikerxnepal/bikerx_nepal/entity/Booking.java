@@ -11,7 +11,7 @@ import java.util.Date;
 @Table(name = "user_purchased_tour")
 @Getter
 @Setter
-public class UserPurchasedTour {
+public class Booking {
 
     @Id
     @SequenceGenerator(name = "user_purchased_tour_seq_gen", sequenceName = "user_purchased_tour_id_seq", allocationSize = 1)
