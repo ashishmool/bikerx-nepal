@@ -10,6 +10,7 @@ import GradingIcon from '@mui/icons-material/Grading'
 import GroupRoundedIcon from "@mui/icons-material/GroupRounded";
 import {Animation} from "@mui/icons-material";
 import AnimationPage from "../components/AnimationPage.tsx";
+import DashboardCalendar from "../components/DashboardCalendar.tsx";
 
 function DashboardReport() {
     const [data, setData] = useState({
@@ -18,6 +19,8 @@ function DashboardReport() {
         testimonials: 0,
         users: 0
     });
+    const [tourDates, setTourDates] = useState<Date[]>([]);
+
 
     useEffect(() => {
         const fetchData = async () => {
@@ -38,7 +41,18 @@ function DashboardReport() {
             }
         };
 
+        const fetchTourDates = async () => {
+            try {
+                const response = await axios.get("http://localhost:8080/tour/getAll");
+                const tourDates = response.data.map((tour: any) => new Date(tour.startDate));
+                setTourDates(tourDates);
+            } catch (error) {
+                console.error('Error fetching tour dates:', error);
+            }
+        };
+
         fetchData();
+        fetchTourDates();
     }, []);
 
     return (
@@ -105,8 +119,16 @@ function DashboardReport() {
                     marginLeft: 0, // Set left margin to 0
                 }}
             >
+
                 <AnimationPage />
+                <div>
+                    <DashboardCalendar tourDates={tourDates} />
+                </div>
+
+
             </Stack>
+
+
         </div>
     );
 }
