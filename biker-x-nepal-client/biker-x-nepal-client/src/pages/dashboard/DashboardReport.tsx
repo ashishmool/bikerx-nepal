@@ -130,16 +130,14 @@ function DashboardReport() {
                     display: 'flex',
                     justifyContent: 'flex-start', // Align to the left
                     marginLeft: 0, // Set left margin to 0
+                    marginTop: -8, // Reduce the marginTop to decrease the gap
+                    marginBottom: -8
                 }}
             >
                 <div>
                     <DashboardCalendar tourDates={tourDates} />
                 </div>
-
                 <BearAnimationBike />
-
-
-
             </Stack>
 
 

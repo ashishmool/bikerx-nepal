@@ -31,6 +31,7 @@ import ListReviews from "./pages/dashboard/review/ListReviews.tsx";
 import UpdateReviews from "./pages/dashboard/review/UpdateReviews.tsx";
 import UpdateUser from "./pages/dashboard/user/UpdateUser.tsx";
 import * as React from "react";
+import ListBooking from "./pages/dashboard/booking/ListBooking.tsx";
 function App() {
   return (
     <BrowserRouter>
@@ -78,12 +79,9 @@ function App() {
           <Route path="user/add" element={<AddNewUser />} />
           <Route path="user/update/:id" element={<UpdateUser />} />
 
+          <Route path="booking/list" element={<ListBooking />} />
 
         </Route>
-
-
-
-
 
 
       </Routes>

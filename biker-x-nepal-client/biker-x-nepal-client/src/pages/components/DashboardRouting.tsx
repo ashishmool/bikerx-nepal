@@ -25,6 +25,7 @@ import AddReview from "../dashboard/review/AddReview.tsx";
 import ListReviews from "../dashboard/review/ListReviews.tsx";
 import UpdateReviews from "../dashboard/review/UpdateReviews.tsx";
 import UpdateUser from "../dashboard/user/UpdateUser.tsx";
+import ListBooking from "../dashboard/booking/ListBooking.tsx";
 
 export default function DashboardRouting() {
     return (
@@ -129,6 +130,8 @@ export default function DashboardRouting() {
                     <Route path="user/list" element={<ListUser />} />
                     <Route path="user/add" element={<AddNewUser />} />
                     <Route path="user/update/:id" element={<UpdateUser />} />
+
+                    <Route path="booking/list" element={<ListBooking />} />
                 </Routes>
             </Stack>
         </Box>

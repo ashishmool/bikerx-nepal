@@ -173,8 +173,8 @@ export default function Sidebar() {
             <ListItem>
                 <ListItemButton role="menuitem"
                                 component="a"
-                                href="/dashboard/bookings"
-                                selected={location.pathname === '/dashboard/bookings'}>
+                                href="/dashboard/booking/list"
+                                selected={location.pathname === '/dashboard/booking/list'}>
                     <BookmarksIcon />
                     <ListItemContent>
                         <Typography level="title-sm">Bookings </Typography>

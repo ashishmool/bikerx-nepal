@@ -8,14 +8,14 @@ import jakarta.persistence.*;
 import java.util.Date;
 
 @Entity
-@Table(name = "user_purchased_tour")
+@Table(name = "bookings")
 @Getter
 @Setter
 public class Booking {
 
     @Id
-    @SequenceGenerator(name = "user_purchased_tour_seq_gen", sequenceName = "user_purchased_tour_id_seq", allocationSize = 1)
-    @GeneratedValue(generator = "user_purchased_tour_seq_gen", strategy = GenerationType.SEQUENCE)
+    @SequenceGenerator(name = "booking_seq_gen", sequenceName = "booking_id_seq", allocationSize = 1)
+    @GeneratedValue(generator = "booking_seq_gen", strategy = GenerationType.SEQUENCE)
     private Long purchaseId;
 
     @Column(name = "purchase_date", nullable = false)

@@ -13,13 +13,13 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/user-purchased-tour")
+@RequestMapping("/booking")
 @RequiredArgsConstructor
 public class BookingController {
 
     private final BookingService bookingService;
 
-    @PostMapping("/purchase")
+    @PostMapping("/save")
     public Booking purchaseTour(@RequestBody BookingPojo bookingPojo) {
         return bookingService.purchaseTour(bookingPojo);
     }
@@ -39,7 +39,7 @@ public class BookingController {
         return bookingService.getPurchaseById(purchaseId);
     }
 
-    @GetMapping("/get-all")
+    @GetMapping("/getAll")
     public List<Booking> getAllPurchases() {
         return bookingService.getAllPurchases();
     }
