@@ -55,7 +55,7 @@ export default function DashboardRouting() {
                         <Link
                             underline="hover"
                             color="neutral"
-                            href="../"
+                            href="/dashboard/home"
                             fontSize={12}
                             fontWeight={500}
                         >

@@ -50,7 +50,7 @@ export const Vehicles = () => {
                   {bike.description}
                 </motion.p>
               </div>
-              <img width={500} src={'data:image/png;base64,' + bike.image} alt={bike.image} />
+              <img width={600} src={'data:image/png;base64,' + bike.image} alt={bike.image} />
             </div>
         ))}
       </div>

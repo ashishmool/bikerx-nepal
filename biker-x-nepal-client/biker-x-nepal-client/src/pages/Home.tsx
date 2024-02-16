@@ -12,7 +12,7 @@ export const Home = () => {
   2. OPTIONAL:The navbar of the Specific Tour page should be fixed when exceed (like the search bar).
   5. When im in Profile, log out and then Log in, the app breaks
   */
-
+    console.log('Token Check Home:::', localStorage.getItem("accessToken"));
   return (
     <main>
       <article className="h-[100vh] relative z-[1] ">

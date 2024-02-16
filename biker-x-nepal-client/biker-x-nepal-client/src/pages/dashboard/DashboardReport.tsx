@@ -9,8 +9,10 @@ import LandscapeIcon from '@mui/icons-material/Landscape'
 import GradingIcon from '@mui/icons-material/Grading'
 import GroupRoundedIcon from "@mui/icons-material/GroupRounded";
 import {Animation} from "@mui/icons-material";
-import AnimationPage from "../components/AnimationPage.tsx";
+import BearAnimationBike from "../components/BearAnimationBike.tsx";
 import DashboardCalendar from "../components/DashboardCalendar.tsx";
+import { Link } from 'react-router-dom'; // Import Link from react-router-dom
+
 
 function DashboardReport() {
     const [data, setData] = useState({
@@ -44,10 +46,21 @@ function DashboardReport() {
         const fetchTourDates = async () => {
             try {
                 const response = await axios.get("http://localhost:8080/tour/getAll");
-                const tourDates = response.data.map((tour: any) => new Date(tour.startDate));
+                const tourDates = response.data.flatMap((tour: any) => {
+                    const startDate = new Date(tour.startDate);
+                    const endDate = new Date(tour.endDate);
+                    const datesBetween = [];
+                    let currentDate = new Date(startDate);
+                    while (currentDate <= endDate) {
+                        datesBetween.push(new Date(currentDate));
+                        currentDate.setDate(currentDate.getDate() + 1);
+                    }
+                    console.log('Dates Between',datesBetween);
+                    return datesBetween;
+                });
                 setTourDates(tourDates);
             } catch (error) {
-                console.error('Error fetching tour dates:', error);
+                console.error("Error fetching tour dates:", error);
             }
         };
 
@@ -71,7 +84,7 @@ function DashboardReport() {
             >
                 <Card sx={{ width: 200, textAlign: 'center' }}>
                     <CardContent>
-                        <Typography variant="h6" component="div">
+                        <Typography variant="h6" component={Link} to="/dashboard/tour/list">
                             <LandscapeIcon /> Tours
                         </Typography>
                         <Typography variant="body2" color="text.secondary">
@@ -81,7 +94,7 @@ function DashboardReport() {
                 </Card>
                 <Card sx={{ width: 200, textAlign: 'center' }}>
                     <CardContent>
-                        <Typography variant="h6" component="div">
+                        <Typography variant="h6" component={Link} to="/dashboard/bike/list">
                             <TwoWheelerIcon /> Bikes
                         </Typography>
                         <Typography variant="body2" color="text.secondary">
@@ -91,7 +104,7 @@ function DashboardReport() {
                 </Card>
                 <Card sx={{ width: 200, textAlign: 'center' }}>
                     <CardContent>
-                        <Typography variant="h6" component="div">
+                        <Typography variant="h6" component={Link} to="/dashboard/testimonial/list">
                             <GradingIcon/> Reviews
                         </Typography>
                         <Typography variant="body2" color="text.secondary">
@@ -101,7 +114,7 @@ function DashboardReport() {
                 </Card>
                 <Card sx={{ width: 200, textAlign: 'center' }}>
                     <CardContent>
-                        <Typography variant="h6" component="div">
+                        <Typography variant="h6" component={Link} to="/dashboard/user/list">
                             <GroupRoundedIcon/> Users
                         </Typography>
                         <Typography variant="body2" color="text.secondary">
@@ -119,11 +132,12 @@ function DashboardReport() {
                     marginLeft: 0, // Set left margin to 0
                 }}
             >
-
-                <AnimationPage />
                 <div>
                     <DashboardCalendar tourDates={tourDates} />
                 </div>
+
+                <BearAnimationBike />
+
 
 
             </Stack>

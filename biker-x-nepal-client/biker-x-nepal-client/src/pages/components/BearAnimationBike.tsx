@@ -2,12 +2,12 @@ import React, { Component } from 'react';
 import Lottie from 'react-lottie';
 import BearAnimation from '../../assets/animation/CuteBear.json'; // Import the animation JSON file
 
-class AnimationPage extends Component {
+class BearAnimationBike extends Component {
     render() {
         const defaultOptions = {
             loop: true,
             autoplay: true,
-            animationData: BearAnimation, // Use the imported animation data
+            animationData: BearAnimation,
             renderer: 'svg'
         };
 
@@ -23,4 +23,4 @@ class AnimationPage extends Component {
     }
 }
 
-export default AnimationPage;
+export default BearAnimationBike;
