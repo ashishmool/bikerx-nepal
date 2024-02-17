@@ -47,13 +47,13 @@ function DashboardReport() {
             try {
                 const response = await axios.get("http://localhost:8080/tour/getAll");
                 const tourDates = response.data.flatMap((tour: any) => {
-                    const startDate = new Date(tour.startDate);
+                    const startDate = new Date(tour.startDate)-1;
                     const endDate = new Date(tour.endDate);
                     const datesBetween = [];
                     let currentDate = new Date(startDate);
                     while (currentDate <= endDate) {
                         datesBetween.push(new Date(currentDate));
-                        currentDate.setDate(currentDate.getDate() + 1);
+                        currentDate.setDate(currentDate.getDate()+1);
                     }
                     console.log('Dates Between',datesBetween);
                     return datesBetween;
