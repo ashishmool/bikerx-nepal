@@ -32,6 +32,7 @@ import UpdateReviews from "./pages/dashboard/review/UpdateReviews.tsx";
 import UpdateUser from "./pages/dashboard/user/UpdateUser.tsx";
 import * as React from "react";
 import ListBooking from "./pages/dashboard/booking/ListBooking.tsx";
+import {ResetPassword} from "./pages/ResetPassword.tsx";
 function App() {
   return (
     <BrowserRouter>
@@ -56,6 +57,7 @@ function App() {
         </Route>
         <Route path="login" element={<LogIn />} />
         <Route path="signup" element={<SignUp />} />
+        <Route path="reset-password" element={<ResetPassword />} />
 
 
         {localStorage.getItem("role")==="Admin" && <Route path="dashboard//*" element={<AdminDashboard />} >

@@ -182,13 +182,22 @@ export const LogIn = () => {
           >
             {isLoading ? <MiniSpinner /> : "Log In"}
           </button>
-          <Link
-            to="/signup"
-            className="transition duration-300 hover:underline text-sm mt-3"
-          >
-            Don't have an account?{" "}
-            <span className="text-yellow-500">Sign up</span>
-          </Link>
+          <div className="flex flex-row justify-between">
+            <Link
+                to="/signup"
+                className="transition duration-300 hover:underline text-sm mt-3"
+            >
+              Don't have an account? <span className="text-yellow-500">Sign up</span>
+            </Link>
+
+            <Link
+                to="/reset-password"
+                className="transition duration-300 hover:underline text-sm mt-3 ml-3"
+            >
+              Forgot Password? <span className="text-yellow-500">Reset Password</span>
+            </Link>
+          </div>
+
         </form>
       </motion.div>
     </div>

@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Reset Password Template</title>
+    <title>Reset Password</title>
 </head>
 <body>
 <table width="600" style="font-family: Arial, Helvetica, sans-serif; font-size: 0.875rem; color: rgb(51, 51, 51);">
@@ -18,8 +18,8 @@
     <tr>
         <td style="padding: 32px 48px 0 48px;">
             <div style="float: left; margin-left: 16px;">
-                <p style="color:rgb(189, 9, 18); font-size: 16px; font-weight: 600; margin-bottom: 8px; margin-top: 8px;">Abroad Dreams</p>
-                <p style="color:rgb(66, 93, 184); font-size: 14px; font-weight: 600; margin-top: 8px;">Coders Brigade</p>
+                <p style="color:rgb(189, 9, 18); font-size: 16px; font-weight: 600; margin-bottom: 8px; margin-top: 8px;">BikerXNepal</p>
+                <p style="color:rgb(66, 93, 184); font-size: 14px; font-weight: 600; margin-top: 8px;">www.bikerxnepal.com.np</p>
             </div>
         </td>
     </tr>
@@ -75,16 +75,16 @@
         </td>
     </tr>
     <tr>
-        <td style="padding: 1rem 48px 1.5rem 48px">For additional help or information, email us at <a href="#" style="color: rgb(26, 115, 232)">www.abroad.com.np</a> </td>
+        <td style="padding: 1rem 48px 1.5rem 48px">For additional help or information, email us at <a href="#" style="color: rgb(26, 115, 232)">bikerxnepal@gmail.com</a> </td>
     </tr>
     <tr>
         <td style="background-color: rgb(66 93 184); padding: 1rem 0;">
             <table style="font-size: 0.75rem; color: rgb(255,255,255); width: 100%; text-align: center">
                 <tr>
-                    <td style="padding-bottom: 0.5rem">Copyright © 2020. All rights reserved.</td>
+                    <td style="padding-bottom: 0.5rem">Copyright © 2024. All rights reserved.</td>
                 </tr>
                 <tr>
-                    <td>Abroad system</td>
+                    <td>BikerX Nepal Booking System</td>
                 </tr>
             </table>
         </td>
