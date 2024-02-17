@@ -56,7 +56,7 @@ public class SpringSecurityConfig {
                         "/testimonial/**",
                         "/system-user/new-password")
                 .permitAll()
-                .requestMatchers("/admin/**")
+                .requestMatchers("/admin/**","/dashboard/**")
                 .hasAuthority("Admin")
                 .anyRequest()
                 .authenticated()

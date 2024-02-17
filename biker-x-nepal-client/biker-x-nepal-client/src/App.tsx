@@ -58,8 +58,7 @@ function App() {
         <Route path="signup" element={<SignUp />} />
 
 
-
-        <Route path="dashboard//*" element={<AdminDashboard />} >
+        {localStorage.getItem("role")==="Admin" && <Route path="dashboard//*" element={<AdminDashboard />} >
 
           <Route path="home" element={<DashboardReport />} />
 
@@ -81,7 +80,8 @@ function App() {
 
           <Route path="booking/list" element={<ListBooking />} />
 
-        </Route>
+        </Route>}
+
 
 
       </Routes>
