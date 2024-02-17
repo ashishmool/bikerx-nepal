@@ -33,7 +33,7 @@ public class BikeController {
     }
 
     @DeleteMapping("/delete/{id}")
-    public void deleteById(@PathVariable("id") Long id) {
+    public void deleteById(@PathVariable("id") Long id) throws IOException {
         this.bikeService.deleteById(id);
     }
 

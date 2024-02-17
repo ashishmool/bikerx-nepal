@@ -68,7 +68,12 @@ public class BikeServiceImpl implements BikeService {
     }
 
     @Override
-    public void deleteById(Long id) {
+    public void deleteById(Long id) throws IOException {
+        Bike bike= bikeRepo.findById(id).get();
+        String uploadDir = "image_uploads/"+bike.getImage();
+        Path uploadPath = Paths.get(uploadDir);
+        Files.deleteIfExists(uploadPath);
+
         bikeRepo.deleteById(id);
     }
 

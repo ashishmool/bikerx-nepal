@@ -13,7 +13,7 @@ public interface BikeService {
 
     List<Bike> getAll();
 
-    void deleteById(Long id);
+    void deleteById(Long id) throws IOException;
 
     Optional<Bike> getById(Long id);
 
