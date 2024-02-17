@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useState, useEffect } from 'react';
 import GlobalStyles from '@mui/joy/GlobalStyles';
 import Avatar from '@mui/joy/Avatar';
 import Box from '@mui/joy/Box';
@@ -23,7 +23,7 @@ import QuestionAnswerRoundedIcon from '@mui/icons-material/QuestionAnswerRounded
 import GroupRoundedIcon from '@mui/icons-material/GroupRounded';
 import LogoutRoundedIcon from '@mui/icons-material/LogoutRounded';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import ColorSchemeToggle from './ColorSchemeToggle';
 import { closeSidebar } from '../utils';
 import TwoWheelerIcon from "@mui/icons-material/TwoWheeler";
@@ -75,7 +75,35 @@ export default function Sidebar() {
     const handleNavigateHome = () => {
         navigate('/');
     };
-  return (
+
+    const [countBookings, setCountBookings] = useState(0);
+
+    useEffect(() => {
+        // Fetch bookings with status PENDING
+        const fetchPendingBookings = async () => {
+            try {
+                const response = await fetch("http://localhost:8080/booking/getAll");
+                if (response.ok) {
+                    const bookings = await response.json();
+                    console.log('All Bookings', bookings);
+                    // Filter bookings where status is "PENDING"
+                    const pendingBookings = bookings.filter(booking => booking.paymentStatus === "PENDING");
+                    console.log('Pending Bookings', pendingBookings);
+                    setCountBookings(pendingBookings.length);
+                } else {
+                    console.error("Failed to fetch pending bookings");
+                }
+            } catch (error) {
+                console.error("Error fetching pending bookings:", error);
+            }
+        };
+
+
+        fetchPendingBookings();
+    }, []);
+
+
+    return (
     <Sheet
       className="Sidebar"
       sx={{
@@ -180,9 +208,11 @@ export default function Sidebar() {
                         <Typography level="title-sm">Bookings </Typography>
 
                     </ListItemContent>
-                    <Chip size="sm" color="primary" variant="solid">
-                        4
-                    </Chip>
+                    {countBookings > 0 && (
+                        <Chip size="sm" color="primary" variant="solid">
+                            {countBookings} <small>(Pending)</small>
+                        </Chip>
+                    )}
                 </ListItemButton>
 
             </ListItem>

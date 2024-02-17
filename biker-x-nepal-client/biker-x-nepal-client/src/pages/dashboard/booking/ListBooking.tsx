@@ -42,7 +42,7 @@ function ListBooking() {
                 <th>Quantity Persons</th>
                 <th>Total Amount</th>
                 <th>Payment Status</th>
-                <th>Action</th>
+                {/*<th>Action</th>*/}
             </tr>
             </thead>
             <tbody>
@@ -54,18 +54,18 @@ function ListBooking() {
                     <td>{booking.user.userId}</td>
                     <td>{booking.bikeId}</td>
                     <td>{booking.quantityPersons}</td>
-                    <td>${booking.totalAmount}</td>
+                    <td>Rs.{booking.totalAmount}</td>
                     <td>{booking.paymentStatus}</td>
-                    <td>
-                        <button onClick={() => navigate(`/dashboard/booking/update/${booking.purchaseId}`)}>
-                            <EditIcon />
-                            Edit
-                        </button>
-                        <button onClick={() => deleteByIdApi.mutate(booking.purchaseId)}>
-                            <DeleteIcon />
-                            Delete
-                        </button>
-                    </td>
+                    {/*<td>*/}
+                    {/*    <button onClick={() => navigate(`/dashboard/booking/update/${booking.purchaseId}`)}>*/}
+                    {/*        <EditIcon />*/}
+                    {/*        Edit*/}
+                    {/*    </button>*/}
+                    {/*    <button onClick={() => deleteByIdApi.mutate(booking.purchaseId)}>*/}
+                    {/*        <DeleteIcon />*/}
+                    {/*        Delete*/}
+                    {/*    </button>*/}
+                    {/*</td>*/}
                 </tr>
             ))}
             </tbody>
