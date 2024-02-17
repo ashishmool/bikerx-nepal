@@ -37,7 +37,7 @@ public class TourController {
     }
 
     @DeleteMapping("/delete/{id}")
-    public void deleteById(@PathVariable("id") Long id) {
+    public void deleteById(@PathVariable("id") Long id) throws IOException {
         this.tourService.deleteById(id);
     }
 

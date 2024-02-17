@@ -14,7 +14,7 @@ public interface TourService {
 
     List<Tour> getAll();
 
-    void deleteById(Long id);
+    void deleteById(Long id) throws IOException;
 
     Optional<Tour> getById(Long id);
 

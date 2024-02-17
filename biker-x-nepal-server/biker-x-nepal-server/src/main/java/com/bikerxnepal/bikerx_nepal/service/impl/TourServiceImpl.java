@@ -1,5 +1,6 @@
 package com.bikerxnepal.bikerx_nepal.service.impl;
 
+import com.bikerxnepal.bikerx_nepal.entity.Bike;
 import com.bikerxnepal.bikerx_nepal.entity.Tour;
 import com.bikerxnepal.bikerx_nepal.pojo.TourPojo;
 import com.bikerxnepal.bikerx_nepal.repo.TourRepo;
@@ -72,7 +73,11 @@ public class TourServiceImpl implements TourService {
     }
 
     @Override
-    public void deleteById(Long id) {
+    public void deleteById(Long id) throws IOException {
+        Tour tour= tourRepo.findById(id).get();
+        String uploadDir = "image_uploads/"+tour.getImage();
+        Path uploadPath = Paths.get(uploadDir);
+        Files.deleteIfExists(uploadPath);
         tourRepo.deleteById(id);
     }
 
