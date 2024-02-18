@@ -34,6 +34,14 @@ export const LogIn = () => {
   const [warningMessage, setWarningMessage] = useState(false);
 
   useEffect(() => {
+
+    if (localStorage.getItem("accessToken")) {
+
+      // If user is not logged in, redirect to login page
+      navigate('/');
+      return;
+    }
+
     if (errorLogin) {
       reset({ loginPassword: "" });
     }

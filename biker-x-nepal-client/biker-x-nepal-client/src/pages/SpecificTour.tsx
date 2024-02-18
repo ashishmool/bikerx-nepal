@@ -75,6 +75,7 @@ export const SpecificTour = () => {
 
   const bookTour = async () => {
     if (!localStorage.getItem("accessToken")) {
+
       // If user is not logged in, redirect to login page
       navigate('/login');
       return;
@@ -214,7 +215,7 @@ export const SpecificTour = () => {
               {/* Book tour button */}
               <button
                   onClick={bookTour}
-                  disabled={!localStorage.getItem("accessToken")}
+                  // disabled={!localStorage.getItem("accessToken")}
                   className="bg-yellow-500 text-black font-semibold py-2 px-4 rounded-lg transition duration-200 hover:bg-yellow-400"
               >
                 Book Tour

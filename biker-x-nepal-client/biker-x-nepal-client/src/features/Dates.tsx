@@ -54,8 +54,7 @@ export const Dates = () => {
     <>
       {!dates.length ? (
         <div className="py-24 text-3xl text-center">
-          Hey! Shamefully, it seems there are no expeditions available soon for
-          this tour.
+          Feature will be integrated soon.
         </div>
       ) : (
         <div className="flex flex-col gap-2 full:gap-8 laptop:flex-row my-10">
