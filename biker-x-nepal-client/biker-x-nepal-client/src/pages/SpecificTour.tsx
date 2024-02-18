@@ -1,25 +1,32 @@
 import * as React from 'react';
 import { useState, useEffect } from 'react';
-import {Link, Outlet, useParams} from 'react-router-dom';
+import { Link, Outlet, useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { FaArrowLeft, FaRegCalendar, FaRegBookmark, FaRegTrashCan, FaChevronRight } from 'react-icons/fa';
 import { Spinner } from '../ui/Spinner';
 import { WrongPage } from './WrongPage';
-import {NavLinkTour} from "../ui/NavLinkTour.tsx";
-import {StarRating} from "../ui/StarRating.tsx";
+import { NavLinkTour } from "../ui/NavLinkTour.tsx";
+import { StarRating } from "../ui/StarRating.tsx";
+import {toast, ToastContainer} from "react-toastify";
 
 export const SpecificTour = () => {
   const { id } = useParams();
   const [tour, setTour] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [quantity, setQuantity] = useState(1); // State for quantity
+  const [totalAmount, setTotalAmount] = useState(0); // State for totalAmount
+  const [selectedBikeId, setSelectedBikeId] = useState(null); // State for selected bike ID
+  const [bikesData, setBikesData] = useState(null); // State for bike data
+
+  const navigate = useNavigate();
 
   useEffect(() => {
+
     const fetchTourById = async () => {
       try {
         const response = await axios.get(`http://localhost:8080/tour/getById/${id}`);
         setTour(response.data);
-        console.log("Response",response.data);
         setLoading(false);
       } catch (error) {
         setError(error.message);
@@ -31,6 +38,92 @@ export const SpecificTour = () => {
       fetchTourById();
     }
   }, [id]);
+
+  useEffect(() => {
+    if (tour) {
+      // Initialize totalAmount to tour.price when tour is available
+      setTotalAmount(tour.tourPrice);
+    }
+  }, [tour]);
+
+  const handleQuantityChange = (e) => {
+    let value = parseInt(e.target.value);
+    // Ensure quantity is not less than 1
+    value = Math.max(1, value);
+    setQuantity(value);
+    // Update totalAmount based on quantity and tour price
+    setTotalAmount(value * tour.tourPrice);
+  };
+
+  const handleBikeChange = (e) => {
+    const selectedId = parseInt(e.target.value);
+    setSelectedBikeId(selectedId);
+  };
+
+  const fetchBikes = async () => {
+    try {
+      const response = await axios.get("http://localhost:8080/bike/getAll");
+      console.log("Response from fetchBikes:", response.data); // Log the response data
+      setBikesData(response.data);
+      return response.data; // Return the data
+    } catch (error) {
+      console.error("Error fetching bikes:", error);
+      throw error;
+    }
+  };
+
+
+  const bookTour = async () => {
+    if (!localStorage.getItem("accessToken")) {
+      // If user is not logged in, redirect to login page
+      navigate('/login');
+      return;
+    }
+
+    const userId = localStorage.getItem("userId");
+
+
+
+    try {
+      const response = await axios.post(
+          'http://localhost:8080/booking/save',
+          {
+            purchaseDate: new Date(),
+            tourId: id,
+            userId: userId,
+            quantityPersons: quantity,
+            paymentStatus: 'PENDING',
+            totalAmount: totalAmount,
+            bikeId: selectedBikeId // Add selected bike ID to the booking data
+          }
+
+      );
+      toast.success("Booked Successfully!");
+      // Handle successful booking
+      console.log('Booking successful:', response.data);
+      // Reset form fields after successful booking
+      setQuantity(1);
+      setSelectedBikeId(null);
+      setTotalAmount(0);
+
+    } catch (error) {
+      // Handle booking error
+      console.error('Error booking tour:', error);
+    }
+  };
+
+  useEffect(() => {
+    fetchBikes()
+        .then(data => {
+          console.log("Bikes Data:", data); // Log the bikesData array
+          setBikesData(data);
+        })
+        .catch(error => {
+          console.error("Error fetching bikes:", error);
+          setError(error.message);
+        });
+  }, []);
+
 
   if (loading) {
     return (
@@ -90,41 +183,57 @@ export const SpecificTour = () => {
             </div>
             <div className="text-white flex flex-col w-full gap-5 pt-2">
               <FaRegCalendar />
-              <button className="bg-yellow-500 text-black font-semibold py-2 px-4 rounded-lg transition duration-200 hover:bg-yellow-400">
-              Book Tour
-            </button>
+              <div className="flex items-center gap-4">
+                <label htmlFor="quantity" className="font-light">No of Persons:</label>
+                <input
+                    type="number"
+                    id="quantity"
+                    name="quantity"
+                    value={quantity}
+                    onChange={handleQuantityChange}
+                    className="border rounded-md py-1 px-2 text-black"
+                />
+              </div>
+              {/* Bike selection dropdown */}
+              <div className="flex items-center gap-4">
+                <label htmlFor="bike" className="font-light">Select Bike:</label>
+                <select
+                    id="bike"
+                    name="bike"
+                    onChange={handleBikeChange}
+                    className="border rounded-md py-1 px-2 text-black"
+                >
+                  <option value="">Select a Bike</option>
+                  {bikesData && bikesData.map(bike => (
+                      <option key={bike.bikeId} value={bike.bikeId}>{bike.makeBrand} {bike.model}</option>
+                  ))}
+                </select>
 
-
-
+              </div>
+              <p>Total Amount: Rs. {totalAmount}</p>
+              {/* Book tour button */}
+              <button
+                  onClick={bookTour}
+                  disabled={!localStorage.getItem("accessToken")}
+                  className="bg-yellow-500 text-black font-semibold py-2 px-4 rounded-lg transition duration-200 hover:bg-yellow-400"
+              >
+                Book Tour
+              </button>
             </div>
             <div className="flex items-center gap-3">
               <StarRating rating={tour.reviewRating} />
               <span className="text-white/60 text-base mb-1 font-light">
-                {!tour.reviewRating
-                  ? "( No reviews yet )"
-                  : `( ${tour.tourId} reviews )`}
-              </span>
+              {!tour.reviewRating ? "( No reviews yet )" : `( ${tour.tourId} reviews )`}
+            </span>
             </div>
           </div>
         </div>
-
-        {/*<div className="text-white flex flex-col w-full gap-5 pt-2">*/}
-
-        {/*  /!*Add to Favorite Tours*!/*/}
-        {/*  /!*<FaRegBookmark />*!/*/}
-
-        {/*  /!*Delete from Favorite Tours*!/*/}
-        {/*  /!*<FaRegTrashCan />*!/*/}
-
-
-
-        {/*</div>*/}
         <div className="text-white pt-24 relative">
           <ul
               className={` text-white/40 flex border-b px-[5%] laptop:px-[0%] laptop:mx-[8%] border-b-white/20
              flex-nowrap overflow-auto gap-10 whitespace-nowrap`}
           >
-            <NavLinkTour route="." end={true}>
+            <NavLinkTour route=".">
               Overview
             </NavLinkTour>
             <NavLinkTour route="itinerary">Itinerary</NavLinkTour>
@@ -135,6 +244,7 @@ export const SpecificTour = () => {
           <div className="px-[8%]">
             <Outlet />
           </div>
+          <ToastContainer />
         </div>
       </main>
   );

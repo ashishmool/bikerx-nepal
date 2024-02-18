@@ -18,15 +18,19 @@ import {
     Typography,
     Textarea, Switch
 } from '@mui/joy';
-import { EditRounded as EditRoundedIcon, EmailRounded as EmailRoundedIcon, AccessTimeFilledRounded as AccessTimeFilledRoundedIcon, HomeRounded as HomeRoundedIcon, ChevronRightRounded as ChevronRightRoundedIcon, InsertDriveFileRounded as InsertDriveFileRoundedIcon, VideocamRounded as VideocamRoundedIcon } from '@mui/icons-material';
-import Breadcrumbs from '@mui/joy/Breadcrumbs';
-import Link from '@mui/joy/Link';
+// import { EditRounded as EditRoundedIcon, EmailRounded as EmailRoundedIcon, AccessTimeFilledRounded as AccessTimeFilledRoundedIcon, HomeRounded as HomeRoundedIcon, ChevronRightRounded as ChevronRightRoundedIcon, InsertDriveFileRounded as InsertDriveFileRoundedIcon, VideocamRounded as VideocamRoundedIcon } from '@mui/icons-material';
+// import Breadcrumbs from '@mui/joy/Breadcrumbs';
+// import Link from '@mui/joy/Link';
 import Card from '@mui/joy/Card';
 import CardActions from '@mui/joy/CardActions';
 import CardOverflow from '@mui/joy/CardOverflow';
 import Divider from '@mui/joy/Divider';
+import {toast} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
-function TourCreate() {
+
+
+function AddTour() {
     const { pk_id } = useParams();
     const navigate = useNavigate();
     const [image, setImage] = useState(null); // State variable to hold the image file
@@ -38,6 +42,8 @@ function TourCreate() {
             return axios.post("http://localhost:8080/tour/save", payload);
         },
         onSuccess() {
+            toast.success('Tour Add Successful!');
+
             navigate("/dashboard/tour/list");
         }
     });
@@ -86,6 +92,7 @@ function TourCreate() {
                         zIndex: 9995,
                     }}
                 >
+
 
                 </Box>
                 <Stack
@@ -170,7 +177,7 @@ function TourCreate() {
                                     <Stack sx={{ flex: 1 }}>
                                         <FormLabel>Booking Status  <Switch
                                             {...register("tourAvailability")}
-                                            defaultChecked={false} // Set default checked state if necessary
+                                            defaultChecked={true} // Set default checked state if necessary
                                         /></FormLabel>
 
                                         <p>{errors?.tourAvailability?.message}</p>
@@ -203,4 +210,4 @@ function TourCreate() {
     );
 }
 
-export default TourCreate;
+export default AddTour;

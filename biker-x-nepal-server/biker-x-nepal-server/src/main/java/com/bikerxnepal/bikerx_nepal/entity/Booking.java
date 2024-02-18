@@ -21,16 +21,26 @@ public class Booking {
     @Column(name = "purchase_date", nullable = false)
     private Date purchaseDate;
 
-    @ManyToOne
-    @JoinColumn(name = "tour_id", nullable = false)
-    private Tour tour;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
-    private SystemUser user;
+    @Column(name = "tour_id")
+    private Long tourId;
 
     @Column(name = "bike_id")
     private Long bikeId;
+
+    @Column(name = "user_id")
+    private Long userId;
+
+
+//    @ManyToOne
+//    @JoinColumn(name = "tour_id", nullable = false)
+//    private Tour tour;
+//
+//    @ManyToOne
+//    @JoinColumn(name = "user_id", nullable = false)
+//    private SystemUser user;
+
+
 
     @Column(name = "quantity_persons", nullable = false)
     private Integer quantityPersons;

@@ -13,7 +13,7 @@ import ChevronRightRoundedIcon from '@mui/icons-material/ChevronRightRounded';
 
 import ListTour from "../dashboard/tour/ListTour.tsx";
 import {Route, Routes} from "react-router-dom";
-import TourCreate from "../dashboard/tour/TourCreate.tsx";
+import AddTour from "../dashboard/tour/AddTour.tsx";
 import UpdateTour from "../dashboard/tour/UpdateTour.tsx";
 import AddBike from "../dashboard/bike/AddBike.tsx";
 import ListBike from "../dashboard/bike/ListBike.tsx";
@@ -115,7 +115,7 @@ export default function DashboardRouting() {
                 <Routes>
                     <Route path="home" element={<DashboardReport />} />
 
-                    <Route path="tour/create" element={<TourCreate />} />
+                    <Route path="tour/create" element={<AddTour />} />
                     <Route path="tour/list" element={<ListTour />} />
                     <Route path="tour/update/:id" element={<UpdateTour />} />
 

@@ -16,7 +16,7 @@ import { Dates } from "./features/Dates";
 import { ReviewsTour } from "./features/ReviewsTour";
 import { ProfileLayout } from "./features/ProfileLayout";
 import { PurchasedTour } from "./pages/PurchasedTour";
-import TourCreate from "./pages/dashboard/tour/TourCreate.tsx";
+import AddTour from "./pages/dashboard/tour/AddTour.tsx";
 import ListTour from "./pages/dashboard/tour/ListTour.tsx";
 import UpdateTour from "./pages/dashboard/tour/UpdateTour.tsx";
 import AdminDashboard from "./pages/components/AdminDashboard.tsx";
@@ -67,7 +67,7 @@ function App() {
 
           <Route path="home" element={<DashboardReport />} />
 
-          <Route path="tour/create" element={<TourCreate />} />
+          <Route path="tour/create" element={<AddTour />} />
           <Route path="tour/list" element={<ListTour />} />
           <Route path="tour/update/:id" element={<UpdateTour />} />
 

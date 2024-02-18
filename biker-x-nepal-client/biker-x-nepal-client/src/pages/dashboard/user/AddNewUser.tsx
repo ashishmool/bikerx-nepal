@@ -20,6 +20,7 @@ import Card from '@mui/joy/Card';
 import CardActions from '@mui/joy/CardActions';
 import CardOverflow from '@mui/joy/CardOverflow';
 import Divider from '@mui/joy/Divider';
+import {toast} from "react-toastify";
 
 function AddNewUser() {
     const navigate = useNavigate();
@@ -31,6 +32,7 @@ function AddNewUser() {
             return axios.post("http://localhost:8080/system-user/save", payload);
         },
         onSuccess() {
+            toast.success('User Added Successfully!');
             navigate("/dashboard/user/list");
         }
     });

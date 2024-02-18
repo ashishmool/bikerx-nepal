@@ -19,10 +19,10 @@ public class BookingPojo {
     private Date purchaseDate;
 
     @NotNull(message = "Tour is required")
-    private Tour tour;
+    private Long tourId;
 
     @NotNull(message = "User is required")
-    private SystemUser user;
+    private Long userId;
 
     private Long bikeId;
 

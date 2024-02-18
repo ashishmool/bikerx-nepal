@@ -16,6 +16,7 @@ import {
     Switch
 } from '@mui/joy';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import {toast} from "react-toastify";
 
 function UpdateUser() {
     const { id } = useParams();
@@ -46,6 +47,8 @@ function UpdateUser() {
             return axios.put(`http://localhost:8080/system-user/update/${id}`, payload);
         },
         onSuccess() {
+            toast.success('User Data Updated Successfully!');
+
             navigate("/dashboard/user/list");
         }
     });

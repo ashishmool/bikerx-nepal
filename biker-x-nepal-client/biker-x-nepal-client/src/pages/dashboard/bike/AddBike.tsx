@@ -20,6 +20,9 @@ import Card from '@mui/joy/Card';
 import CardActions from '@mui/joy/CardActions';
 import CardOverflow from '@mui/joy/CardOverflow';
 import Divider from '@mui/joy/Divider';
+import {toast} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 function AddBike() {
     const navigate = useNavigate();
@@ -32,6 +35,7 @@ function AddBike() {
             return axios.post("http://localhost:8080/bike/save", payload);
         },
         onSuccess() {
+            toast.success('Bike Add Successful!');
             navigate("/dashboard/bike/list");
         }
     });

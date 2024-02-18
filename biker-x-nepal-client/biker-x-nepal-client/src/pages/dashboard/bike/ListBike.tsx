@@ -4,6 +4,8 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
+import {toast, ToastContainer} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function ListBike() {
     const navigate = useNavigate();
@@ -21,6 +23,7 @@ function ListBike() {
             return axios.delete(`http://localhost:8080/bike/delete/${id}`);
         },
         onSuccess() {
+            toast.success('Bike Remove Successful!');
             refetch();
         }
     });
@@ -61,6 +64,8 @@ function ListBike() {
                 ))}
                 </tbody>
             </table>
+            <ToastContainer/>
+
         </>
     );
 }

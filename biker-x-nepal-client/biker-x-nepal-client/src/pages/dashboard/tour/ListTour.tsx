@@ -5,6 +5,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
+import {toast, ToastContainer} from "react-toastify";
 
 function ListTour() {
     const navigate = useNavigate();
@@ -23,6 +24,8 @@ function ListTour() {
             return axios.delete(`http://localhost:8080/tour/delete/${id}`);
         },
         onSuccess() {
+            toast.success('Tour Delete Successful!');
+
             refetch();
         }
     });
@@ -65,6 +68,7 @@ function ListTour() {
                 ))}
                 </tbody>
             </table>
+            <ToastContainer/>
         </>
     );
 }

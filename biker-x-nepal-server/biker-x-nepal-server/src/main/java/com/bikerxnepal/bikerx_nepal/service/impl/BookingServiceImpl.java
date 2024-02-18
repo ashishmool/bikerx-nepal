@@ -23,11 +23,12 @@ public class BookingServiceImpl implements BookingService {
     public Booking purchaseTour(BookingPojo bookingPojo) {
         Booking booking = new Booking();
         booking.setPurchaseDate(new Date());
-        booking.setTour(bookingPojo.getTour());
-        booking.setUser(bookingPojo.getUser());
+        booking.setTourId(bookingPojo.getTourId());
+        booking.setUserId(bookingPojo.getUserId());
         booking.setBikeId(bookingPojo.getBikeId());
         booking.setQuantityPersons(bookingPojo.getQuantityPersons());
         booking.setPaymentStatus(BookingEnum.PENDING); // Default status
+        booking.setTotalAmount(bookingPojo.getTotalAmount());
 
 //        userPurchasedTour.setTotalAmount(userPurchasedTourPojo.getTourPrice() * userPurchasedTourPojo.getQuantityPersons());
 
@@ -41,10 +42,13 @@ public class BookingServiceImpl implements BookingService {
                 .orElseThrow(() -> new EntityNotFoundException("Purchase not found with ID: " + purchaseId));
 
 
-        existingPurchase.setTour(bookingPojo.getTour());
-        existingPurchase.setUser(bookingPojo.getUser());
+        existingPurchase.setTourId(bookingPojo.getTourId());
+        existingPurchase.setUserId(bookingPojo.getUserId());
         existingPurchase.setBikeId(bookingPojo.getBikeId());
         existingPurchase.setQuantityPersons(bookingPojo.getQuantityPersons());
+        existingPurchase.setPaymentStatus(bookingPojo.getPaymentStatus());
+        existingPurchase.setTotalAmount(bookingPojo.getTotalAmount());
+
 //        existingPurchase.setTotalAmount(userPurchasedTourPojo.getTourPrice() * userPurchasedTourPojo.getQuantityPersons());
 
 

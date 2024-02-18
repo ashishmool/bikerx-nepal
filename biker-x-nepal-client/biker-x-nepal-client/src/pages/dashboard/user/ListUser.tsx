@@ -4,6 +4,8 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import { useMutation } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
+import {toast, ToastContainer} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function ListUser() {
     const [users, setUsers] = useState([]);
@@ -24,6 +26,7 @@ function ListUser() {
             });
             setUsers(filteredUsers);
         } catch (error) {
+            toast.error('Server-Side Error!');
             console.error('Error fetching users:', error);
         }
     };
@@ -34,6 +37,7 @@ function ListUser() {
             return axios.delete(`http://localhost:8080/system-user/delete/${id}`);
         },
         onSuccess() {
+            toast.success('User Deleted Successfully!');
             fetchUsers();
         }
     });
@@ -73,6 +77,7 @@ function ListUser() {
                 ))}
                 </tbody>
             </table>
+            <ToastContainer/>
         </>
     );
 }

@@ -16,6 +16,8 @@ import {
     Switch
 } from '@mui/joy';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import {toast} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function UpdateBike() {
     const { id } = useParams();
@@ -50,6 +52,7 @@ function UpdateBike() {
             return axios.put(`http://localhost:8080/bike/update/${id}`, formData);
         },
         onSuccess() {
+            toast.success('Updated Bike Data Successfully!');
             navigate("/dashboard/bike/list");
         }
     });
