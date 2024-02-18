@@ -4,6 +4,10 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
+import LibraryAddCheckIcon from '@mui/icons-material/LibraryAddCheck'
+import {toast, ToastContainer} from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
+
 
 function ListBooking() {
     const [bookings, setBookings] = useState([]);
@@ -15,6 +19,29 @@ function ListBooking() {
             return axios.get("http://localhost:8080/booking/getAll");
         }
     });
+
+    const markAsDone = async (id) => {
+        try {
+            await axios.put(`http://localhost:8080/booking/update/${id}`, { paymentStatus: 'COMPLETED' });
+            toast.success('Payment Marked Complete');
+            refetch();
+        } catch (error) {
+            toast.error('Error marking DONE');
+            console.error('Error marking booking as done:', error);
+        }
+    };
+
+    const markAsCancelled = async (id) => {
+        try {
+            await axios.put(`http://localhost:8080/booking/update/${id}`, { paymentStatus: 'CANCEL' });
+
+            refetch();
+        } catch (error) {
+            toast.error('Error marking CANCEL');
+
+            console.error('Error marking booking as cancelled:', error);
+        }
+    };
 
     const deleteByIdApi = useMutation({
         mutationKey: ["DELETE_BOOKING_BY_ID"],
@@ -31,45 +58,42 @@ function ListBooking() {
     }, [data]);
 
     return (
-        <table border={1} style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'center' }}>
-            <thead>
-            <tr>
-                <th>Booking ID</th>
-                <th>Purchase Date</th>
-                <th>Tour ID</th>
-                <th>User ID</th>
-                <th>Bike ID</th>
-                <th>Quantity Persons</th>
-                <th>Total Amount</th>
-                <th>Payment Status</th>
-                {/*<th>Action</th>*/}
-            </tr>
-            </thead>
-            <tbody>
-            {bookings.map((booking, index) => (
-                <tr key={index}>
-                    <td>{booking.purchaseId}</td>
-                    <td>{new Date(booking.purchaseDate).toLocaleDateString()}</td>
-                    <td>{booking.tour.tourId}</td>
-                    <td>{booking.user.userId}</td>
-                    <td>{booking.bikeId}</td>
-                    <td>{booking.quantityPersons}</td>
-                    <td>Rs.{booking.totalAmount}</td>
-                    <td>{booking.paymentStatus}</td>
-                    {/*<td>*/}
-                    {/*    <button onClick={() => navigate(`/dashboard/booking/update/${booking.purchaseId}`)}>*/}
-                    {/*        <EditIcon />*/}
-                    {/*        Edit*/}
-                    {/*    </button>*/}
-                    {/*    <button onClick={() => deleteByIdApi.mutate(booking.purchaseId)}>*/}
-                    {/*        <DeleteIcon />*/}
-                    {/*        Delete*/}
-                    {/*    </button>*/}
-                    {/*</td>*/}
+        <>
+            <table border={1} style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'center' }}>
+                <thead>
+                <tr>
+                    <th>Booking ID</th>
+                    <th>Purchase Date</th>
+                    <th>Tour ID</th>
+                    <th>User ID</th>
+                    <th>Bike ID</th>
+                    <th>Quantity Persons</th>
+                    <th>Total Amount</th>
+                    <th>Payment Status</th>
+                    <th>Action</th>
                 </tr>
-            ))}
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                {bookings.map((booking, index) => (
+                    <tr key={index}>
+                        <td>{booking.purchaseId}</td>
+                        <td>{new Date(booking.purchaseDate).toLocaleDateString()}</td>
+                        <td>{booking.tourId}</td>
+                        <td>{booking.userId}</td>
+                        <td>{booking.bikeId}</td>
+                        <td>{booking.quantityPersons || '-'}</td>
+                        <td>Rs.{booking.totalAmount}</td>
+                        <td>{booking.paymentStatus}</td>
+                        <td>
+                            <button onClick={() => markAsDone(booking.purchaseId)}><LibraryAddCheckIcon/>Done</button>
+                            <button onClick={() => markAsCancelled(booking.purchaseId)}><DeleteIcon/> Delete</button>
+                        </td>
+                    </tr>
+                ))}
+                </tbody>
+            </table>
+            <ToastContainer/>
+        </>
     );
 }
 
