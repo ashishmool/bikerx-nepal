@@ -32,6 +32,7 @@ import UpdateReviews from "./pages/dashboard/review/UpdateReviews.tsx";
 import UpdateUser from "./pages/dashboard/user/UpdateUser.tsx";
 import * as React from "react";
 import ListBooking from "./pages/dashboard/booking/ListBooking.tsx";
+import {ForgotPassword} from "./pages/ForgotPassword.tsx";
 import {ResetPassword} from "./pages/ResetPassword.tsx";
 function App() {
   return (
@@ -57,7 +58,9 @@ function App() {
         </Route>
         <Route path="login" element={<LogIn />} />
         <Route path="signup" element={<SignUp />} />
+        <Route path="forgot-password" element={<ForgotPassword />} />
         <Route path="reset-password" element={<ResetPassword />} />
+
 
 
         {localStorage.getItem("role")==="Admin" && <Route path="dashboard//*" element={<AdminDashboard />} >

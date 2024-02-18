@@ -191,7 +191,7 @@ export const LogIn = () => {
             </Link>
 
             <Link
-                to="/reset-password"
+                to="/forgot-password"
                 className="transition duration-300 hover:underline text-sm mt-3 ml-3"
             >
               Forgot Password? <span className="text-yellow-500">Reset Password</span>

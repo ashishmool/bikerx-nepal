@@ -59,7 +59,7 @@ public class EmailServiceImpl implements EmailService {
             String html = FreeMarkerTemplateUtils.processTemplateIntoString(template, model);
 
             mimeMessageHelper.setTo(emailRequest.getSendToEmail());
-            mimeMessageHelper.setFrom("abroad.dreams.com@gmail.com");
+            mimeMessageHelper.setFrom("bikerxnepal@gmail.com");
             mimeMessageHelper.setText(html, true);
             mimeMessageHelper.setSubject("Reset password");
 

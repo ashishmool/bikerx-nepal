@@ -1,32 +1,55 @@
-import { FaEnvelope } from "react-icons/fa";
+import { FaLock } from "react-icons/fa";
+import { Link, useNavigate } from "react-router-dom";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { useEffect } from "react";
 import { MiniSpinner } from "../ui/MiniSpinner";
 import { motion } from "framer-motion";
 import axios from 'axios';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
+interface ResetPasswordFormData {
+    password: string;
+    confirmPassword: string;
+}
+
 export const ResetPassword = () => {
     const {
         register,
         handleSubmit,
+        getValues,
         formState: { errors },
-    } = useForm();
+        reset,
+    } = useForm<ResetPasswordFormData>();
 
-    const onSubmit: SubmitHandler<FieldValues> = async (data) => {
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        // Reset form on component mount
+        reset();
+    }, []);
+
+    const onSubmit: SubmitHandler<ResetPasswordFormData> = async (data) => {
         try {
-            // Send request to reset password using the provided email
-            const response = await axios.post('http://localhost:8080/recover/reset-password', {
-                email: data.email
-            });
+            // Extract token from the URL
+            const urlParams = new URLSearchParams(window.location.search);
+            const token = urlParams.get('token');
 
-            // Handle response as needed
-            console.log(response.data);
-            toast.success('Password reset email sent successfully!');
+            if (token) {
+                // Use the extracted token in the API request
+                const response = await axios.post(
+                    'http://localhost:8080/system-user/new-password',
+                    { token, newPassword: data.password }
+                );
+
+                console.log(response.data);
+                navigate('/login');
+            } else {
+                toast.error('Invalid reset token.');
+            }
         } catch (error) {
-            console.error('Error sending password reset email:', error);
-            toast.error('Failed to send password reset email. Please try again.');
+            console.error('Error setting new password:', error);
+            toast.error('Error setting new password.');
         }
     };
 
@@ -38,7 +61,7 @@ export const ResetPassword = () => {
             </div>
             <motion.div
                 className="w-full laptop:w-[490px] bg-black laptop:bg-black/90 text-white absolute z-[1] laptop:mt-24
-        px-8 laptop:py-8 pb-16 pt-28 flex flex-col justify-between left-[50%] translate-x-[-50%]"
+          px-8 laptop:py-8 pb-16 pt-28 flex flex-col justify-between left-[50%] translate-x-[-50%]"
                 initial={{ opacity: 0, translateX: "-100%" }}
                 animate={{ opacity: 1, translateX: "-50%" }}
                 transition={{ duration: 0.5 }}
@@ -54,55 +77,78 @@ export const ResetPassword = () => {
                     onSubmit={handleSubmit(onSubmit)}
                 >
                     <label
-                        htmlFor="email"
-                        className="flex flex-col-reverse gap-1 relative mb-3 text-sm"
+                        htmlFor="password"
+                        className="flex flex-col-reverse gap-1 relative text-sm mb-3"
                     >
-                        {errors.email?.message && (
+                        {errors.password && (
                             <span className="text-[#ff2020]">
-                {errors.email.message.toString()}
-              </span>
+                                {errors.password.message}
+                            </span>
                         )}
                         <input
-                            id="email"
+                            id="password"
                             className={`bg-transparent border-2 ${
-                                errors.email?.message
+                                errors.password
                                     ? "border-[#ff2020] focus:border-[#ff2020]"
                                     : "border-white/40 focus:border-white/80"
                             }  pl-10 pr-4 py-[6px] focus:outline-none text-white placeholder:text-white/40  peer transition 
             duration-200 w-full disabled:cursor-not-allowed`}
-                            type="email"
-                            placeholder="Enter Email"
-                            {...register("email", {
-                                required: "This field is required" as unknown as boolean,
+                            type="password"
+                            placeholder="Enter New Password"
+                            {...register("password", {
+                                required: "This field is required",
+                                minLength: {
+                                    value: 8,
+                                    message: "Password must have at least 8 characters",
+                                },
+                                maxLength: {
+                                    value: 16,
+                                    message: "Password must have maximum 16 characters",
+                                },
                             })}
                         />
                         <span className="cursor-pointer peer-focus:text-white transition duration-200">
-              Email
+              New Password
             </span>
-                        <FaEnvelope className="absolute top-[35px] left-[14px] peer-focus:text-yellow-500" />
+                        <FaLock className="absolute top-[35px] left-[14px] peer-focus:text-yellow-500" />
+                    </label>
+                    <label
+                        htmlFor="confirmPassword"
+                        className="flex flex-col-reverse gap-1 relative text-sm mb-3"
+                    >
+                        {errors.confirmPassword && (
+                            <span className="text-[#ff2020]">
+                                {errors.confirmPassword.message}
+                            </span>
+                        )}
+                        <input
+                            id="confirmPassword"
+                            className={`bg-transparent border-2 ${
+                                errors.confirmPassword
+                                    ? "border-[#ff2020] focus:border-[#ff2020]"
+                                    : "border-white/40 focus:border-white/80"
+                            }  pl-10 pr-4 py-[6px] focus:outline-none text-white placeholder:text-white/40  peer transition 
+            duration-200 w-full disabled:cursor-not-allowed`}
+                            type="password"
+                            placeholder="Confirm New Password"
+                            {...register("confirmPassword", {
+                                required: "This field is required",
+                                validate: value =>
+                                    value === getValues().password || "Passwords do not match"
+                            })}
+                        />
+                        <span className="cursor-pointer peer-focus:text-white transition duration-200">
+              Confirm New Password
+            </span>
+                        <FaLock className="absolute top-[35px] left-[14px] peer-focus:text-yellow-500" />
                     </label>
                     <button
                         className="px-4 mt-8 py-[6px] transition duration-300 bg-yellow-500 text-black font-semibold text-base
-          hover:bg-yellow-200 disabled:cursor-not-allowed"
+            hover:bg-yellow-200 disabled:cursor-not-allowed"
                         disabled={false} // Enable button always for reset password
                     >
-                        Recover
+                        Reset Password
                     </button>
-                    <div className="flex flex-row justify-between">
-                        <Link
-                            to="/signup"
-                            className="transition duration-300 hover:underline text-sm mt-3"
-                        >
-                            Don't have an account? <span className="text-yellow-500">Sign up</span>
-                        </Link>
-
-                        <Link
-                            to="/login"
-                            className="transition duration-300 hover:underline text-sm mt-3 ml-3"
-                        >
-                            Already Registered? <span className="text-yellow-500">Login</span>
-                        </Link>
-                    </div>
                 </form>
             </motion.div>
             <ToastContainer />
