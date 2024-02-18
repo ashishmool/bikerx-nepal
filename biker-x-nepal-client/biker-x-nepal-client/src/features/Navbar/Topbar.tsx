@@ -60,15 +60,16 @@ export const Topbar = () => {
                       onMouseEnter={() => setIsProfileOpen(true)}
                       onMouseLeave={() => setIsProfileOpen(false)}
                   >
-                <span className="px-3 py-2 rounded-full bg-[#3f3f3fdc]">
-                  {localStorage.getItem("email")}
-                  {surname.slice(0, 1).toLocaleUpperCase()}
-                </span>
-                    <button onClick={handleLogout} className="flex items-center gap-1 cursor-pointer focus:outline-none">
-                      <LogoutOutlined />
-                      Logout
-                    </button>
+  <span className="px-3 py-2 rounded-full bg-[#3f3f3fdc]">
+    {localStorage.getItem("email")}
+    {surname.slice(0, 1).toLocaleUpperCase()}
+  </span>
+                    <span onClick={handleLogout} className="flex items-center gap-1 cursor-pointer focus:outline-none">
+    <LogoutOutlined />
+    Logout
+  </span>
                   </button>
+
 
                 </div>
             )}

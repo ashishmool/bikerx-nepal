@@ -83,7 +83,9 @@ public class TourServiceImpl implements TourService {
 
     @Override
     public Optional<Tour> getById(Long id) {
-        return tourRepo.findById(id);
+        Optional<Tour> tourOptional = tourRepo.findById(id);
+        tourOptional.ifPresent(tour -> tour.setImage(imageToBase64.getImageBase64(tour.getImage())));
+        return tourOptional;
     }
 
     @Override
