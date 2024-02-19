@@ -2,11 +2,10 @@
 ## Description
 This completely functional tour website is about **bikerXnepal**, that provides motorbike tours in Nepal. 
 Here you will find all the sections and functionalities that a tour provider company should have: 
-- Tours catalog (w/ filtering, sorting, and pagination)
+- Tours Xatalog (w/ filtering, sorting, and pagination)
 - Authentication
-- Favorite tours (user required) 
-- Pricing
-- Reviews (w/ sorting)
+- The Rides
+- Reviews
 - About us (FAQ, Services, Who We Are).
 
 This is a frontend project (**React, TypeScript, Tailwind**), nevertheless the backend was also added using **Springboot** and **PostgreSQL**.
@@ -24,4 +23,3 @@ This is a frontend project (**React, TypeScript, Tailwind**), nevertheless the b
 - Framer Motion
 - Springboot
 - PostgreSQL.
-- Leaflet + MapTiler
