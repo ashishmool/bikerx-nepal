@@ -53,4 +53,10 @@ public class BookingController {
     public List<Booking> getPurchasesByPaymentStatus(@RequestParam("paymentStatus") BookingEnum paymentStatus) {
         return bookingService.getPurchasesByPaymentStatus(paymentStatus);
     }
+
+
+    @GetMapping("/getByUserId/{userId}") // Updated mapping to retrieve userId from path
+    public List<Booking> getPurchasesByUserId(@PathVariable Long userId) { // Use @PathVariable to retrieve userId from path
+        return bookingService.getPurchasesByUserId(userId);
+    }
 }

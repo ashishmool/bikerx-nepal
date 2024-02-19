@@ -108,7 +108,7 @@ export const SignUp = () => {
               duration-200 w-full disabled:cursor-not-allowed`}
                 type="text"
                 maxLength={20}
-                placeholder="Ashish"
+                placeholder="First Name"
                 {...register("firstName", {
                   required: "This field is required" as unknown as boolean,
                   minLength: {
@@ -146,7 +146,7 @@ export const SignUp = () => {
               duration-200 w-full disabled:cursor-not-allowed`}
                 type="text"
                 maxLength={20}
-                placeholder="Mool"
+                placeholder="Last Name"
                 {...register("lastName", {
                   required: "This field is required" as unknown as boolean,
                   minLength: {

@@ -10,4 +10,5 @@ import java.util.List;
 public interface BookingRepo extends JpaRepository<Booking, Long> {
     List<Booking> findByPurchaseDate(Date purchaseDate);
     List<Booking> findByPaymentStatus(BookingEnum paymentStatus);
+    List<Booking> findByUserId(Long userId);
 }

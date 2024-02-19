@@ -34,6 +34,7 @@ import * as React from "react";
 import ListBooking from "./pages/dashboard/booking/ListBooking.tsx";
 import {ForgotPassword} from "./pages/ForgotPassword.tsx";
 import {ResetPassword} from "./pages/ResetPassword.tsx";
+import {MyTour} from "./pages/MyTour.tsx";
 function App() {
   return (
     <BrowserRouter>
@@ -46,8 +47,10 @@ function App() {
           <Route path="about" element={<About />} />
           <Route element={<ProfileLayout />}>
             <Route path="profile" element={<Profile />} />
-            <Route path="order/:orderId" element={<PurchasedTour />} />
+
+            {/*<Route path="order/:orderId" element={<PurchasedTour />} />*/}
           </Route>
+          <Route path="my-tour/:id" element={<MyTour />} />
           <Route path="tours/:id" element={<SpecificTour />}>
             <Route index element={<Overview />} />
             <Route path="itinerary" element={<Itinerary />} />

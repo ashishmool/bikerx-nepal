@@ -20,6 +20,7 @@ import Card from '@mui/joy/Card';
 import CardActions from '@mui/joy/CardActions';
 import CardOverflow from '@mui/joy/CardOverflow';
 import Divider from '@mui/joy/Divider';
+import {toast} from "react-toastify";
 
 function AddReview() {
     const navigate = useNavigate();
@@ -31,6 +32,7 @@ function AddReview() {
             return axios.post("http://localhost:8080/testimonial/save", payload);
         },
         onSuccess() {
+            toast.success('Added Review Successfully');
             navigate("/dashboard/testimonial/list");
         }
     });
@@ -61,19 +63,19 @@ function AddReview() {
                             <Box sx={{ mb: 1 }}>
                                 <Typography level="title-md">Add New Testimonial</Typography>
                                 <Typography level="body-sm">
-                                    Provide details about the testimonial.
+                                    Provide details about the review.
                                 </Typography>
                             </Box>
                             <Divider />
                             <Stack spacing={2} sx={{ my: 1 }}>
                                 <Stack direction="row" spacing={1}>
                                     <Stack sx={{ flex: 1 }}>
-                                        <FormLabel>Title *</FormLabel>
-                                        <Input type="text" {...register("title", { required: "Title is required" })} />
+                                        <FormLabel>Review Title *</FormLabel>
+                                        <Input type="text" {...register("title", { required: "Review Title" })} />
                                         <p>{errors?.title?.message}</p>
                                     </Stack>
                                     <Stack sx={{ flex: 1 }}>
-                                        <FormLabel>Description *</FormLabel>
+                                        <FormLabel>Describe Your Experience *</FormLabel>
                                         <Textarea rows={4} {...register("description", { required: "Description is required" })} />
                                         <p>{errors?.description?.message}</p>
                                     </Stack>

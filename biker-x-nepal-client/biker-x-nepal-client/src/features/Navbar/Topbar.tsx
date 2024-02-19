@@ -27,6 +27,7 @@ export const Topbar = () => {
     window.location.href = '/';
 
   };
+  const userId = localStorage.getItem("userId");
 
   return (
       <div className="bg-transparent absolute text-[--main-font-color] z-[2] w-full">
@@ -40,6 +41,10 @@ export const Topbar = () => {
               )}
               <NavlinkTopbar route="tours">Tours</NavlinkTopbar>
               <NavlinkTopbar route="about">About</NavlinkTopbar>
+              {role === "Customer" && (
+                  <NavlinkTopbar route={`/my-tour/${userId}`}>My Bookings</NavlinkTopbar>
+
+              )}
             </div>
           </li>
           <li className="hidden laptop:flex gap-4 full:gap-8 text-lg items-center">

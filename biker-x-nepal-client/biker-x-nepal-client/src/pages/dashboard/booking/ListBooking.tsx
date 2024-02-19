@@ -31,24 +31,17 @@ function ListBooking() {
         }
     };
 
-    const markAsCancelled = async (id) => {
-        try {
-            await axios.put(`http://localhost:8080/booking/update/${id}`, { paymentStatus: 'CANCEL' });
 
-            refetch();
-        } catch (error) {
-            toast.error('Error marking CANCEL');
 
-            console.error('Error marking booking as cancelled:', error);
-        }
-    };
 
-    const deleteByIdApi = useMutation({
+    const deleteBooking = useMutation({
         mutationKey: ["DELETE_BOOKING_BY_ID"],
         mutationFn(id) {
+            console.log('purchaseId',id);
             return axios.delete(`http://localhost:8080/booking/delete/${id}`);
         },
         onSuccess() {
+            toast.success('Deleted');
             refetch();
         }
     });
@@ -85,8 +78,16 @@ function ListBooking() {
                         <td>Rs.{booking.totalAmount}</td>
                         <td>{booking.paymentStatus}</td>
                         <td>
-                            <button onClick={() => markAsDone(booking.purchaseId)}><LibraryAddCheckIcon/>Done</button>
-                            <button onClick={() => markAsCancelled(booking.purchaseId)}><DeleteIcon/> Delete</button>
+                            {booking.paymentStatus !== 'COMPLETED' && booking.paymentStatus !== 'CANCEL' && booking.paymentStatus !== 'PROCESSING' && (
+                                <>
+                                    <button onClick={() => markAsDone(booking.purchaseId)}>
+                                        <LibraryAddCheckIcon/> Done
+                                    </button>
+                                    <button onClick={() => deleteBooking.mutate(booking.purchaseId)}>
+                                        <DeleteIcon/> Delete
+                                    </button>
+                                </>
+                            )}
                         </td>
                     </tr>
                 ))}

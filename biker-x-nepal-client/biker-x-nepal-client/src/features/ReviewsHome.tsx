@@ -52,7 +52,7 @@ export const ReviewsHome = () => {
                 viewport={{ once: true }}
                 className="text-4xl laptop:text-5xl font-semibold text-center full:text-left"
             >
-                Testimonials
+                Latest Reviews
             </motion.h3>
             <motion.div
                 initial={{ opacity: 0, translateY: "100%" }}

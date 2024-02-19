@@ -15,5 +15,7 @@ public interface BookingService {
     Optional<Booking> getPurchaseById(Long purchaseId);
     List<Booking> getAllPurchases();
     List<Booking> getPurchasesByDate(Date purchaseDate);
+
+    List<Booking> getPurchasesByUserId(Long userId);
     List<Booking> getPurchasesByPaymentStatus(BookingEnum paymentStatus);
 }

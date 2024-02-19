@@ -141,7 +141,7 @@ export const LogIn = () => {
                   : "border-white/40 focus:border-white/80"
               }  pl-10 pr-4 py-[6px] focus:outline-none text-white placeholder:text-white/40  peer transition 
               duration-200 w-full disabled:cursor-not-allowed`}
-              placeholder="Enter Email"
+              placeholder="Enter Your Email Address"
               {...register("loginEmail", {
                 required: "This field is required" as unknown as boolean,
               })}
@@ -171,7 +171,7 @@ export const LogIn = () => {
               duration-200 w-full disabled:cursor-not-allowed`}
               id="loginPassword"
               type="password"
-              placeholder="Enter Password"
+              placeholder="Enter Your Password"
               {...register("loginPassword", {
                 required: "This field is required" as unknown as boolean,
               })}

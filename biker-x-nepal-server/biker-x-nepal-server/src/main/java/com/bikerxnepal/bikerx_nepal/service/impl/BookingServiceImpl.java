@@ -41,16 +41,7 @@ public class BookingServiceImpl implements BookingService {
         Booking existingPurchase = bookingRepo.findById(purchaseId)
                 .orElseThrow(() -> new EntityNotFoundException("Purchase not found with ID: " + purchaseId));
 
-
-        existingPurchase.setTourId(bookingPojo.getTourId());
-        existingPurchase.setUserId(bookingPojo.getUserId());
-        existingPurchase.setBikeId(bookingPojo.getBikeId());
-        existingPurchase.setQuantityPersons(bookingPojo.getQuantityPersons());
         existingPurchase.setPaymentStatus(bookingPojo.getPaymentStatus());
-        existingPurchase.setTotalAmount(bookingPojo.getTotalAmount());
-
-//        existingPurchase.setTotalAmount(userPurchasedTourPojo.getTourPrice() * userPurchasedTourPojo.getQuantityPersons());
-
 
         return bookingRepo.save(existingPurchase);
     }
@@ -75,6 +66,9 @@ public class BookingServiceImpl implements BookingService {
         return bookingRepo.findByPurchaseDate(purchaseDate);
     }
 
+    @Override
+    public List<Booking> getPurchasesByUserId(Long userId){
+        return bookingRepo.findByUserId(userId);}
     @Override
     public List<Booking> getPurchasesByPaymentStatus(BookingEnum paymentStatus) {
         return bookingRepo.findByPaymentStatus(paymentStatus);

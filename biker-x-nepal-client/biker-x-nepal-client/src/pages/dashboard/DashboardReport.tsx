@@ -118,7 +118,7 @@ function DashboardReport() {
                             <GroupRoundedIcon/> Users
                         </Typography>
                         <Typography variant="body2" color="text.secondary">
-                            {data.users-1}
+                            {data.users}
                         </Typography>
                     </CardContent>
                 </Card>

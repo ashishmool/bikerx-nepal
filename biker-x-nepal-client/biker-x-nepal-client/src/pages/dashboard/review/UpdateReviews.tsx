@@ -15,6 +15,7 @@ import {
     Textarea,
 } from '@mui/joy';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import {toast} from "react-toastify";
 
 function UpdateReviews() {
     const { id } = useParams();
@@ -45,6 +46,7 @@ function UpdateReviews() {
             return axios.put(`http://localhost:8080/testimonial/update/${id}`, payload);
         },
         onSuccess() {
+            toast.success('Review Updated Successfully)')
             navigate("/dashboard/testimonials/manage");
         }
     });

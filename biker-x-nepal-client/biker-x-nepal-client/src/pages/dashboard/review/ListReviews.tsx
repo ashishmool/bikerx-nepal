@@ -4,6 +4,10 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
+import {toast, ToastContainer} from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
+import {Stars} from "@mui/icons-material";
+import {Rate} from "antd";
 
 function ListReviews() {
     const navigate = useNavigate();
@@ -21,6 +25,7 @@ function ListReviews() {
             return axios.delete(`http://localhost:8080/testimonial/delete/${id}`);
         },
         onSuccess() {
+            toast.success('Review Delete Success');
             refetch();
         }
     });
@@ -43,19 +48,26 @@ function ListReviews() {
                 <tbody>
                 {data?.data.map((testimonial) => (
                     <tr key={testimonial.testimonialId} style={{ borderBottom: '1px solid #ddd' }}>
-                        <td>{testimonial.testimonialId}</td>
-                        <td>{testimonial.title}</td>
-                        <td style={{ wordWrap: 'break-word', maxWidth: '160px' }}>{testimonial.description}</td>
-                        <td>{testimonial.fullName}</td>
-                        <td style={{ wordWrap: 'break-word', maxWidth: '80px' }}>{testimonial.designation}</td>
-                        <td style={{ wordWrap: 'break-word', maxWidth: '80px' }}>{testimonial.company}</td>
-                        <td style={{ wordWrap: 'break-word', maxWidth: '80px' , textAlign:'center'}}>{testimonial.reviewRating}</td>
+                        <td style={{ wordWrap: 'break-word', maxWidth: '30px' }}>{testimonial.testimonialId}</td>
+                        <td style={{ wordWrap: 'break-word', maxWidth: '80px' }}>{testimonial.title}</td>
+                        <td style={{ wordWrap: 'break-word', maxWidth: '80px' }}>{testimonial.description}</td>
+                        <td style={{ wordWrap: 'break-word', maxWidth: '50px' }}>{testimonial.fullName}</td>
+                        <td style={{ wordWrap: 'break-word', maxWidth: '50px' }}>{testimonial.designation}</td>
+                        <td style={{ wordWrap: 'break-word', maxWidth: '50px' }}>{testimonial.company}</td>
+                        <td style={{ wordWrap: 'break-word', maxWidth: '50px' , textAlign:'center'}}>
+
+                            <Rate
+                                value={testimonial.reviewRating}
+                                disabled={true}
+                                className="justify-evenly block text-center"
+                            />
+
+                            </td>
                         <td style={{ textAlign:'center'}}>
                             <button onClick={() => navigate(`/dashboard/testimonial/update/${testimonial.testimonialId}`)}>
                                 <EditIcon />
                                 Edit
                             </button>
-                            <br/><br/>
                             <button onClick={() => deleteByIdApi.mutate(testimonial.testimonialId)}>
                                 <DeleteIcon />
                                 Delete
@@ -64,6 +76,7 @@ function ListReviews() {
                     </tr>
                 ))}
                 </tbody>
+                <ToastContainer/>
             </table>
         </>
     );
