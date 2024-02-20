@@ -17,6 +17,22 @@ const DashboardCalendar: React.FC<{ tourDates: Date[] }> = ({ tourDates }) => {
         }
     };
 
+    const tileContent = ({ date, view }: { date: Date, view: string }) => {
+        if (view === 'month') {
+            const formattedDate = date.toISOString().split('T')[0];
+            if (tourDates.some(tourDate => tourDate.toISOString().split('T')[0] === formattedDate)) {
+                return <span style={{ backgroundColor: 'white', color: 'pink' }}><TwoWheelerIcon /></span>;
+            }
+        }
+        return null;
+    };
+
+    const tileClassName = ({ date }: { date: Date }) => {
+        const formattedDate = date.toISOString().split('T')[0];
+        const currentDate = new Date().toISOString().split('T')[0];
+        return formattedDate === currentDate ? 'current-date' : '';
+    };
+
     return (
         <div className="p-card p-m-4 p-d-flex p-jc-center" style={{ marginTop: '100px' }}>
             <Calendar
@@ -24,16 +40,16 @@ const DashboardCalendar: React.FC<{ tourDates: Date[] }> = ({ tourDates }) => {
                 value={date}
                 calendarType="gregory"
                 showWeekNumbers
-                tileContent={({ date, view }) => {
-                    if (view === 'month') {
-                        const formattedDate = date.toISOString().split('T')[0];
-                        if (tourDates.some(tourDate => tourDate.toISOString().split('T')[0] === formattedDate)) {
-                            return <span style={{ backgroundColor: 'white', color: 'pink' }}><TwoWheelerIcon/></span>;
-                        }
-                    }
-                    return null;
-                }}
+                tileContent={tileContent}
+                tileClassName={tileClassName}
             />
+            <style>
+                {`
+                    .current-date {
+                        color: green;
+                    }
+                `}
+            </style>
         </div>
     );
 };
