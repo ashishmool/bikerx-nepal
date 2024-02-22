@@ -67,7 +67,7 @@ export const SignUp = () => {
         transition={{ duration: 0.5 }}
       >
         <div className=" flex flex-col gap-2 mb-10 text-sm text-white/40">
-          <span>CREATE FREE ACCOUNT</span>
+          <span>JOIN OUR COMMUNITY</span>
           <h1 className="font-semibold text-3xl text-white">
             Create New Account
           </h1>
@@ -75,7 +75,7 @@ export const SignUp = () => {
             to="/login"
             className="transition duration-300 hover:underline hover:text-white"
           >
-            Already a member? <span className="text-yellow-500">Log In</span>
+            Already a Community Member? <span className="text-yellow-500">Log In</span>
           </Link>
         </div>
         {errorSignup && (

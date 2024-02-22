@@ -1,7 +1,9 @@
 package com.bikerxnepal.bikerx_nepal.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.Date;
@@ -10,6 +12,8 @@ import java.util.Date;
 @Table(name = "testimonials")
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class Testimonial {
 
     @Id
