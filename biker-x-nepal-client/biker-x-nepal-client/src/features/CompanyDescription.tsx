@@ -59,7 +59,7 @@ export const CompanyDescription = () => {
             viewport={{ once: true }}
             className="text-center laptop:text-left text-4xl full:text-5xl font-semibold"
           >
-            Why Choose Us?
+            The Passion of Riding...
           </motion.h1>
           <motion.p
             initial={{ opacity: 0, translateY: "100%" }}

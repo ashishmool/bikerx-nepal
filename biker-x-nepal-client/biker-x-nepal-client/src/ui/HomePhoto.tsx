@@ -3,7 +3,6 @@ import { FaLocationDot } from "react-icons/fa6";
 import { homeImages } from "../utils/homeImages";
 import { IHomeBg } from "../moduls";
 import { motion } from "framer-motion";
-import { useNavigate } from "react-router-dom";
 
 export const HomePhoto = () => {
   const [photos, setPhotos] = useState(homeImages);
