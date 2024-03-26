@@ -53,5 +53,8 @@ public class Tour {
 
     private String image;
 
+    @OneToOne(mappedBy = "tour")
+    private Itinerary itinerary;
+
 
 }

@@ -238,6 +238,7 @@ export const SpecificTour = () => {
               Overview
             </NavLinkTour>
             <NavLinkTour route="itinerary">Itinerary</NavLinkTour>
+
             <NavLinkTour route="meeting">Meeting & Pickup</NavLinkTour>
             <NavLinkTour route="dates">Dates & Prices</NavLinkTour>
             <NavLinkTour route="reviews">Reviews</NavLinkTour>

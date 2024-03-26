@@ -37,4 +37,7 @@ public class Bike {
     @Column(name = "image", nullable = true)
     private String image;
 
+    //NumberPLate
+    //Owner
+    //Mobile
 }

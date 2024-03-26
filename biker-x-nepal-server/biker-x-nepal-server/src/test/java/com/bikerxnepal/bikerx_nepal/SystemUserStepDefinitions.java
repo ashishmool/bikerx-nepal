@@ -52,5 +52,23 @@ public class SystemUserStepDefinitions {
         // Logic to Verify SystemUser by Email
     }
 
+    @Given("get SystemUserEmail")
+    public void get_SystemUserEmail() {
+        // Write code here that turns the phrase above into concrete actions
+        throw new io.cucumber.java.PendingException();
+    }
+
+
+    @Given("Send ResetEmail")
+    public void send_ResetEmail() {
+        // Write code here that turns the phrase above into concrete actions
+        throw new io.cucumber.java.PendingException();
+    }
+    @Then("Change Password")
+    public void change_Password() {
+        // Write code here that turns the phrase above into concrete actions
+        throw new io.cucumber.java.PendingException();
+    }
+
 
 }

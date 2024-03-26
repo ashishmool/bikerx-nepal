@@ -51,6 +51,8 @@ public class SpringSecurityConfig {
                         "/purchased-tours/**",
                         "/tours/**",
                         "/bike/**",
+                        "/itinerary",
+                        "/itinerary/**",
                         "/booking/**",
                         "/authenticate",
                         "/authenticate/**",

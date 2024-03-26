@@ -27,6 +27,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import ColorSchemeToggle from './ColorSchemeToggle';
 import { closeSidebar } from '../utils';
 import TwoWheelerIcon from "@mui/icons-material/TwoWheeler";
+import MapIcon from '@mui/icons-material/Map';
 
 const handleLogout = () => {
     localStorage.clear();
@@ -252,6 +253,43 @@ export default function Sidebar() {
               </List>
             </Toggler>
           </ListItem>
+
+            <ListItem nested>
+                <Toggler
+                    defaultExpanded
+                    renderToggle={({ open, setOpen }) => (
+                        <ListItemButton onClick={() => setOpen(!open)}>
+                            <MapIcon />
+                            <ListItemContent>
+                                <Typography level="title-sm">Itineraries</Typography>
+                            </ListItemContent>
+                            <KeyboardArrowDownIcon
+                                sx={{ transform: open ? 'rotate(180deg)' : 'none' }}
+                            />
+                        </ListItemButton>
+                    )}
+                >
+                    <List sx={{ gap: 0.5 }}>
+                        <ListItem>
+                            <ListItemButton
+                                role="menuitem"
+                                component="a"
+                                href="/dashboard/itinerary/add"
+                                selected={location.pathname === '/dashboard/itinerary/add'}
+                            >Add New Itinerary</ListItemButton>
+                        </ListItem>
+                        <ListItem sx={{ mt: 0.5 }}>
+                            <ListItemButton
+                                role="menuitem"
+                                component="a"
+                                href="/dashboard/itinerary/list"
+                                selected={location.pathname === '/dashboard/itinerary/list'}
+                            >Manage Itinerary</ListItemButton>
+                        </ListItem>
+
+                    </List>
+                </Toggler>
+            </ListItem>
 
             <ListItem nested>
                 <Toggler

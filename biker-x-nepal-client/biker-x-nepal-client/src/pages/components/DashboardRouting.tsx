@@ -26,6 +26,8 @@ import ListReviews from "../dashboard/review/ListReviews.tsx";
 import UpdateReviews from "../dashboard/review/UpdateReviews.tsx";
 import UpdateUser from "../dashboard/user/UpdateUser.tsx";
 import ListBooking from "../dashboard/booking/ListBooking.tsx";
+import AddItinerary from "../dashboard/itinerary/AddItinerary.tsx";
+import ListItinerary from "../dashboard/itinerary/ListItinerary.tsx";
 
 export default function DashboardRouting() {
     return (
@@ -118,6 +120,9 @@ export default function DashboardRouting() {
                     <Route path="tour/create" element={<AddTour />} />
                     <Route path="tour/list" element={<ListTour />} />
                     <Route path="tour/update/:id" element={<UpdateTour />} />
+
+                    <Route path="itinerary/add" element={<AddItinerary />} />
+                    <Route path="itinerary/list" element={<ListItinerary />} />
 
                     <Route path="bike/add" element={<AddBike />} />
                     <Route path="bike/list" element={<ListBike />} />

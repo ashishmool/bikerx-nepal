@@ -15,7 +15,7 @@ import { MeetingPoint } from "./features/MeetingPoint";
 import { Dates } from "./features/Dates";
 import { ReviewsTour } from "./features/ReviewsTour";
 import { ProfileLayout } from "./features/ProfileLayout";
-import { PurchasedTour } from "./pages/PurchasedTour";
+// import { PurchasedTour } from "./pages/PurchasedTour";
 import AddTour from "./pages/dashboard/tour/AddTour.tsx";
 import ListTour from "./pages/dashboard/tour/ListTour.tsx";
 import UpdateTour from "./pages/dashboard/tour/UpdateTour.tsx";
@@ -35,6 +35,10 @@ import ListBooking from "./pages/dashboard/booking/ListBooking.tsx";
 import {ForgotPassword} from "./pages/ForgotPassword.tsx";
 import {ResetPassword} from "./pages/ResetPassword.tsx";
 import {MyTour} from "./pages/MyTour.tsx";
+import AddItinerary from "./pages/dashboard/itinerary/AddItinerary.tsx";
+import ListItinerary from "./pages/dashboard/itinerary/ListItinerary.tsx";
+// import AddItinerary from "./pages/dashboard/itinerary/AddItinerary.tsx";
+// import ListItinerary from "./pages/dashboard/itinerary/ListItinerary.tsx";
 function App() {
   return (
     <BrowserRouter>
@@ -62,7 +66,7 @@ function App() {
         <Route path="login" element={<LogIn />} />
         <Route path="signup" element={<SignUp />} />
         <Route path="forgot-password" element={<ForgotPassword />} />
-        <Route path="reset-password" element={<ResetPassword />} />
+        <Route path="reset-password"   element={<ResetPassword />} />
 
 
 
@@ -73,6 +77,10 @@ function App() {
           <Route path="tour/create" element={<AddTour />} />
           <Route path="tour/list" element={<ListTour />} />
           <Route path="tour/update/:id" element={<UpdateTour />} />
+
+          <Route path="itinerary/add" element={<AddItinerary />} />
+          <Route path="itinerary/list" element={<ListItinerary />} />
+          {/*<Route path="bike/update/:id" element={<UpdateBike/>} />*/}
 
           <Route path="bike/add" element={<AddBike />} />
           <Route path="bike/list" element={<ListBike />} />
