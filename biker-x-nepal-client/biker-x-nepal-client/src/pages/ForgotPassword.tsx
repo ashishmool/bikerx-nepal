@@ -22,7 +22,7 @@ export const ForgotPassword = () => {
         console.log('Email for Recovery:::',data.email);
         try {
             // Send request to reset password using the provided email
-            const response = await axios.post('http://localhost:8080/recover/reset-password', {
+            const response = await axios.post('http://13.48.249.115:8080/recover/reset-password', {
                 sendToEmail: data.email
             });
 

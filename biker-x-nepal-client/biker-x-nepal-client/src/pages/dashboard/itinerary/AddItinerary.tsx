@@ -27,7 +27,7 @@ function AddItinerary() {
     const useApiCall = useMutation({
         mutationKey: ["POST_ITINERARY_CREATE"],
         mutationFn: (payload) => {
-            return axios.post("http://localhost:8080/itinerary/save", payload);
+            return axios.post("http://13.48.249.115:8080/itinerary/save", payload);
         },
         onSuccess() {
             toast.success('Itinerary Add Successful!');

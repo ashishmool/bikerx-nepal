@@ -17,7 +17,7 @@ function ListUser() {
 
     const fetchUsers = async () => {
         try {
-            const response = await axios.get('http://localhost:8080/system-user/getAllWithoutPassword');
+            const response = await axios.get('http://13.48.249.115:8080/system-user/getAllWithoutPassword');
             console.log('Users Fetched:', response.data);
             // Filter out the password field from each user object
             const filteredUsers = response.data.map(user => {
@@ -34,7 +34,7 @@ function ListUser() {
     const deleteByIdApi = useMutation({
         mutationKey: ["DELETE_USER_BY_ID"],
         mutationFn(id) {
-            return axios.delete(`http://localhost:8080/system-user/delete/${id}`);
+            return axios.delete(`http://13.48.249.115:8080/system-user/delete/${id}`);
         },
         onSuccess() {
             toast.success('User Deleted Successfully!');

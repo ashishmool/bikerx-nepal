@@ -25,7 +25,7 @@ export const SpecificTour = () => {
 
     const fetchTourById = async () => {
       try {
-        const response = await axios.get(`http://localhost:8080/tour/getById/${id}`);
+        const response = await axios.get(`http://13.48.249.115:8080/tour/getById/${id}`);
         setTour(response.data);
         setLoading(false);
       } catch (error) {
@@ -62,7 +62,7 @@ export const SpecificTour = () => {
 
   const fetchBikes = async () => {
     try {
-      const response = await axios.get("http://localhost:8080/bike/getAll");
+      const response = await axios.get("http://13.48.249.115:8080/bike/getAll");
       console.log("Response from fetchBikes:", response.data); // Log the response data
       setBikesData(response.data);
       return response.data; // Return the data
@@ -87,7 +87,7 @@ export const SpecificTour = () => {
 
     try {
       const response = await axios.post(
-          'http://localhost:8080/booking/save',
+          'http://13.48.249.115:8080/booking/save',
           {
             purchaseDate: new Date(),
             tourId: id,

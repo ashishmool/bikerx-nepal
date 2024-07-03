@@ -16,13 +16,13 @@ function ListBooking() {
     const { data, refetch } = useQuery({
         queryKey: ["GET_BOOKINGS"],
         queryFn() {
-            return axios.get("http://localhost:8080/booking/getAll");
+            return axios.get("http://13.48.249.115:8080/booking/getAll");
         }
     });
 
     const markAsDone = async (id) => {
         try {
-            await axios.put(`http://localhost:8080/booking/update/${id}`, { paymentStatus: 'COMPLETED' });
+            await axios.put(`http://13.48.249.115:8080/booking/update/${id}`, { paymentStatus: 'COMPLETED' });
             toast.success('Payment Marked Complete');
             refetch();
         } catch (error) {
@@ -38,7 +38,7 @@ function ListBooking() {
         mutationKey: ["DELETE_BOOKING_BY_ID"],
         mutationFn(id) {
             console.log('purchaseId',id);
-            return axios.delete(`http://localhost:8080/booking/delete/${id}`);
+            return axios.delete(`http://13.48.249.115:8080/booking/delete/${id}`);
         },
         onSuccess() {
             toast.success('Deleted');

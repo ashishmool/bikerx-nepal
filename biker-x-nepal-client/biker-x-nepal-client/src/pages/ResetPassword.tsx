@@ -38,7 +38,7 @@ export const ResetPassword = () => {
             if (token) {
                 // Use the extracted token in the API request
                 const response = await axios.post(
-                    'http://localhost:8080/system-user/new-password',
+                    'http://13.48.249.115:8080/system-user/new-password',
                     { token, newPassword: data.password }
                 );
 

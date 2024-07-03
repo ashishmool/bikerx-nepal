@@ -29,7 +29,7 @@ function UpdateReviews() {
     const { data: testimonialByIdData, isLoading } = useQuery({
         queryKey: ["GET_TESTIMONIAL_BY_ID", id],
         queryFn() {
-            return axios.get(`http://localhost:8080/testimonial/getById/${id}`);
+            return axios.get(`http://13.48.249.115:8080/testimonial/getById/${id}`);
         },
         enabled: !!id
     });
@@ -43,7 +43,7 @@ function UpdateReviews() {
     const updateTestimonialMutation = useMutation({
         mutationKey: ["UPDATE_TESTIMONIAL"],
         mutationFn(payload) {
-            return axios.put(`http://localhost:8080/testimonial/update/${id}`, payload);
+            return axios.put(`http://13.48.249.115:8080/testimonial/update/${id}`, payload);
         },
         onSuccess() {
             toast.success('Review Updated Successfully)')

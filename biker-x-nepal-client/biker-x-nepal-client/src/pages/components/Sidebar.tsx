@@ -83,7 +83,7 @@ export default function Sidebar() {
         // Fetch bookings with status PENDING
         const fetchPendingBookings = async () => {
             try {
-                const response = await fetch("http://localhost:8080/booking/getAll");
+                const response = await fetch("http://13.48.249.115:8080/booking/getAll");
                 if (response.ok) {
                     const bookings = await response.json();
                     console.log('All Bookings', bookings);

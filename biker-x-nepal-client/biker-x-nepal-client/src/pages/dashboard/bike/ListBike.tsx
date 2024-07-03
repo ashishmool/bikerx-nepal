@@ -13,14 +13,14 @@ function ListBike() {
     const { data, refetch } = useQuery({
         queryKey: ["GET_BIKES"],
         queryFn() {
-            return axios.get("http://localhost:8080/bike/getAll");
+            return axios.get("http://13.48.249.115:8080/bike/getAll");
         }
     });
 
     const deleteByIdApi = useMutation({
         mutationKey: ["DELETE_BIKE_BY_ID"],
         mutationFn(id) {
-            return axios.delete(`http://localhost:8080/bike/delete/${id}`);
+            return axios.delete(`http://13.48.249.115:8080/bike/delete/${id}`);
         },
         onSuccess() {
             toast.success('Bike Remove Successful!');

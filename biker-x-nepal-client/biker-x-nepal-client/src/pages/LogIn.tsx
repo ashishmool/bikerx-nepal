@@ -52,7 +52,7 @@ export const LogIn = () => {
 
   const onSubmit = async (data: FieldValues) => {
     try {
-      const response = await axios.post("http://localhost:8080/authenticate", {
+      const response = await axios.post("http://13.48.249.115:8080/authenticate", {
         email: data.loginEmail,
         password: data.loginPassword
       });

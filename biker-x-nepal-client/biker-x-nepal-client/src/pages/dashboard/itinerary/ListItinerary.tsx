@@ -14,14 +14,14 @@ function ListItinerary() {
     const { data, refetch } = useQuery({
         queryKey: ["GET_ITINERARIES"],
         queryFn() {
-            return axios.get("http://localhost:8080/itinerary/getAll");
+            return axios.get("http://13.48.249.115:8080/itinerary/getAll");
         }
     });
 
     const deleteByIdApi = useMutation({
         mutationKey: ["DELETE_ITINERARY_BY_ID"],
         mutationFn(id) {
-            return axios.delete(`http://localhost:8080/itinerary/delete/${id}`);
+            return axios.delete(`http://13.48.249.115:8080/itinerary/delete/${id}`);
         },
         onSuccess() {
             toast.success('Itinerary Delete Success');

@@ -3,7 +3,7 @@ import axios from "axios";
 import { IPurchasedTour, newPurchasedTour } from "../../moduls";
 
 // Define your backend API base URL
-const baseURL = "http://localhost:8080";
+const baseURL = "http://13.48.249.115:8080";
 
 // Define interfaces for your data types
 interface IUserTours {

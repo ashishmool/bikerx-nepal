@@ -9,7 +9,7 @@ export const Vehicles = () => {
   useEffect(() => {
     const fetchBikes = async () => {
       try {
-        const response = await axios.get("http://localhost:8080/bike/getAll");
+        const response = await axios.get("http://13.48.249.115:8080/bike/getAll");
         setBikes(response.data);
       } catch (error) {
         console.error("Error fetching bikes:", error);

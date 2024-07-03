@@ -20,7 +20,7 @@ const initialState: ICurrentTour = {
   dates: [],
 };
 
-const baseURL = "http://localhost:8080"; // Adjust the base URL as needed
+const baseURL = "http://13.48.249.115:8080"; // Adjust the base URL as needed
 
 const axiosInstance = axios.create({
   baseURL,

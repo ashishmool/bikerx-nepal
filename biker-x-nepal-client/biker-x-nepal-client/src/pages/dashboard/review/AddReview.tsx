@@ -29,7 +29,7 @@ function AddReview() {
         mutationKey: ["POST_TESTIMONIAL_CREATE"],
         mutationFn: (payload) => {
             console.log(payload);
-            return axios.post("http://localhost:8080/testimonial/save", payload);
+            return axios.post("http://13.48.249.115:8080/testimonial/save", payload);
         },
         onSuccess() {
             toast.success('Added Review Successfully');

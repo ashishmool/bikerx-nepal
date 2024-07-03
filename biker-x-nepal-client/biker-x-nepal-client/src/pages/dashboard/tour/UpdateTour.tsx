@@ -41,7 +41,7 @@ function UpdateTour() {
     const { data: tourByIdData, isLoading } = useQuery({
         queryKey: ["GET_TOUR_BY_ID", id],
         queryFn() {
-            return axios.get(`http://localhost:8080/tour/getById/${id}`);
+            return axios.get(`http://13.48.249.115:8080/tour/getById/${id}`);
         },
         enabled: !!id // Ensure the query is only enabled when ID is available
     });
@@ -62,7 +62,7 @@ function UpdateTour() {
             Object.entries(payload).forEach(([key, value]) => {
                 formData.append(key, value);
             });
-            return axios.put(`http://localhost:8080/tour/update/${id}`, formData);
+            return axios.put(`http://13.48.249.115:8080/tour/update/${id}`, formData);
         },
         onSuccess() {
             navigate("/dashboard/tour/list");

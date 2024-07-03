@@ -39,7 +39,7 @@ function AddTour() {
         mutationKey: ["POST_TOUR_CREATE"],
         mutationFn: (payload) => {
             console.log(payload);
-            return axios.post("http://localhost:8080/tour/save", payload);
+            return axios.post("http://13.48.249.115:8080/tour/save", payload);
         },
         onSuccess() {
             toast.success('Tour Add Successful!');
@@ -51,7 +51,7 @@ function AddTour() {
     const { data: getByIdApi } = useQuery({
         queryKey: ["GET_BY_ID_TOUR_API"],
         queryFn() {
-            return axios.get("http://localhost:8080/tour/getById/" + pk_id)
+            return axios.get("http://13.48.249.115:8080/tour/getById/" + pk_id)
         },
         enabled: !!pk_id
     });

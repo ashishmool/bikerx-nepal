@@ -43,7 +43,7 @@ export const SignUp = () => {
   const onSubmit = async (data: INewUser) => {
     // dispatch(createUser(data));
     try {
-      const response = await axios.post('http://localhost:8080/system-user/save', data);
+      const response = await axios.post('http://13.48.249.115:8080/system-user/save', data);
       navigate('/login');
       console.log(response.data); // Handle response as needed
     } catch (error) {

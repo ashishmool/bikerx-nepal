@@ -158,7 +158,7 @@ export const TourCatalog = () => {
     // Fetch tours when component mounts
     const fetchTours = async () => {
       try {
-        const response = await axios.get("http://localhost:8080/tour/getAll"); // Assuming your backend is running on the same host
+        const response = await axios.get("http://13.48.249.115:8080/tour/getAll"); // Assuming your backend is running on the same host
         setTours(response.data); // Update state with fetched tours
       } catch (error) {
         console.error("Error fetching tours:", error);

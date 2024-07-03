@@ -14,7 +14,7 @@ const initialState: ICurrentTour = {
     isRetrieving: false,
 };
 
-const baseURL = "http://localhost:8080"; // Define your backend base URL
+const baseURL = "http://13.48.249.115:8080"; // Define your backend base URL
 
 export const retrieveOneTour = createAsyncThunk(
     "currentTour/retrieveOneTour",
