@@ -30,7 +30,7 @@ function UpdateUser() {
     const { data: userByIdData, isLoading } = useQuery({
         queryKey: ["GET_USER_BY_ID", id],
         queryFn() {
-            return axios.get(`http://13.48.249.115:8080/system-user/getById/${id}`);
+            return axios.get(`http://localhost:8080/system-user/getById/${id}`);
         },
         enabled: !!id
     });
@@ -44,7 +44,7 @@ function UpdateUser() {
     const updateUserMutation = useMutation({
         mutationKey: ["UPDATE_USER"],
         mutationFn(payload) {
-            return axios.put(`http://13.48.249.115:8080/system-user/update/${id}`, payload);
+            return axios.put(`http://localhost:8080/system-user/update/${id}`, payload);
         },
         onSuccess() {
             toast.success('User Data Updated Successfully!');

@@ -21,7 +21,6 @@ export const About = () => {
         </motion.h1>
       </div>
       <CompanyDescription />
-      <Vehicles />
       <TeamMembers />
     </main>
   );

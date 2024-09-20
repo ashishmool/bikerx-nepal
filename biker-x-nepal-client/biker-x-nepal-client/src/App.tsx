@@ -2,6 +2,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Layout } from "./features/Layout";
 import { Home } from "./pages/Home";
 import { Tours } from "./pages/Tours";
+import { Rides } from "./pages/Rides";
 import { About } from "./pages/About";
 import { SpecificTour } from "./pages/SpecificTour";
 import { SignUp } from "./pages/SignUp";
@@ -48,6 +49,7 @@ function App() {
           <Route path="*" element={<WrongPage />} />
           <Route index element={<Home />} />
           <Route path="tours" element={<Tours />} />
+          <Route path="rides" element={<Rides />} />
           <Route path="about" element={<About />} />
           <Route element={<ProfileLayout />}>
             <Route path="profile" element={<Profile />} />

@@ -1,7 +1,7 @@
 import axios from "axios";
 import { ILogin } from "../moduls";
 
-axios.defaults.baseURL = "http://13.48.249.115:8080";
+axios.defaults.baseURL = "http://localhost:8080";
 
 export const login = async ({ loginEmail, loginPassword }: ILogin) => {
     try {

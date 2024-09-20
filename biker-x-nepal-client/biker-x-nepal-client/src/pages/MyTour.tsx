@@ -9,7 +9,7 @@ export const MyTour = () => {
     useEffect(() => {
         const fetchBookings = async () => {
             try {
-                const response = await axios.get(`http://13.48.249.115:8080/booking/getByUserId/${userId}`);
+                const response = await axios.get(`http://localhost:8080/booking/getByUserId/${userId}`);
                 setBookings(response.data);
             } catch (error) {
                 console.error("Error fetching bookings:", error);
@@ -22,7 +22,7 @@ export const MyTour = () => {
     useEffect(() => {
         const fetchTourDetails = async (tourId) => {
             try {
-                const response = await axios.get(`http://13.48.249.115:8080/tour/getById/${tourId}`);
+                const response = await axios.get(`http://localhost:8080/tour/getById/${tourId}`);
                 setTourDetails((prevDetails) => ({
                     ...prevDetails,
                     [tourId]: response.data // Storing tour details by tourId

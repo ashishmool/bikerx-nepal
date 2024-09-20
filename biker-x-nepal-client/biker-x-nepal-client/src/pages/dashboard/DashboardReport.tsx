@@ -27,10 +27,10 @@ function DashboardReport() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const toursResponse = await axios.get("http://13.48.249.115:8080/tour/getAll");
-                const bikesResponse = await axios.get("http://13.48.249.115:8080/bike/getAll");
-                const testimonialsResponse = await axios.get("http://13.48.249.115:8080/testimonial/getAll");
-                const usersResponse = await axios.get("http://13.48.249.115:8080/system-user/getAllWithoutPassword");
+                const toursResponse = await axios.get("http://localhost:8080/tour/getAll");
+                const bikesResponse = await axios.get("http://localhost:8080/bike/getAll");
+                const testimonialsResponse = await axios.get("http://localhost:8080/testimonial/getAll");
+                const usersResponse = await axios.get("http://localhost:8080/system-user/getAllWithoutPassword");
 
                 setData({
                     tours: toursResponse.data.length,
@@ -45,7 +45,7 @@ function DashboardReport() {
 
         const fetchTourDates = async () => {
             try {
-                const response = await axios.get("http://13.48.249.115:8080/tour/getAll");
+                const response = await axios.get("http://localhost:8080/tour/getAll");
                 const tourDates = response.data.flatMap((tour: any) => {
                     const startDate = new Date(tour.startDate)-1;
                     const endDate = new Date(tour.endDate);

@@ -14,14 +14,14 @@ function ListTour() {
     const { data, refetch } = useQuery({
         queryKey: ["GET_TOURS"],
         queryFn() {
-            return axios.get("http://13.48.249.115:8080/tour/getAll");
+            return axios.get("http://localhost:8080/tour/getAll");
         }
     });
 
     const deleteByIdApi = useMutation({
         mutationKey: ["DELETE_TOUR_BY_ID"],
         mutationFn(id) {
-            return axios.delete(`http://13.48.249.115:8080/tour/delete/${id}`);
+            return axios.delete(`http://localhost:8080/tour/delete/${id}`);
         },
         onSuccess() {
             toast.success('Tour Delete Successful!');

@@ -15,14 +15,14 @@ function ListReviews() {
     const { data, refetch } = useQuery({
         queryKey: ["GET_TESTIMONIALS"],
         queryFn() {
-            return axios.get("http://13.48.249.115:8080/testimonial/getAll");
+            return axios.get("http://localhost:8080/testimonial/getAll");
         }
     });
 
     const deleteByIdApi = useMutation({
         mutationKey: ["DELETE_TESTIMONIAL_BY_ID"],
         mutationFn(id) {
-            return axios.delete(`http://13.48.249.115:8080/testimonial/delete/${id}`);
+            return axios.delete(`http://localhost:8080/testimonial/delete/${id}`);
         },
         onSuccess() {
             toast.success('Review Delete Success');

@@ -32,7 +32,7 @@ function AddBike() {
         mutationKey: ["POST_BIKE_CREATE"],
         mutationFn: (payload) => {
             console.log(payload);
-            return axios.post("http://13.48.249.115:8080/bike/save", payload);
+            return axios.post("http://localhost:8080/bike/save", payload);
         },
         onSuccess() {
             toast.success('Bike Add Successful!');

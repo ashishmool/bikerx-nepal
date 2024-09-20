@@ -31,7 +31,7 @@ function UpdateBike() {
     const { data: bikeByIdData, isLoading } = useQuery({
         queryKey: ["GET_BIKE_BY_ID", id],
         queryFn() {
-            return axios.get(`http://13.48.249.115:8080/bike/getById/${id}`);
+            return axios.get(`http://localhost:8080/bike/getById/${id}`);
         },
         enabled: !!id
     });
@@ -49,7 +49,7 @@ function UpdateBike() {
             Object.entries(payload).forEach(([key, value]) => {
                 formData.append(key, value);
             });
-            return axios.put(`http://13.48.249.115:8080/bike/update/${id}`, formData);
+            return axios.put(`http://localhost:8080/bike/update/${id}`, formData);
         },
         onSuccess() {
             toast.success('Updated Bike Data Successfully!');

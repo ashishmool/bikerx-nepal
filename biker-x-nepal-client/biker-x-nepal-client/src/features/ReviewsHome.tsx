@@ -12,7 +12,7 @@ export const ReviewsHome = () => {
     useEffect(() => {
         const fetchReviews = async () => {
             try {
-                const response = await axios.get('http://13.48.249.115:8080/testimonial/getAll');
+                const response = await axios.get('http://localhost:8080/testimonial/getAll');
                 const fetchedReviews = response.data;
                 console.log('Fetched Reviews:::', fetchedReviews);
                 setReviewsHome(fetchedReviews); // Update state with fetched reviews

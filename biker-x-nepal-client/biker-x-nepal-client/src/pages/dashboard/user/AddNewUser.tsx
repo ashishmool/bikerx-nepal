@@ -29,7 +29,7 @@ function AddNewUser() {
         mutationKey: ["POST_USER_CREATE"],
         mutationFn: (payload) => {
             console.log(payload);
-            return axios.post("http://13.48.249.115:8080/system-user/save", payload);
+            return axios.post("http://localhost:8080/system-user/save", payload);
         },
         onSuccess() {
             toast.success('User Added Successfully!');
