@@ -39,6 +39,7 @@ export const Topbar = () => {
               )}
               <NavlinkTopbar route="tours">Tours</NavlinkTopbar>
               <NavlinkTopbar route="rides">Rides</NavlinkTopbar>
+              <NavlinkTopbar route="shop">Shop</NavlinkTopbar>
               <NavlinkTopbar route="about">About</NavlinkTopbar>
               {role === "Customer" && (
                   <NavlinkTopbar route={`/my-tour/${userId}`}>My Bookings</NavlinkTopbar>
@@ -94,6 +95,7 @@ export const Topbar = () => {
               )}
               <NavlinkTopbar route="tours" className="text-center py-2 flex-grow-0">Tours</NavlinkTopbar>
               <NavlinkTopbar route="rides" className="text-center py-2 flex-grow-0">Rides</NavlinkTopbar>
+              <NavlinkTopbar route="shop" className="text-center py-2 flex-grow-0">Shop</NavlinkTopbar>
               <NavlinkTopbar route="about" className="text-center py-2 flex-grow-0">About</NavlinkTopbar>
               {role === "Customer" && (
                   <NavlinkTopbar route={`/my-tour/${userId}`} className="text-center py-2 flex-grow-0">My Bookings</NavlinkTopbar>

@@ -146,7 +146,7 @@ export const LogIn = () => {
                 required: "This field is required" as unknown as boolean,
               })}
               disabled={isLoading}
-              defaultValue={"bikerxnepal@gmail.com"}
+              defaultValue={"something@hello.com"}
             />
             <span className="cursor-pointer peer-focus:text-white transition duration-200">
               Email
@@ -176,7 +176,7 @@ export const LogIn = () => {
                 required: "This field is required" as unknown as boolean,
               })}
               disabled={isLoading}
-              defaultValue={"admin123"}
+              defaultValue={""}
             />
             <span className="cursor-pointer peer-focus:text-white transition duration-200">
               Password
