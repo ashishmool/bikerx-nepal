@@ -61,4 +61,9 @@ public class ItineraryServiceImpl implements ItineraryService {
         }
         return "Itinerary not found with ID: " + id;
     }
+
+    @Override
+    public Optional<Itinerary> getByTourId(Long tourId) {
+        return itineraryRepo.findByTour_TourId(tourId);
+    }
 }

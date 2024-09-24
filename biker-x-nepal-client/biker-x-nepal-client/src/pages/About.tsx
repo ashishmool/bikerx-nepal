@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Vehicles } from "../features/Vehicles";
+import { Motorbikes } from "../features/Motorbikes.tsx";
 import { CompanyDescription } from "../features/CompanyDescription";
 import { TeamMembers } from "../features/TeamMembers";
 

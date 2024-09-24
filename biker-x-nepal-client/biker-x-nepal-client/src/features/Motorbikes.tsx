@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import * as React from "react";
 
-export const Vehicles = () => {
+export const Motorbikes = () => {
     const [bikes, setBikes] = useState([]);
 
     useEffect(() => {
@@ -20,14 +20,14 @@ export const Vehicles = () => {
     }, []);
 
     return (
-        <div className="text-white flex flex-wrap justify-center">
+        <div className="text-white flex flex-wrap justify-center mb-24">
             {bikes.map((bike) => (
                 <div
                     key={bike.bikeId}
                     className="text-white px-2 mt-12 flex flex-col items-center w-full laptop:w-1/3" // Set to 1/3 for 3 bikes on larger screens
                 >
                     <img
-                        width={300}
+                        height={300}
                         src={'data:image/png;base64,' + bike.image}
                         alt={bike.model}
                         className="object-cover h-48 mb-4"

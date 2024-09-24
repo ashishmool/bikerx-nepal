@@ -212,7 +212,7 @@ export const SpecificTour = () => {
                   ))}
                 </select>
               </div>
-              <p>Total Amount: Rs. {totalAmount}</p>
+              <p className="text-2xl font-bold">Total Amount: Rs. {totalAmount}</p> {/* Increased text size and made it bold */}
               <button
                   onClick={bookTour}
                   className="bg-yellow-500 text-black font-semibold py-2 px-4 rounded-lg transition duration-200 hover:bg-yellow-400"
@@ -235,17 +235,17 @@ export const SpecificTour = () => {
               Overview
             </NavLinkTour>
             <NavLinkTour route="itinerary">
-              Itinerary
+              Itinerary Brief
             </NavLinkTour>
             <NavLinkTour route="meeting">
               Meeting & Pickup
             </NavLinkTour>
-            <NavLinkTour route="dates">
-              Dates & Prices
-            </NavLinkTour>
-            <NavLinkTour route="reviews">
-              Reviews
-            </NavLinkTour>
+            {/*<NavLinkTour route="dates">*/}
+            {/*  Dates & Prices*/}
+            {/*</NavLinkTour>*/}
+            {/*<NavLinkTour route="reviews">*/}
+            {/*  Reviews*/}
+            {/*</NavLinkTour>*/}
           </ul>
           <div className="px-[8%]">
             <Outlet />

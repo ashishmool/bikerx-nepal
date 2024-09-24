@@ -19,4 +19,6 @@ public interface ItineraryService {
 
     String update(Long id, ItineraryPojo itineraryPojo) throws IOException;
 
+    Optional<Itinerary> getByTourId(Long tourId);
+
 }

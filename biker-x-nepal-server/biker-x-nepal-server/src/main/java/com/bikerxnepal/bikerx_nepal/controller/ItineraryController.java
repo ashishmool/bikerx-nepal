@@ -63,4 +63,11 @@ public class ItineraryController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
+
+    @GetMapping("/getByTourId/{tourId}")
+    public ResponseEntity<Itinerary> getByTourId(@PathVariable Long tourId) {
+        Optional<Itinerary> itinerary = itineraryService.getByTourId(tourId);
+        return itinerary.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
 }

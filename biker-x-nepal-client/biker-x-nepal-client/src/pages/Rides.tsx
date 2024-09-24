@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Vehicles } from "../features/Vehicles";
+import { Motorbikes } from "../features/Motorbikes.tsx";
 
 export const Rides = () => {
     return (
@@ -18,7 +18,7 @@ export const Rides = () => {
                     The Rides
                 </motion.h1>
             </div>
-            <Vehicles />
+            <Motorbikes />
         </main>
     );
 };
