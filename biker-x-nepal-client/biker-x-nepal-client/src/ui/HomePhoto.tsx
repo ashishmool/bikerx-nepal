@@ -5,14 +5,15 @@ import { IHomeBg } from "../moduls";
 import { motion } from "framer-motion";
 
 export const HomePhoto = () => {
-  const [photos, setPhotos] = useState(homeImages);
-  const [isStoped] = useState(false);
+  const [photos, setPhotos] = useState<IHomeBg[]>(homeImages);
+  const [isStopped] = useState(false); // Minor typo fix (from isStoped to isStopped)
 
   useEffect(() => {
-    let timerImage: any;
-    if (!isStoped) {
+    let timerImage: NodeJS.Timeout;
+    if (!isStopped) {
       timerImage = setInterval(() => {
         setPhotos((prev: IHomeBg[]) => {
+          // Shift the positions: active -> before, before -> after, after -> active
           const newArray = prev.map((photo) => {
             switch (photo.position) {
               case "active":
@@ -27,34 +28,42 @@ export const HomePhoto = () => {
           });
           return newArray;
         });
-      }, 5000);
+      }, 5000); // 5-second interval
     }
 
+    // Cleanup on unmount
     return () => clearInterval(timerImage);
-  }, [isStoped]);
+  }, [isStopped]);
+
   return (
-    <div className="relative h-full w-full overflow-hidden">
+      <div className="relative h-full w-full overflow-hidden">
+        {photos.map((photo, index) => {
+          const { position, image } = photo;
 
-      {photos.map((photo, index) => {
-        const { position, image } = photo;
-
-        return (
-          <div
-            key={index}
-            className={`transition-[transform] duration-300 absolute h-full w-full bg-[url('/src/images/bgImages/${image}.jpg')] bg-cover bg-bottom
+          // Use inline styles for dynamic background images
+          return (
+              <div
+                  key={index}
+                  style={{
+                    backgroundImage: `url(/src/images/bgImages/${image}.jpg)`, // Dynamically set the background image
+                  }}
+                  className={`transition-transform duration-300 absolute h-full w-full bg-cover bg-bottom 
             before:content-[''] before:absolute before:inset-0 before:bg-black/50 ${position}`}
-          >
-            <motion.div
-              initial={{ opacity: 0, translateY: "200%" }}
-              animate={{ opacity: 1, translateY: "0%" }}
-              transition={{ duration: 1.0 }}
-              className="absolute text-[--main-font-color] flex gap-3 items-center left-[10%] bottom-6"
-            >
-              <FaLocationDot/>Conquer Nepal's Terrain: Ride, Travel, Explore!
-            </motion.div>
-          </div>
-        );
-      })}
-    </div>
+              >
+                <motion.div
+                    initial={{ opacity: 0, translateY: "200%" }}
+                    animate={{ opacity: 1, translateY: "0%" }}
+                    transition={{ duration: 1.0 }}
+                    className="absolute text-[--main-font-color] flex gap-3 items-center left-[10%] bottom-6"
+                >
+                  {/* Show tourName */}
+                  <h2 className="text-4xl font-bold">{photo.tourName}</h2>
+                  <FaLocationDot />
+                  Conquer Nepal's Terrain: Ride, Travel, Explore!
+                </motion.div>
+              </div>
+          );
+        })}
+      </div>
   );
 };

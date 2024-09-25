@@ -7,6 +7,7 @@ import axios from 'axios';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from "react-router-dom";
+import {LogoLink} from "../ui/LogoLink.tsx";
 
 
 export const ForgotPassword = () => {
@@ -55,7 +56,7 @@ export const ForgotPassword = () => {
         <div className="h-[800px] relative z-[1] w-full bg-[url('/src/images/bgImages/bg-login.jpg')] bg-cover bg-top
       before:content-[''] before:absolute before:inset-0 before:bg-black/50">
             <div className="text-2xl font-spacex absolute z-[2] left-8 laptop:left-16 top-8 laptop:top-10 text-white">
-                <Link to="/">BikerX Nepal</Link>
+                <LogoLink/>
             </div>
             <motion.div
                 className="w-full laptop:w-[490px] bg-black laptop:bg-black/90 text-white absolute z-[1] laptop:mt-24

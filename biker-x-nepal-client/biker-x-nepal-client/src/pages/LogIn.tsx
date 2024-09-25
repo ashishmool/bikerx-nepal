@@ -11,6 +11,7 @@ import { useEffect, useState } from "react";
 import { MiniSpinner } from "../ui/MiniSpinner";
 import { motion } from "framer-motion";
 import axios from 'axios';
+import {LogoLink} from "../ui/LogoLink.tsx";
 
 
 export const LogIn = () => {
@@ -103,7 +104,7 @@ export const LogIn = () => {
         </button>
       </div>
       <div className="text-2xl font-spacex absolute z-[2] left-8 laptop:left-16 top-8 laptop:top-10 text-white">
-        <Link to="/">BikerX Nepal</Link>
+        <LogoLink/>
       </div>
       <motion.div
         className="h-[100vh] laptop:h-auto w-full laptop:w-[490px] bg-black laptop:bg-black/90 text-white
