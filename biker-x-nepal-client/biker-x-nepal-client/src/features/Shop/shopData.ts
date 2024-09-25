@@ -2,7 +2,25 @@
 
 export const products = [
     {
-        productId: 1,
+        productId: 999,
+        productName: "Pagal Toil Hoodie",
+        size: "L",
+        colour: "Black",
+        price: 2999.99,
+        quantityInStock: 3,
+        image: "src/assets/products/hoodie-1.png",
+    },
+    {
+        productId: 999,
+        productName: "Pagal Toli Logo Patch",
+        size: "6in x 4in (L x B)",
+        colour: "Black-White",
+        price: 299.99,
+        quantityInStock: 22,
+        image: "src/assets/products/tag-1.png",
+    },
+    {
+        productId: 1001,
         productName: "Motorcycle Helmet",
         size: "L",
         colour: "Black",
@@ -11,7 +29,7 @@ export const products = [
         image: "src/assets/products/helmet-1.png",
     },
     {
-        productId: 2,
+        productId: 1002,
         productName: "Leather Riding Jacket",
         size: "M",
         colour: "Brown",
@@ -20,7 +38,7 @@ export const products = [
         image: "src/assets/products/jacket-1.png",
     },
     {
-        productId: 3,
+        productId: 1003,
         productName: "Riding Gloves",
         size: "One Size",
         colour: "Black",
@@ -29,7 +47,7 @@ export const products = [
         image: "src/assets/products/gloves-1.png",
     },
     {
-        productId: 4,
+        productId: 1004,
         productName: "Motorbike Boots",
         size: "42",
         colour: "Black",
@@ -38,7 +56,7 @@ export const products = [
         image: "src/assets/products/boots-1.png",
     },
     {
-        productId: 5,
+        productId: 1005,
         productName: "Motorcycle Goggles",
         size: "One Size",
         colour: "Clear",

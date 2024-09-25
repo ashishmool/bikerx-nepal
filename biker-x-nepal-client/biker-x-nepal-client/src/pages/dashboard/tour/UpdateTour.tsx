@@ -6,7 +6,6 @@ import { useNavigate, useParams } from "react-router-dom";
 import {
     Box,
     Stack,
-    AspectRatio,
     IconButton,
     FormControl,
     FormLabel,
@@ -15,49 +14,52 @@ import {
     Option,
     Button,
     Typography,
-    Textarea, Switch
+    Textarea,
+    Switch
 } from '@mui/joy';
-import * as React from "react";
-import ArrowBackIcon from '@mui/icons-material/ArrowBack'; // Import the back icon
-
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import { toast } from 'react-toastify';
 
 function UpdateTour() {
     const { id } = useParams();
-    console.log("Tour ID:", id); // Log the ID to ensure it's correctly received
-
     const navigate = useNavigate();
-    const [tourData, setTourData] = useState(null); // State variable to hold the tour data
-    const [image, setImage] = useState(null); // State variable to hold the image file
-    const { register, handleSubmit, formState } = useForm(); // Form control
-    const { errors } = formState; // Form errors
-    const [bookingStatus, setBookingStatus] = useState(false); // Default status is Unavailable
+    const [image, setImage] = useState(null);
+    const [bookingStatusLabel, setBookingStatusLabel] = useState("Unavailable");
 
-    const toggleBookingStatus = () => {
-        setBookingStatus(!bookingStatus); // Toggle the booking status
-    };
-
+    const { register, handleSubmit, formState, reset, setValue, watch } = useForm();
+    const { errors } = formState;
 
     // Query to fetch tour data by ID
     const { data: tourByIdData, isLoading } = useQuery({
         queryKey: ["GET_TOUR_BY_ID", id],
-        queryFn() {
-            return axios.get(`http://localhost:8080/tour/getById/${id}`);
-        },
-        enabled: !!id // Ensure the query is only enabled when ID is available
+        queryFn: () => axios.get(`http://localhost:8080/tour/getById/${id}`),
+        enabled: !!id
     });
 
-    // Effect to set tour data when fetched
+    // Watch form values to handle dynamic updates
+    const watchTourAvailability = watch("tourAvailability", false);
+
+    // Set booking status label dynamically
+    useEffect(() => {
+        setBookingStatusLabel(watchTourAvailability ? "Available" : "Unavailable");
+    }, [watchTourAvailability]);
+
+    // Reset form with fetched data and set individual form fields
     useEffect(() => {
         if (tourByIdData) {
-            setTourData(tourByIdData.data);
+            const { tourName, tourDescription, tourType, startDate, endDate, maxParticipants, tourRating, tourPrice, tourAvailability } = tourByIdData.data;
+            reset(tourByIdData.data); // Reset all fields
+            setValue("tourType", tourType); // Set the tourType in Select
+            setValue("startDate", new Date(startDate).toISOString().split("T")[0]); // Format date properly
+            setValue("endDate", new Date(endDate).toISOString().split("T")[0]); // Format date properly
+            setValue("tourAvailability", tourAvailability); // Set the switch status
         }
-    }, [tourByIdData]);
+    }, [tourByIdData, reset, setValue]);
 
     // Mutation to update tour data
     const updateTourMutation = useMutation({
         mutationKey: ["UPDATE_TOUR"],
         mutationFn(payload) {
-            // Use FormData to handle file uploads
             const formData = new FormData();
             Object.entries(payload).forEach(([key, value]) => {
                 formData.append(key, value);
@@ -65,71 +67,68 @@ function UpdateTour() {
             return axios.put(`http://localhost:8080/tour/update/${id}`, formData);
         },
         onSuccess() {
+            toast.success("Tour updated successfully!");
             navigate("/dashboard/tour/list");
+        },
+        onError(err) {
+            toast.error("Failed to update tour: " + (err.response?.data?.message || "An error occurred"));
         }
     });
 
-    // Function to handle form submission
+    // Handle form submission
     const onSubmit = (formData) => {
-        // Merge existing tour data with form data
-        const mergedData = {
-            ...tourData, // Existing tour data
-            ...formData, // Form data
-        };
+        const changes = detectChanges(formData);
+        if (Object.keys(changes).length > 0) {
+            updateTourMutation.mutate(changes);
+        } else {
+            console.log("No changes detected.");
+        }
+    };
 
-        // Check and set default values for fields that can be null
-        Object.entries(mergedData).forEach(([key, value]) => {
-            if (value === null || value === undefined) {
-                // Set default values for null or undefined fields
-                if (key === "endDate") {
-                    mergedData[key] = ""; // Or any default value you prefer for endDate
-                } else {
-                    mergedData[key] = ""; // Or any default value you prefer for other fields
-                }
+    // Detect changes between initial and current values
+    const detectChanges = (formData) => {
+        const changes = {};
+        Object.entries(formData).forEach(([key, value]) => {
+            if (value !== tourByIdData.data[key]) {
+                changes[key] = value;
             }
         });
 
-        // Add the image file to the merged data if it's not null or undefined
+        // Include new image if uploaded
         if (image) {
-            mergedData.image = image;
+            changes.image = image;
         }
 
-        console.log("Payload data being sent:", mergedData); // Log the payload data
-        updateTourMutation.mutate(mergedData); // Call the mutation to update tour data
+        return changes;
     };
 
-    // Function to handle image upload
+    // Handle image upload
     const handleImageUpload = (event) => {
-        setImage(event?.target?.files[0]); // Set the image file to the state variable
+        setImage(event?.target?.files[0]);
     };
 
-    if (isLoading) return <p>Loading...</p>; // Display loading indicator while fetching data
+    if (isLoading) return <p>Loading...</p>;
 
     return (
-
-
-        <Box maxWidth="800px" mx="auto" px={{ xs: 2, md: 6 }} py={{ xs: 2, md: 3 }}> {/* Apply styling to the form */}
-            <IconButton onClick={() => navigate("/dashboard/tour/list")} aria-label="back"> {/* Back button with icon */}
+        <Box maxWidth="800px" mx="auto" px={{ xs: 2, md: 6 }} py={{ xs: 2, md: 3 }}>
+            <IconButton onClick={() => navigate("/dashboard/tour/list")} aria-label="back">
                 <ArrowBackIcon /> Go Back
             </IconButton>
             <form onSubmit={handleSubmit(onSubmit)}>
                 <Stack spacing={2}>
                     <FormControl>
                         <FormLabel>Tour Name</FormLabel>
-                        <Textarea defaultValue={tourData?.tourName} {...register("tourName")} />
+                        <Textarea {...register("tourName")} />
                         <p>{errors?.tourName?.message}</p>
                     </FormControl>
                     <FormControl>
                         <FormLabel>Description</FormLabel>
-                        <Textarea defaultValue={tourData?.tourDescription} {...register("tourDescription")} />
+                        <Textarea {...register("tourDescription")} />
                         <p>{errors?.tourDescription?.message}</p>
                     </FormControl>
                     <FormControl>
                         <FormLabel>Tour Type</FormLabel>
-                        <Select
-                            defaultValue={tourData?.tourType} // Set default value if necessary
-                            {...register("tourType", { required: "Tour type is required" })}
-                        >
+                        <Select {...register("tourType", { required: "Tour type is required" })} defaultValue={tourByIdData?.data?.tourType || ""}>
                             <Option value="">Select Tour Type</Option>
                             <Option value="on-road">On-road</Option>
                             <Option value="off-road">Off-road</Option>
@@ -138,82 +137,53 @@ function UpdateTour() {
                         <p>{errors?.tourType?.message}</p>
                     </FormControl>
 
-
-
                     <FormControl>
                         <FormLabel>Start Date</FormLabel>
-                        <Input type="date" defaultValue={tourData?.startDate} {...register("startDate")} />
+                        <Input type="date" {...register("startDate")} />
                         <p>{errors?.startDate?.message}</p>
                     </FormControl>
 
                     <FormControl>
                         <FormLabel>End Date</FormLabel>
-                        <Input type="date" defaultValue={tourData?.endDate} {...register("endDate")} />
+                        <Input type="date" {...register("endDate")} />
                         <p>{errors?.endDate?.message}</p>
                     </FormControl>
 
                     <FormControl>
                         <FormLabel>Max Participants</FormLabel>
-                        <Textarea type="number" defaultValue={tourData?.maxParticipants} {...register("maxParticipants")} />
+                        <Input type="number" {...register("maxParticipants")} />
                         <p>{errors?.maxParticipants?.message}</p>
                     </FormControl>
+
                     <FormControl>
                         <FormLabel>Tour Rating</FormLabel>
-                        <Textarea type="number" defaultValue={tourData?.tourRating} {...register("tourRating")} />
+                        <Input type="number" {...register("tourRating")} />
                         <p>{errors?.tourRating?.message}</p>
                     </FormControl>
+
                     <FormControl>
                         <FormLabel>Tour Price</FormLabel>
-                        <Textarea type="number" defaultValue={tourData?.tourPrice} {...register("tourPrice")} />
+                        <Input type="number" {...register("tourPrice")} />
                         <p>{errors?.tourPrice?.message}</p>
                     </FormControl>
+
                     <FormControl>
-                        <FormLabel>Booking Status <Switch
-                            {...register("tourAvailability")}
-                            defaultChecked={false} // Set default checked state if necessary
-                            onClick={toggleBookingStatus}
-                        /></FormLabel>
-                        <div>
-                            <small>Set Status To: {bookingStatus ? "Available" : "Unavailable"}</small> | <small>Current Status: {tourData?.tourAvailability ? "Available" : "Unavailable"}</small>
-                        </div>
+                        <FormLabel>
+                            Booking Status: <span>{bookingStatusLabel}</span>
+                            <Switch {...register("tourAvailability")} checked={watchTourAvailability} />
+                        </FormLabel>
                         <p>{errors?.tourAvailability?.message}</p>
                     </FormControl>
+
                     <FormControl>
-
-                        <FormLabel>Choose New Image:  <Input type="file" onChange={handleImageUpload} /></FormLabel>
-                        <FormLabel><small><strong>Current Image Name :</strong> {tourData?.image} </small></FormLabel>
-
+                        <FormLabel>
+                            Choose New Image: <Input type="file" onChange={handleImageUpload} />
+                        </FormLabel>
                     </FormControl>
-
-                    {/*<FormControl>*/}
-                    {/*    <FormLabel>Itinerary</FormLabel>*/}
-                    {/*    <Textarea defaultValue={tourData?.tourItinerary} {...register("tourItinerary")} />*/}
-                    {/*    <p>{errors?.tourItinerary?.message}</p>*/}
-                    {/*</FormControl>*/}
-
                 </Stack>
-                <Button
-                    variant="contained"
-                    type="submit"
-                    sx={{
-                        width: '50%', // Set button width to 100%
-                        mt: 2, // Add margin-top for spacing
-                        py: 2, // Padding on the y-axis
-                        fontSize: '1.2rem', // Increase font size
-                        fontWeight: 'bold', // Make text bold
-                        backgroundColor: '#1976d2', // Set background color to a shade of blue
-                        color: 'white', // Set text color to white
-                        borderRadius: '8px', // Add border radius for rounded corners
-                        boxShadow: '0 3px 5px 2px rgba(0, 0, 0, .3)', // Add box shadow for depth
-                        transition: 'background-color 0.3s', // Add transition effect for hover
-                        '&:hover': {
-                            backgroundColor: '#1565c0', // Darker background color on hover
-                        },
-                    }}
-                >
+                <Button variant="contained" type="submit" sx={{ width: '50%', mt: 2, py: 2, fontSize: '1.2rem', fontWeight: 'bold' }}>
                     Update Tour
                 </Button>
-
             </form>
         </Box>
     );

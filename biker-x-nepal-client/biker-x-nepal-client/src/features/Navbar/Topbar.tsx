@@ -30,7 +30,7 @@ export const Topbar = () => {
   return (
       <div className="bg-transparent absolute text-[--main-font-color] z-[2] w-full">
         <ul className="flex w-full justify-between px-[10%] h-32 items-center">
-          <li className="flex tablet:w-[60%] full:w-[50%] justify-between items-center">
+          <li className="flex tablet:w-[75%] full:w-[70%] justify-between items-center">
             <LogoLink />
             <div className="hidden laptop:flex gap-4 full:gap-8 text-lg">
               <NavlinkTopbar route="/">Home</NavlinkTopbar>
@@ -38,9 +38,9 @@ export const Topbar = () => {
                   <NavlinkTopbar route="/dashboard/home">Dashboard</NavlinkTopbar>
               )}
               <NavlinkTopbar route="tours">Tours</NavlinkTopbar>
+              <NavlinkTopbar route="shop">Store</NavlinkTopbar>
               <NavlinkTopbar route="rides">Rides</NavlinkTopbar>
-              <NavlinkTopbar route="shop">Shop</NavlinkTopbar>
-              <NavlinkTopbar route="about">About</NavlinkTopbar>
+              <NavlinkTopbar route="about">Who We Are</NavlinkTopbar>
               {role === "Customer" && (
                   <NavlinkTopbar route={`/my-tour/${userId}`}>My Bookings</NavlinkTopbar>
               )}

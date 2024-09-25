@@ -102,13 +102,18 @@ public class TourServiceImpl implements TourService {
         existingTour.setMaxParticipants(tourPojo.getMaxParticipants());
         existingTour.setTourRating(tourPojo.getTourRating());
         existingTour.setTourPrice(tourPojo.getTourPrice());
-        existingTour.setTourAvailability(tourPojo.isTourAvailability()); // Boolean to check
+        existingTour.setTourAvailability(tourPojo.isTourAvailability()); //Boolean to check
 
-        if (tourPojo.getImage() != null) {
+
+        if(tourPojo.getImage()!=null){
             Path fileNameAndPath = Paths.get("image_uploads", tourPojo.getImage().getOriginalFilename());
             Files.write(fileNameAndPath, tourPojo.getImage().getBytes());
             existingTour.setImage(tourPojo.getImage().getOriginalFilename());
         }
+
+
+
+        existingTour.setImage(tourPojo.getImage().getOriginalFilename());
 
         tourRepo.save(existingTour);
         return "Updated Successfully!";

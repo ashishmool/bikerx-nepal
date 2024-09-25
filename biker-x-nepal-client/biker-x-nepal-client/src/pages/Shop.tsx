@@ -58,7 +58,7 @@ export const Shop = () => {
         <main className="relative">
             <ProductSidebar /> {/* Sidebar for filtering products */}
             <div
-                className="h-[400px] relative w-full bg-[url('/src/images/bgImages/mars-bg.jpg')] bg-cover bg-center
+                className="h-[400px] relative w-full bg-[url('/src/images/bgImages/shop-bg.jpg')] bg-cover bg-center
         before:content-[''] before:absolute before:inset-0 before:bg-black/50"
             >
                 <motion.h1

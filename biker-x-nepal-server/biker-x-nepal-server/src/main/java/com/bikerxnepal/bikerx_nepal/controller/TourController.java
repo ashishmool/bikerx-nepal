@@ -42,9 +42,10 @@ public class TourController {
     }
 
     @PutMapping("/update/{id}")
-    public String updateTour(@PathVariable("id") Long id, @ModelAttribute @RequestBody TourPojo tourPojo) throws IOException {
-        return this.tourService.update(id, tourPojo);
+    public String updateTour(@PathVariable("id") Long id, @ModelAttribute @Valid TourPojo tourPojo) throws IOException {
+        return tourService.update(id, tourPojo);
     }
+
 
     @GetMapping("/getByMaxParticipants/{maxParticipants}")
     public List<Tour> getTourByMaxParticipants(@PathVariable("maxParticipants") int maxParticipants) {

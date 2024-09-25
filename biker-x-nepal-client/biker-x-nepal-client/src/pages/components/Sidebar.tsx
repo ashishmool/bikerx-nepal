@@ -404,11 +404,11 @@ export default function Sidebar() {
       </Box>
       <Divider />
       <Box sx={{ display: 'flex', gap: 1, alignItems: 'center' }}>
-        <Avatar
-          variant="outlined"
-          size="sm"
-          src="https://scontent.fktm7-1.fna.fbcdn.net/v/t39.30808-6/335908168_603305641661553_7305707784394286074_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=efb6e6&_nc_ohc=c6hfRpmIHwAAX9glMNw&_nc_ht=scontent.fktm7-1.fna&oh=00_AfCob5UWM8Nb_NgdKSy8_6a1RYo1KyYcloen592nCeCvjQ&oe=65CF32D6"
-        />
+        {/*<Avatar*/}
+        {/*  variant="outlined"*/}
+        {/*  size="sm"*/}
+        {/*  src="https://scontent.fktm7-1.fna.fbcdn.net/v/t39.30808-6/335908168_603305641661553_7305707784394286074_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=efb6e6&_nc_ohc=c6hfRpmIHwAAX9glMNw&_nc_ht=scontent.fktm7-1.fna&oh=00_AfCob5UWM8Nb_NgdKSy8_6a1RYo1KyYcloen592nCeCvjQ&oe=65CF32D6"*/}
+        {/*/>*/}
         <Box sx={{ minWidth: 0, flex: 1 }}>
           <Typography level="title-sm">Ashish Mool</Typography>
           <Typography level="body-xs">bikerxnepal@gmail.com</Typography>
