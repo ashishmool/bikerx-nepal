@@ -38,6 +38,7 @@ import {ResetPassword} from "./pages/ResetPassword.tsx";
 import {MyTour} from "./pages/MyTour.tsx";
 import AddItinerary from "./pages/dashboard/itinerary/AddItinerary.tsx";
 import ListItinerary from "./pages/dashboard/itinerary/ListItinerary.tsx";
+import {Shop} from "./pages/Shop.tsx";
 // import AddItinerary from "./pages/dashboard/itinerary/AddItinerary.tsx";
 // import ListItinerary from "./pages/dashboard/itinerary/ListItinerary.tsx";
 function App() {
@@ -51,6 +52,7 @@ function App() {
           <Route path="tours" element={<Tours />} />
           <Route path="rides" element={<Rides />} />
           <Route path="about" element={<About />} />
+          <Route path="shop" element={<Shop />} />
           <Route element={<ProfileLayout />}>
             <Route path="profile" element={<Profile />} />
 

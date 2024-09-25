@@ -1,3 +1,5 @@
+// moduls.ts
+
 export interface IHomeBg {
   tourName: string;
   price: string;
@@ -5,7 +7,6 @@ export interface IHomeBg {
   position: string;
   id: number;
 }
-
 
 export interface Coordinates {
   offsetX: number;
@@ -26,17 +27,18 @@ export interface IFilterBtn {
   name: string;
   options: OptionsFilter[];
 }
+
 export interface OptionsFilter {
   idShared: Filters;
   idSidebar: string;
   idFull: string;
 }
+
 export interface ISortingOptions {
   idShared: string;
   idSidebar: string;
   idFull: string;
 }
-
 
 export interface INewUser {
   signupName: string;
@@ -45,6 +47,7 @@ export interface INewUser {
   signupPassword: string;
   signupConfirm?: string;
 }
+
 export interface ILogin {
   loginEmail: string;
   loginPassword: string;
@@ -60,6 +63,7 @@ export interface ISingleReview {
   tour_id: number;
   isSuggested: boolean;
 }
+
 export interface IItinerary {
   id: number;
   tour_id: number;
@@ -68,6 +72,7 @@ export interface IItinerary {
   endDay: number;
   activities: string[];
 }
+
 export interface IDate {
   id: number;
   tour_id: number;
@@ -75,7 +80,6 @@ export interface IDate {
   price: number;
   duration: string;
 }
-
 
 export interface IInfoFavTour {
   name: string;
@@ -94,6 +98,7 @@ export interface newPurchasedTour {
   totalPrice: number;
   tour_id: number;
 }
+
 export interface IPurchasedTour extends newPurchasedTour {
   cardImage: string;
   created_at: string;
@@ -105,4 +110,15 @@ export interface IPurchasedTour extends newPurchasedTour {
     name: string;
     surname: string;
   };
+}
+
+// Define the IProducts interface
+export interface IProducts {
+  productId: number;
+  productName: string;
+  size: string;
+  colour: string;
+  price: number;
+  quantityInStock: number;
+  image: string;
 }

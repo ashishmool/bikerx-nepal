@@ -41,16 +41,45 @@ export const SignUp = () => {
     }
   }, [errorSignup, isRegistering, isLoggedIn]);
   const onSubmit = async (data: INewUser) => {
-    // dispatch(createUser(data));
     try {
-      const response = await axios.post('http://localhost:8080/system-user/save', data);
-      navigate('/login');
-      console.log(response.data); // Handle response as needed
+      // Step 1: Register the user
+      const registrationResponse = await axios.post('http://localhost:8080/system-user/save', data);
+      toast.success('Registration Successful! Logging you in...');
+
+      // Step 2: Automatically log the user in using the same credentials
+      const loginResponse = await axios.post("http://localhost:8080/authenticate", {
+        email: data.email, // use the email from registration form
+        password: data.password // use the password from registration form
+      });
+
+      // Step 3: Extract user data from the login response
+      const userData = loginResponse?.data?.data;
+
+      // Store authentication data in localStorage
+      localStorage.setItem("accessToken", userData?.token);
+      localStorage.setItem("userId", userData?.userId);
+      localStorage.setItem("email", userData?.email);
+      localStorage.setItem("role", userData?.role);
+
+      // Step 4: Redirect based on the user's role
+      if (userData?.role === "Customer") {
+        toast.success('Login Successful!');
+        window.location.href = '/';
+      } else if (userData?.role === "Admin") {
+        toast.success('Login Successful!');
+        window.location.href = '/dashboard/home';
+      } else {
+        toast.error("Role mismatch or unauthorized access.");
+      }
     } catch (error) {
-      toast.error('User Registration Failed! Please try again.');
-      console.error('Error creating user:', error);
+      // Step 5: Handle any errors during registration or login
+      toast.error('Registration or Login Failed! Please try again.');
+      console.error("Error during registration or login:", error);
     }
   };
+
+
+
   return (
     <div
       className="h-0 laptop:h-[800px] relative z-[1] w-full bg-[url('/src/images/bgImages/bg-signup.jpg')] bg-cover bg-top
