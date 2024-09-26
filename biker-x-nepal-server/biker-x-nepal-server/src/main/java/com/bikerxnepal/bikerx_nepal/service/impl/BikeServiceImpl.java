@@ -28,17 +28,31 @@ public class BikeServiceImpl implements BikeService {
 
     @Override
     public String save(BikePojo bikePojo) throws IOException {
+        // Validate mandatory fields
+        if (bikePojo.getMakeBrand() == null || bikePojo.getMakeBrand().isEmpty()) {
+            throw new IllegalArgumentException("Make/Brand cannot be null or empty");
+        }
+        if (bikePojo.getModel() == null || bikePojo.getModel().isEmpty()) {
+            throw new IllegalArgumentException("Model cannot be null or empty");
+        }
+        if (bikePojo.getDescription() == null || bikePojo.getDescription().isEmpty()) {
+            throw new IllegalArgumentException("Description cannot be null or empty");
+        }
+
+        // Create Bike entity
         Bike bike = new Bike();
         bike.setMakeBrand(bikePojo.getMakeBrand());
         bike.setModel(bikePojo.getModel());
         bike.setYear(bikePojo.getYear());
         bike.setDescription(bikePojo.getDescription());
 
-        if (bikePojo.getImage() != null) {
+        // Handle image upload if present
+        if (bikePojo.getImage() != null && !bikePojo.getImage().isEmpty()) {
             String fileName = saveImage(bikePojo.getImage());
             bike.setImage(fileName);
         }
 
+        // Save bike entity to the database
         bikeRepo.save(bike);
         return "Saved Successfully!";
     }
@@ -85,20 +99,36 @@ public class BikeServiceImpl implements BikeService {
 
     @Override
     public String update(Long id, BikePojo bikePojo) throws IOException {
+        // Fetch the existing bike from the repository
         Bike existingBike = bikeRepo.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Bike not found with ID: " + id));
 
-        existingBike.setMakeBrand(bikePojo.getMakeBrand());
-        existingBike.setModel(bikePojo.getModel());
-        existingBike.setYear(bikePojo.getYear());
-        existingBike.setDescription(bikePojo.getDescription());
+        // Update fields with new values or retain existing ones if not provided
+        existingBike.setMakeBrand(bikePojo.getMakeBrand() != null ? bikePojo.getMakeBrand() : existingBike.getMakeBrand());
+        existingBike.setModel(bikePojo.getModel() != null ? bikePojo.getModel() : existingBike.getModel());
+        existingBike.setYear(bikePojo.getYear() != null ? bikePojo.getYear() : existingBike.getYear());
+        existingBike.setDescription(bikePojo.getDescription() != null ? bikePojo.getDescription() : existingBike.getDescription());
 
-        if (bikePojo.getImage() != null) {
-            String fileName = saveImage(bikePojo.getImage());
-            existingBike.setImage(fileName);
+        // Handle image update
+        if (bikePojo.getImage() != null && !bikePojo.getImage().isEmpty()) {
+            // Construct the path for the existing image
+            String existingImageFileName = existingBike.getImage();
+            String uploadDir = "image_uploads";
+            Path uploadPath = Paths.get(uploadDir, existingImageFileName);
+
+            // Delete the old image if it exists
+            Files.deleteIfExists(uploadPath);
+
+            // Save the new image and update the bike entity
+            String newFileName = saveImage(bikePojo.getImage());
+            existingBike.setImage(newFileName);
         }
 
+        // Save the updated bike entity back to the repository
         bikeRepo.save(existingBike);
         return "Updated Successfully!";
     }
+
+
+
 }

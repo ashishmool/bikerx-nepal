@@ -5,6 +5,7 @@ import com.bikerxnepal.bikerx_nepal.pojo.BikePojo;
 import com.bikerxnepal.bikerx_nepal.service.BikeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
@@ -18,9 +19,14 @@ public class BikeController {
     private final BikeService bikeService;
 
     @PostMapping("/save")
-    public String saveBike(@RequestBody @ModelAttribute BikePojo bikePojo) throws IOException {
+    public String saveBike(
+            @ModelAttribute BikePojo bikePojo, // Use ModelAttribute to bind form data to Pojo
+            @RequestParam("image") MultipartFile image // Separate handling for the image
+    ) throws IOException {
+        bikePojo.setImage(image); // Set the image in the Pojo
         return bikeService.save(bikePojo);
     }
+
 
     @GetMapping("/getAll")
     public List<Bike> getAll() {

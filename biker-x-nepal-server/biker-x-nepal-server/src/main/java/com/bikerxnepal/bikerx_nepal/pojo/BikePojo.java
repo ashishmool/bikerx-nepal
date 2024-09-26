@@ -18,7 +18,7 @@ public class BikePojo {
 
     private String model;
 
-    private int year;
+    private Integer year;
 
     private String description;
 
