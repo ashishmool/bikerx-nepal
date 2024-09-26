@@ -77,6 +77,7 @@ export default function Sidebar() {
         navigate('/');
     };
 
+
     const [countBookings, setCountBookings] = useState(0);
 
     useEffect(() => {
@@ -160,7 +161,7 @@ export default function Sidebar() {
         <IconButton variant="soft" color="primary" size="sm" onClick={handleNavigateHome}>
           <TwoWheelerIcon />
         </IconButton>
-        <Typography level="title-lg">BikerXNepal</Typography>
+        <Typography level="title-lg">Golden City</Typography>
         <ColorSchemeToggle sx={{ ml: 'auto' }} />
       </Box>
       <Input size="sm" startDecorator={<SearchRoundedIcon />} placeholder="Search" />
@@ -220,7 +221,7 @@ export default function Sidebar() {
 
           <ListItem nested>
             <Toggler
-              defaultExpanded
+              defaultExpanded = {false}
               renderToggle={({ open, setOpen }) => (
                 <ListItemButton onClick={() => setOpen(!open)}>
                   <AssignmentRoundedIcon />
@@ -256,7 +257,7 @@ export default function Sidebar() {
 
             <ListItem nested>
                 <Toggler
-                    defaultExpanded
+                    defaultExpanded = {false}
                     renderToggle={({ open, setOpen }) => (
                         <ListItemButton onClick={() => setOpen(!open)}>
                             <MapIcon />
@@ -293,7 +294,7 @@ export default function Sidebar() {
 
             <ListItem nested>
                 <Toggler
-                    defaultExpanded
+                    defaultExpanded = {false}
                     renderToggle={({ open, setOpen }) => (
                         <ListItemButton onClick={() => setOpen(!open)}>
                             <SportsMotorsportsIcon />
@@ -330,7 +331,7 @@ export default function Sidebar() {
 
             <ListItem nested>
                 <Toggler
-                    defaultExpanded
+                    defaultExpanded = {false}
                     renderToggle={({ open, setOpen }) => (
                         <ListItemButton onClick={() => setOpen(!open)}>
                             <QuestionAnswerRoundedIcon />
@@ -367,7 +368,7 @@ export default function Sidebar() {
 
             <ListItem nested>
                 <Toggler
-                    defaultExpanded
+                    defaultExpanded = {false}
                     renderToggle={({ open, setOpen }) => (
                         <ListItemButton onClick={() => setOpen(!open)}>
                             <GroupRoundedIcon />
@@ -396,6 +397,42 @@ export default function Sidebar() {
                                 href="/dashboard/user/add"
                                 selected={location.pathname === '/dashboard/user/add'}
                             >Add New User</ListItemButton>
+                        </ListItem>
+                    </List>
+                </Toggler>
+            </ListItem>
+
+            <ListItem nested>
+                <Toggler
+                    defaultExpanded = {false}
+                    renderToggle={({ open, setOpen }) => (
+                        <ListItemButton onClick={() => setOpen(!open)}>
+                            <GroupRoundedIcon />
+                            <ListItemContent>
+                                <Typography level="title-sm">Shop (Coming Soon!)</Typography>
+                            </ListItemContent>
+                            <KeyboardArrowDownIcon
+                                sx={{ transform: open ? 'rotate(180deg)' : 'none' }}
+                            />
+                        </ListItemButton>
+                    )}
+                >
+                    <List sx={{ gap: 0.5 }}>
+                        <ListItem sx={{ mt: 0.5 }}>
+                            <ListItemButton
+                                role="menuitem"
+                                component="a"
+                                href="/dashboard/user/list"
+                                selected={location.pathname === '/dashboard/user/list'}
+                            >Manage Shop</ListItemButton>
+                        </ListItem>
+                        <ListItem>
+                            <ListItemButton
+                                role="menuitem"
+                                component="a"
+                                href="/dashboard/user/add"
+                                selected={location.pathname === '/dashboard/user/add'}
+                            >Add Product</ListItemButton>
                         </ListItem>
                     </List>
                 </Toggler>
