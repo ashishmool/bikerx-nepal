@@ -21,9 +21,14 @@ public class TourController {
     private final TourService tourService;
 
     @PostMapping("/save")
-    public String saveTour(@RequestBody @Valid TourPojo tourPojo) throws IOException {
+    public String saveTour(@ModelAttribute @Valid TourPojo tourPojo) throws IOException {
         tourService.save(tourPojo);
         return "Tour saved successfully!";
+    }
+
+    @PutMapping("/update/{id}")
+    public String updateTour(@PathVariable("id") Long id, @ModelAttribute @Valid TourPojo tourPojo) throws IOException {
+        return tourService.update(id, tourPojo);
     }
 
     @GetMapping("/getAll")
@@ -42,10 +47,6 @@ public class TourController {
         return "Tour deleted successfully!";
     }
 
-    @PutMapping("/update/{id}")
-    public String updateTour(@PathVariable("id") Long id, @RequestBody @Valid TourPojo tourPojo) throws IOException {
-        return tourService.update(id, tourPojo);
-    }
 
     @GetMapping("/getByMaxParticipants/{maxParticipants}")
     public List<Tour> getTourByMaxParticipants(@PathVariable("maxParticipants") int maxParticipants) {
