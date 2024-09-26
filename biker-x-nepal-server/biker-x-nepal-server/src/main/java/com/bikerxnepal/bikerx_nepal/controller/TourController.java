@@ -27,7 +27,7 @@ public class TourController {
     }
 
     @PutMapping("/update/{id}")
-    public String updateTour(@PathVariable("id") Long id, @ModelAttribute @Valid TourPojo tourPojo) throws IOException {
+    public String updateTour(@PathVariable("id") Long id, @ModelAttribute TourPojo tourPojo) throws IOException {
         return tourService.update(id, tourPojo);
     }
 
