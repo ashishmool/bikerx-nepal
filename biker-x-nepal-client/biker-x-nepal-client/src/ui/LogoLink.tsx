@@ -6,7 +6,7 @@ export const LogoLink = () => {
         <div className="flex items-center text-2xl font-spacex">
             <Link to="/" className="flex items-center">
                 {/* Use the img tag to display the SVG */}
-                <img src={logo} width={250} alt="Golden City Logo" className="h-16 w-48 mr-2" />
+                <img src={logo} alt="Golden City Logo" className="h-28 w-80 mr-2" />
                 {/*BikerX Nepal*/}
             </Link>
         </div>

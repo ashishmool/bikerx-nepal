@@ -20,10 +20,10 @@ public class TourController {
 
     private final TourService tourService;
 
-    @PostMapping(value = "/save")
-    public String saveTour(@RequestBody @ModelAttribute TourPojo tourPojo) throws IOException {
+    @PostMapping("/save")
+    public String saveTour(@RequestBody @Valid TourPojo tourPojo) throws IOException {
         tourService.save(tourPojo);
-        return "Saved Successfully!";
+        return "Tour saved successfully!";
     }
 
     @GetMapping("/getAll")
@@ -37,15 +37,15 @@ public class TourController {
     }
 
     @DeleteMapping("/delete/{id}")
-    public void deleteById(@PathVariable("id") Long id) throws IOException {
-        this.tourService.deleteById(id);
+    public String deleteById(@PathVariable("id") Long id) throws IOException {
+        tourService.deleteById(id);
+        return "Tour deleted successfully!";
     }
 
     @PutMapping("/update/{id}")
-    public String updateTour(@PathVariable("id") Long id, @ModelAttribute @Valid TourPojo tourPojo) throws IOException {
+    public String updateTour(@PathVariable("id") Long id, @RequestBody @Valid TourPojo tourPojo) throws IOException {
         return tourService.update(id, tourPojo);
     }
-
 
     @GetMapping("/getByMaxParticipants/{maxParticipants}")
     public List<Tour> getTourByMaxParticipants(@PathVariable("maxParticipants") int maxParticipants) {
@@ -57,7 +57,6 @@ public class TourController {
                                     @RequestParam("endDate") @DateTimeFormat(pattern = "yyyy-MM-dd") Date endDate) {
         return tourService.getByDuration(startDate, endDate);
     }
-
 
     @GetMapping("/getByTourPrice/{tourPrice}")
     public List<Tour> getByTourPrice(@PathVariable("tourPrice") double tourPrice) {

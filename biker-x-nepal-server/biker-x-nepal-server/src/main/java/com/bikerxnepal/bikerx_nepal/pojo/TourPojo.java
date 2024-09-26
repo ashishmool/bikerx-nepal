@@ -6,7 +6,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
-
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Date;
@@ -43,7 +42,6 @@ public class TourPojo {
     @Min(value = 1, message = "Minimum participants must be at least 1")
     private int maxParticipants;
 
-//    @NotNull(message = "Tour rating is required")
     @Min(value = 1, message = "Tour rating must be at least 1")
     @Max(value = 5, message = "Tour rating cannot be more than 5")
     private Long tourRating;
@@ -53,5 +51,5 @@ public class TourPojo {
 
     private boolean tourAvailability;
 
-    private MultipartFile image;
+    private MultipartFile image; // Add custom validators if needed
 }

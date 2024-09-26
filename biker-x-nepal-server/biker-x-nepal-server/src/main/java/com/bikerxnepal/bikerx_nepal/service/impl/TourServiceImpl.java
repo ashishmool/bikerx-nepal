@@ -27,93 +27,106 @@ public class TourServiceImpl implements TourService {
 
     ImageToBase64 imageToBase64=new ImageToBase64();
 
-
     @Override
-    public String save(TourPojo tourPojo)  throws IOException {
-        Tour tour;
-
-        if (tourPojo.getTourId() != null) {
-            tour = tourRepo.findById(tourPojo.getTourId())
-                    .orElseThrow(() -> new EntityNotFoundException("Tour not found with ID: " + tourPojo.getTourId()));
-        } else {
-            tour = new Tour();
+    public String save(TourPojo tourPojo) throws IOException {
+        Tour tour = new Tour();
+        if (tourPojo.getImage() != null && !tourPojo.getImage().isEmpty()) {
+            Path fileNameAndPath = Paths.get("uploads/", tourPojo.getImage().getOriginalFilename());
+            Files.write(fileNameAndPath, tourPojo.getImage().getBytes());
+            tour.setImage(tourPojo.getImage().getOriginalFilename());
         }
-
         tour.setTourName(tourPojo.getTourName());
         tour.setTourDescription(tourPojo.getTourDescription());
         tour.setTourType(tourPojo.getTourType());
-        tour.setTourItinerary(tourPojo.getTourItinerary());
         tour.setStartDate(tourPojo.getStartDate());
         tour.setEndDate(tourPojo.getEndDate());
         tour.setMaxParticipants(tourPojo.getMaxParticipants());
-        tour.setTourRating(tourPojo.getTourRating());
         tour.setTourPrice(tourPojo.getTourPrice());
-        tour.setTourAvailability(tourPojo.isTourAvailability()); //Boolean to check
-
-
-        if(tourPojo.getImage()!=null){
-            Path fileNameAndPath = Paths.get("image_uploads", tourPojo.getImage().getOriginalFilename());
-            Files.write(fileNameAndPath, tourPojo.getImage().getBytes());
-        }
-
-        tour.setImage(tourPojo.getImage().getOriginalFilename());
-
+        tour.setTourAvailability(true); // Default availability is true
         tourRepo.save(tour);
-        return "Saved Successfully!";
+        return "Tour saved successfully!";
     }
+
+
 
     @Override
     public List<Tour> getAll() {
 
+
         return tourRepo.findAll().stream().map(item -> {
-            item.setImage(imageToBase64.getImageBase64( item.getImage()));
+            item.setImage(imageToBase64.getImageBase64(item.getImage()));
             return item;
         }).collect(Collectors.toList());
 
+
     }
+
+
 
     @Override
     public void deleteById(Long id) throws IOException {
-        Tour tour= tourRepo.findById(id).get();
-        String uploadDir = "image_uploads/"+tour.getImage();
-        Path uploadPath = Paths.get(uploadDir);
-        Files.deleteIfExists(uploadPath);
+        Optional<Tour> tour = tourRepo.findById(id);
+        if (tour.isEmpty()) {
+            throw new EntityNotFoundException("Tour not found");
+        }
         tourRepo.deleteById(id);
     }
 
     @Override
     public Optional<Tour> getById(Long id) {
-        Optional<Tour> tourOptional = tourRepo.findById(id);
-        tourOptional.ifPresent(tour -> tour.setImage(imageToBase64.getImageBase64(tour.getImage())));
-        return tourOptional;
+        return tourRepo.findById(id);
     }
 
     @Override
     public String update(Long id, TourPojo tourPojo) throws IOException {
         Tour existingTour = tourRepo.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Course not found with ID: " + id));
+                .orElseThrow(() -> new EntityNotFoundException("Tour not found with ID: " + id));
 
-        existingTour.setTourName(tourPojo.getTourName());
-        existingTour.setTourDescription(tourPojo.getTourDescription());
-        existingTour.setTourType(tourPojo.getTourType());
-        existingTour.setTourItinerary(tourPojo.getTourItinerary());
-        existingTour.setStartDate(tourPojo.getStartDate());
-        existingTour.setEndDate(tourPojo.getEndDate());
-        existingTour.setMaxParticipants(tourPojo.getMaxParticipants());
-        existingTour.setTourRating(tourPojo.getTourRating());
-        existingTour.setTourPrice(tourPojo.getTourPrice());
-        existingTour.setTourAvailability(tourPojo.isTourAvailability()); //Boolean to check
+        // Update only if the new values are present, otherwise retain the existing ones
+        if (tourPojo.getTourName() != null && !tourPojo.getTourName().isEmpty()) {
+            existingTour.setTourName(tourPojo.getTourName());
+        }
 
+        if (tourPojo.getTourDescription() != null && !tourPojo.getTourDescription().isEmpty()) {
+            existingTour.setTourDescription(tourPojo.getTourDescription());
+        }
 
-        if(tourPojo.getImage()!=null){
+        if (tourPojo.getTourType() != null && !tourPojo.getTourType().isEmpty()) {
+            existingTour.setTourType(tourPojo.getTourType());
+        }
+
+        if (tourPojo.getTourItinerary() != null && !tourPojo.getTourItinerary().isEmpty()) {
+            existingTour.setTourItinerary(tourPojo.getTourItinerary());
+        }
+
+        if (tourPojo.getStartDate() != null) {
+            existingTour.setStartDate(tourPojo.getStartDate());
+        }
+
+        if (tourPojo.getEndDate() != null) {
+            existingTour.setEndDate(tourPojo.getEndDate());
+        }
+
+        if (tourPojo.getMaxParticipants() > 0) {
+            existingTour.setMaxParticipants(tourPojo.getMaxParticipants());
+        }
+
+        if (tourPojo.getTourRating() != null) {
+            existingTour.setTourRating(tourPojo.getTourRating());
+        }
+
+        if (tourPojo.getTourPrice() > 0) {
+            existingTour.setTourPrice(tourPojo.getTourPrice());
+        }
+
+        existingTour.setTourAvailability(tourPojo.isTourAvailability());
+
+        // Handle image update if provided
+        if (tourPojo.getImage() != null && !tourPojo.getImage().isEmpty()) {
             Path fileNameAndPath = Paths.get("image_uploads", tourPojo.getImage().getOriginalFilename());
             Files.write(fileNameAndPath, tourPojo.getImage().getBytes());
             existingTour.setImage(tourPojo.getImage().getOriginalFilename());
         }
-
-
-
-        existingTour.setImage(tourPojo.getImage().getOriginalFilename());
 
         tourRepo.save(existingTour);
         return "Updated Successfully!";
@@ -122,26 +135,36 @@ public class TourServiceImpl implements TourService {
 
     @Override
     public List<Tour> getTourByMaxParticipants(int maxParticipants) {
-        return tourRepo.findByMaxParticipantsLessThanEqual(maxParticipants);
+        return tourRepo.findAll().stream()
+                .filter(t -> t.getMaxParticipants() <= maxParticipants)
+                .collect(Collectors.toList());
     }
 
     @Override
     public List<Tour> getByDuration(Date startDate, Date endDate) {
-        return tourRepo.findByStartDateGreaterThanEqualAndEndDateLessThanEqual(startDate, endDate);
+        return tourRepo.findAll().stream()
+                .filter(t -> t.getStartDate().after(startDate) && t.getEndDate().before(endDate))
+                .collect(Collectors.toList());
     }
 
     @Override
     public List<Tour> getByTourPrice(double tourPrice) {
-        return tourRepo.findByTourPrice(tourPrice);
+        return tourRepo.findAll().stream()
+                .filter(t -> t.getTourPrice() <= tourPrice)
+                .collect(Collectors.toList());
     }
 
     @Override
     public List<Tour> getByTourType(String tourType) {
-        return tourRepo.findByTourType(tourType);
+        return tourRepo.findAll().stream()
+                .filter(t -> t.getTourType().equalsIgnoreCase(tourType))
+                .collect(Collectors.toList());
     }
 
     @Override
     public List<Tour> getByPriceRange(double minPrice, double maxPrice) {
-        return tourRepo.findByTourPriceBetween(minPrice, maxPrice);
+        return tourRepo.findAll().stream()
+                .filter(t -> t.getTourPrice() >= minPrice && t.getTourPrice() <= maxPrice)
+                .collect(Collectors.toList());
     }
 }

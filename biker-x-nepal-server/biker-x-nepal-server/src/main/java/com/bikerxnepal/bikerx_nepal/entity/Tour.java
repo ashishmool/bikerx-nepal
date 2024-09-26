@@ -34,15 +34,17 @@ public class Tour {
     private String tourItinerary;
 
     @Column(name = "start_date", nullable = false)
+    @Temporal(TemporalType.DATE)
     private Date startDate;
 
     @Column(name = "end_date", nullable = false)
+    @Temporal(TemporalType.DATE)
     private Date endDate;
 
     @Column(name = "max_participants", nullable = false)
     private Integer maxParticipants;
 
-    @Column(name = "rating", nullable = true)
+    @Column(name = "rating")
     private Long tourRating;
 
     @Column(name = "tour_price", nullable = false)
@@ -53,8 +55,6 @@ public class Tour {
 
     private String image;
 
-    @OneToOne(mappedBy = "tour")
-    private Itinerary itinerary;
-
-
+    @OneToOne(mappedBy = "tour", cascade = CascadeType.ALL)
+    private Itinerary itinerary; // Assuming Itinerary is another entity
 }

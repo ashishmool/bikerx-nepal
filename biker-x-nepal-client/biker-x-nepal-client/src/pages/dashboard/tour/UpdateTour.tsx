@@ -10,60 +10,48 @@ import {
     FormControl,
     FormLabel,
     Input,
-    Select,
-    Option,
     Button,
-    Typography,
     Textarea,
-    Switch
 } from '@mui/joy';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function UpdateTour() {
     const { id } = useParams();
     const navigate = useNavigate();
     const [image, setImage] = useState(null);
-    const [bookingStatusLabel, setBookingStatusLabel] = useState("Unavailable");
 
-    const { register, handleSubmit, formState, reset, setValue, watch } = useForm();
+    // Form management using react-hook-form
+    const { register, handleSubmit, setValue, formState } = useForm();
     const { errors } = formState;
 
-    // Query to fetch tour data by ID
+    // Fetching tour data based on ID
     const { data: tourByIdData, isLoading } = useQuery({
         queryKey: ["GET_TOUR_BY_ID", id],
         queryFn: () => axios.get(`http://localhost:8080/tour/getById/${id}`),
         enabled: !!id
     });
 
-    // Watch form values to handle dynamic updates
-    const watchTourAvailability = watch("tourAvailability", false);
-
-    // Set booking status label dynamically
-    useEffect(() => {
-        setBookingStatusLabel(watchTourAvailability ? "Available" : "Unavailable");
-    }, [watchTourAvailability]);
-
-    // Reset form with fetched data and set individual form fields
+    // Populate form fields when the data is fetched
     useEffect(() => {
         if (tourByIdData) {
-            const { tourName, tourDescription, tourType, startDate, endDate, maxParticipants, tourRating, tourPrice, tourAvailability } = tourByIdData.data;
-            reset(tourByIdData.data); // Reset all fields
-            setValue("tourType", tourType); // Set the tourType in Select
-            setValue("startDate", new Date(startDate).toISOString().split("T")[0]); // Format date properly
-            setValue("endDate", new Date(endDate).toISOString().split("T")[0]); // Format date properly
-            setValue("tourAvailability", tourAvailability); // Set the switch status
+            const { tourName, tourDescription, tourType, startDate, endDate, maxParticipants, tourRating, tourPrice } = tourByIdData.data;
+            setValue("tourName", tourName);
+            setValue("tourDescription", tourDescription);
+            setValue("tourType", tourType);
+            setValue("startDate", new Date(startDate).toISOString().split("T")[0]); // Format date
+            setValue("endDate", new Date(endDate).toISOString().split("T")[0]); // Format date
+            setValue("maxParticipants", maxParticipants);
+            setValue("tourRating", tourRating);
+            setValue("tourPrice", tourPrice);
         }
-    }, [tourByIdData, reset, setValue]);
+    }, [tourByIdData, setValue]);
 
-    // Mutation to update tour data
+    // Updating the tour mutation
     const updateTourMutation = useMutation({
         mutationKey: ["UPDATE_TOUR"],
-        mutationFn(payload) {
-            const formData = new FormData();
-            Object.entries(payload).forEach(([key, value]) => {
-                formData.append(key, value);
-            });
+        mutationFn(formData) {
             return axios.put(`http://localhost:8080/tour/update/${id}`, formData);
         },
         onSuccess() {
@@ -75,39 +63,40 @@ function UpdateTour() {
         }
     });
 
-    // Handle form submission
+    // Submit handler to trigger the update mutation
     const onSubmit = (formData) => {
-        const changes = detectChanges(formData);
-        if (Object.keys(changes).length > 0) {
-            updateTourMutation.mutate(changes);
-        } else {
-            console.log("No changes detected.");
-        }
-    };
+        const updatedData = new FormData();
 
-    // Detect changes between initial and current values
-    const detectChanges = (formData) => {
-        const changes = {};
-        Object.entries(formData).forEach(([key, value]) => {
-            if (value !== tourByIdData.data[key]) {
-                changes[key] = value;
-            }
-        });
-
-        // Include new image if uploaded
+        // Handle the image only if it's a new image selection
         if (image) {
-            changes.image = image;
+            updatedData.append("image", image); // Include the image file if selected
         }
 
-        return changes;
+        // Append other form fields
+        updatedData.append("tourName", formData.tourName);
+        updatedData.append("tourDescription", formData.tourDescription);
+        updatedData.append("tourType", formData.tourType);
+        updatedData.append("startDate", formData.startDate);
+        updatedData.append("endDate", formData.endDate);
+        updatedData.append("maxParticipants", String(formData.maxParticipants));
+        updatedData.append("tourRating", String(formData.tourRating));
+        updatedData.append("tourPrice", String(formData.tourPrice)); // Ensure it's a string to avoid NaN issues
+
+        // Log FormData content for debugging
+        for (let pair of updatedData.entries()) {
+            console.log(`${pair[0]}: ${pair[1]}`);
+        }
+
+        // Trigger the mutation to update tour data
+        updateTourMutation.mutate(updatedData);
     };
 
-    // Handle image upload
+    // Image upload handler
     const handleImageUpload = (event) => {
         setImage(event?.target?.files[0]);
     };
 
-    if (isLoading) return <p>Loading...</p>;
+    if (isLoading) return <p>Loading...</p>; // Show a loading message while fetching tour data
 
     return (
         <Box maxWidth="800px" mx="auto" px={{ xs: 2, md: 6 }} py={{ xs: 2, md: 3 }}>
@@ -118,61 +107,54 @@ function UpdateTour() {
                 <Stack spacing={2}>
                     <FormControl>
                         <FormLabel>Tour Name</FormLabel>
-                        <Textarea {...register("tourName")} />
-                        <p>{errors?.tourName?.message}</p>
+                        <Textarea
+                            {...register("tourName", { required: "Tour name is required" })}
+                        />
+                        <p>{errors.tourName?.message}</p>
                     </FormControl>
                     <FormControl>
                         <FormLabel>Description</FormLabel>
-                        <Textarea {...register("tourDescription")} />
-                        <p>{errors?.tourDescription?.message}</p>
+                        <Textarea
+                            {...register("tourDescription", { required: "Description is required" })}
+                        />
+                        <p>{errors.tourDescription?.message}</p>
                     </FormControl>
                     <FormControl>
                         <FormLabel>Tour Type</FormLabel>
-                        <Select {...register("tourType", { required: "Tour type is required" })} defaultValue={tourByIdData?.data?.tourType || ""}>
-                            <Option value="">Select Tour Type</Option>
-                            <Option value="on-road">On-road</Option>
-                            <Option value="off-road">Off-road</Option>
-                            <Option value="on-off-combined">On-Off Combined</Option>
-                        </Select>
-                        <p>{errors?.tourType?.message}</p>
+                        <Input
+                            {...register("tourType", { required: "Tour type is required" })}
+                        />
+                        <p>{errors.tourType?.message}</p>
                     </FormControl>
 
                     <FormControl>
                         <FormLabel>Start Date</FormLabel>
-                        <Input type="date" {...register("startDate")} />
-                        <p>{errors?.startDate?.message}</p>
+                        <Input type="date" {...register("startDate", { required: "Start date is required" })} />
+                        <p>{errors.startDate?.message}</p>
                     </FormControl>
 
                     <FormControl>
                         <FormLabel>End Date</FormLabel>
-                        <Input type="date" {...register("endDate")} />
-                        <p>{errors?.endDate?.message}</p>
+                        <Input type="date" {...register("endDate", { required: "End date is required" })} />
+                        <p>{errors.endDate?.message}</p>
                     </FormControl>
 
                     <FormControl>
                         <FormLabel>Max Participants</FormLabel>
-                        <Input type="number" {...register("maxParticipants")} />
-                        <p>{errors?.maxParticipants?.message}</p>
+                        <Input type="number" {...register("maxParticipants", { required: "Max participants is required" })} />
+                        <p>{errors.maxParticipants?.message}</p>
                     </FormControl>
 
                     <FormControl>
                         <FormLabel>Tour Rating</FormLabel>
-                        <Input type="number" {...register("tourRating")} />
-                        <p>{errors?.tourRating?.message}</p>
+                        <Input type="number" {...register("tourRating", { required: "Rating is required" })} />
+                        <p>{errors.tourRating?.message}</p>
                     </FormControl>
 
                     <FormControl>
                         <FormLabel>Tour Price</FormLabel>
-                        <Input type="number" {...register("tourPrice")} />
-                        <p>{errors?.tourPrice?.message}</p>
-                    </FormControl>
-
-                    <FormControl>
-                        <FormLabel>
-                            Booking Status: <span>{bookingStatusLabel}</span>
-                            <Switch {...register("tourAvailability")} checked={watchTourAvailability} />
-                        </FormLabel>
-                        <p>{errors?.tourAvailability?.message}</p>
+                        <Input type="number" {...register("tourPrice", { required: "Price is required", min: { value: 0, message: "Tour price must be positive" } } )} />
+                        <p>{errors.tourPrice?.message}</p>
                     </FormControl>
 
                     <FormControl>
@@ -181,7 +163,25 @@ function UpdateTour() {
                         </FormLabel>
                     </FormControl>
                 </Stack>
-                <Button variant="contained" type="submit" sx={{ width: '50%', mt: 2, py: 2, fontSize: '1.2rem', fontWeight: 'bold' }}>
+                <Button
+                    variant="contained"
+                    type="submit"
+                    sx={{
+                        width: '50%',
+                        mt: 2,
+                        py: 2,
+                        fontSize: '1.2rem',
+                        fontWeight: 'bold',
+                        backgroundColor: '#1976d2',
+                        color: 'white',
+                        borderRadius: '8px',
+                        boxShadow: '0 3px 5px 2px rgba(0, 0, 0, .3)',
+                        transition: 'background-color 0.3s',
+                        '&:hover': {
+                            backgroundColor: '#1565c0',
+                        },
+                    }}
+                >
                     Update Tour
                 </Button>
             </form>

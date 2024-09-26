@@ -69,7 +69,7 @@ export default function DashboardRouting() {
                         </Typography>
                     </Breadcrumbs>
                     <Typography level="h2" component="h1" sx={{ mt: 1, mb: 2 }}>
-                        Welcome, {localStorage.getItem("role")}
+                        Welcome, {localStorage.getItem("email")}
                     </Typography>
 
                 </Box>
