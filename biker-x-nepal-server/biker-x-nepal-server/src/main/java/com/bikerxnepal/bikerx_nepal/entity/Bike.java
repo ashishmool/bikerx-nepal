@@ -34,6 +34,10 @@ public class Bike {
     @Column(name = "description", nullable = false)
     private String description;
 
+
+    @Column(name = "bike_price", nullable = false)
+    private Double bikePrice;
+
     @Column(name = "image", nullable = true)
     private String image;
 

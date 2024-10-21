@@ -1,5 +1,6 @@
 package com.bikerxnepal.bikerx_nepal.pojo;
 
+import jakarta.validation.constraints.Positive;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,6 +22,9 @@ public class BikePojo {
     private Integer year;
 
     private String description;
+
+    @Positive(message = "Bike price must be positive")
+    private double bikePrice;
 
     private MultipartFile image;
 

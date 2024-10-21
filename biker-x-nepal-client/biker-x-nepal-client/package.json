@@ -21,7 +21,9 @@
     "@tanstack/react-query-devtools": "^5.0.0",
     "antd": "^5.10.2",
     "axios": "^1.6.7",
+    "core-js": "^3.38.1",
     "framer-motion": "^10.16.4",
+    "glob": "^11.0.0",
     "leaflet": "^1.9.4",
     "nanoid": "^5.0.2",
     "react": "^18.2.0",
@@ -38,7 +40,8 @@
     "react-simple-star-rating": "^5.1.7",
     "react-spinners": "^0.13.8",
     "react-stars": "^2.2.5",
-    "react-toastify": "^10.0.4"
+    "react-toastify": "^10.0.4",
+    "rimraf": "^6.0.1"
   },
   "devDependencies": {
     "@types/leaflet": "^1.9.7",
@@ -50,7 +53,7 @@
     "@typescript-eslint/parser": "^6.0.0",
     "@vitejs/plugin-react": "^4.0.3",
     "autoprefixer": "^10.4.16",
-    "eslint": "^8.45.0",
+    "eslint": "^9.13.0",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.3",
     "postcss": "^8.4.31",

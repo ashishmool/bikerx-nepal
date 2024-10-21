@@ -74,8 +74,17 @@ public class TourServiceImpl implements TourService {
 
     @Override
     public Optional<Tour> getById(Long id) {
-        return tourRepo.findById(id);
+        Optional<Tour> tour = tourRepo.findById(id);
+
+        // If tour is present, convert the image to Base64 format
+        if (tour.isPresent()) {
+            Tour foundTour = tour.get();
+            foundTour.setImage(imageToBase64.getImageBase64(foundTour.getImage()));
+        }
+
+        return tour;
     }
+
 
     @Override
     public String update(Long id, TourPojo tourPojo) throws IOException {

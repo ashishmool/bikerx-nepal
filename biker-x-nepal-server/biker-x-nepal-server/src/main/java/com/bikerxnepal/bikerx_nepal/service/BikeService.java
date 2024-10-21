@@ -1,6 +1,7 @@
 package com.bikerxnepal.bikerx_nepal.service;
 
 import com.bikerxnepal.bikerx_nepal.entity.Bike;
+import com.bikerxnepal.bikerx_nepal.entity.Tour;
 import com.bikerxnepal.bikerx_nepal.pojo.BikePojo;
 
 import java.io.IOException;
@@ -16,6 +17,8 @@ public interface BikeService {
     void deleteById(Long id) throws IOException;
 
     Optional<Bike> getById(Long id);
+
+    List<Bike> getByBikePrice(double bikePrice);
 
     String update(Long id, BikePojo bikePojo) throws IOException;
 

@@ -44,6 +44,7 @@ public class BikeServiceImpl implements BikeService {
         bike.setMakeBrand(bikePojo.getMakeBrand());
         bike.setModel(bikePojo.getModel());
         bike.setYear(bikePojo.getYear());
+        bike.setBikePrice(bikePojo.getBikePrice());
         bike.setDescription(bikePojo.getDescription());
 
         // Handle image upload if present
@@ -98,6 +99,11 @@ public class BikeServiceImpl implements BikeService {
     }
 
     @Override
+    public List<Bike> getByBikePrice(double bikePrice) {
+        return null;
+    }
+
+    @Override
     public String update(Long id, BikePojo bikePojo) throws IOException {
         // Fetch the existing bike from the repository
         Bike existingBike = bikeRepo.findById(id)
@@ -108,7 +114,7 @@ public class BikeServiceImpl implements BikeService {
         existingBike.setModel(bikePojo.getModel() != null ? bikePojo.getModel() : existingBike.getModel());
         existingBike.setYear(bikePojo.getYear() != null ? bikePojo.getYear() : existingBike.getYear());
         existingBike.setDescription(bikePojo.getDescription() != null ? bikePojo.getDescription() : existingBike.getDescription());
-
+        existingBike.setBikePrice(existingBike.getBikePrice());
         // Handle image update
         if (bikePojo.getImage() != null && !bikePojo.getImage().isEmpty()) {
             // Construct the path for the existing image

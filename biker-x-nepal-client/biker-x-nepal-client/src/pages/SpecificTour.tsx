@@ -16,7 +16,7 @@ export const SpecificTour = () => {
   const [error, setError] = useState(null);
   const [quantity, setQuantity] = useState(1);
   const [totalAmount, setTotalAmount] = useState(0);
-  const [selectedBikeId, setSelectedBikeId] = useState(null);
+  const [selectedBike, setSelectedBike] = useState(null);  // Store bike object
   const [bikesData, setBikesData] = useState(null);
 
   const navigate = useNavigate();
@@ -40,7 +40,7 @@ export const SpecificTour = () => {
 
   useEffect(() => {
     if (tour) {
-      setTotalAmount(tour.tourPrice);
+      setTotalAmount(tour.tourPrice);  // Set initial amount to tour price
     }
   }, [tour]);
 
@@ -56,25 +56,23 @@ export const SpecificTour = () => {
     }
 
     setQuantity(value);
-    // Update totalAmount based on quantity and tour price
-    setTotalAmount(value * tour.tourPrice);
+    calculateTotal(value, selectedBike);
   };
-
 
   const handleBikeChange = (e) => {
     const selectedId = parseInt(e.target.value);
-    setSelectedBikeId(selectedId);
+    const bike = bikesData.find(bike => bike.bikeId === selectedId);
+    setSelectedBike(bike);
+    calculateTotal(quantity, bike);
   };
+
 
   const fetchBikes = async () => {
     try {
       const response = await axios.get("http://localhost:8080/bike/getAll");
-      console.log("Response from fetchBikes:", response.data);
       setBikesData(response.data);
-      return response.data;
     } catch (error) {
-      console.error("Error fetching bikes:", error);
-      throw error;
+      setError(error.message);
     }
   };
 
@@ -96,13 +94,12 @@ export const SpecificTour = () => {
             quantityPersons: quantity,
             paymentStatus: 'PENDING',
             totalAmount: totalAmount,
-            bikeId: selectedBikeId
+            bikeId: selectedBike?.bikeId  // Ensure the selected bike is passed
           }
       );
       toast.success("Booked Successfully!");
-      console.log('Booking successful:', response.data);
       setQuantity(1);
-      setSelectedBikeId(null);
+      setSelectedBike(null);
       setTotalAmount(0);
     } catch (error) {
       console.error('Error booking tour:', error);
@@ -110,15 +107,7 @@ export const SpecificTour = () => {
   };
 
   useEffect(() => {
-    fetchBikes()
-        .then(data => {
-          console.log("Bikes Data:", data);
-          setBikesData(data);
-        })
-        .catch(error => {
-          console.error("Error fetching bikes:", error);
-          setError(error.message);
-        });
+    fetchBikes();
   }, []);
 
   if (loading) {
@@ -137,10 +126,18 @@ export const SpecificTour = () => {
     return <WrongPage />;
   }
 
-  // Calculate the duration between start and end dates
   const startDate = new Date(tour.startDate);
   const endDate = new Date(tour.endDate);
-  const duration = Math.ceil((endDate - startDate) / (1000 * 60 * 60 * 24)); // Convert milliseconds to days
+  const duration = Math.ceil((endDate - startDate) / (1000 * 60 * 60 * 24));
+
+  const calculateTotal = (quantity, bike) => {
+    console.log("Bike Price::: ",bike.bikePrice);
+    console.log("Tour Duration::: ",duration);
+    const bikePrice = bike ? bike.bikePrice * duration : 0;  // Multiply by duration
+    const updatedTotal = (tour.tourPrice * quantity) + bikePrice;
+    setTotalAmount(updatedTotal);
+  };
+
 
   return (
       <main className="relative pt-32">
@@ -160,7 +157,9 @@ export const SpecificTour = () => {
         </div>
         <div className="grid grid-cols-1 full:grid-cols-2 gap-16 mt-16 px-[8%]">
           <div className="image-class">
-            <img width={500} src={'data:image/png;base64,' + tour.image} alt={tour.image} />
+            <img width={600} src={'data:image/png;base64,'+tour.image} />
+
+
           </div>
           <div className="text-white flex flex-col items-start gap-6 justify-start border-white/30">
             <div className="flex flex-col items-start gap-6">
@@ -173,7 +172,6 @@ export const SpecificTour = () => {
                   <h2 className="font-light whitespace-nowrap">End Date</h2>
                   <h2 className="font-semibold text-lg">{endDate.toLocaleDateString('en-GB', { weekday: 'long', day: '2-digit', month: 'short', year: 'numeric' })}</h2>
                 </div>
-                {/* Duration (days) */}
                 <div className="flex flex-col gap-2 items-center tablet:items-start text-center ">
                   <h2 className="font-light whitespace-nowrap">Duration</h2>
                   <h2 className="font-semibold text-lg">{duration} days</h2>
@@ -184,7 +182,6 @@ export const SpecificTour = () => {
                 </div>
               </div>
             </div>
-
             <div className="text-white flex flex-col w-full gap-5 pt-2">
               <FaRegCalendar />
               <div className="flex items-center gap-4">
@@ -208,11 +205,13 @@ export const SpecificTour = () => {
                 >
                   <option value="">Select a Bike</option>
                   {bikesData && bikesData.map(bike => (
-                      <option key={bike.bikeId} value={bike.bikeId}>{bike.makeBrand} {bike.model}</option>
+                      <option key={bike.bikeId} value={bike.bikeId}>
+                        {bike.makeBrand} {bike.model} (Rs. {bike.bikePrice}/day)
+                      </option>
                   ))}
                 </select>
               </div>
-              <p className="text-2xl font-bold">Total Amount: Rs. {totalAmount}</p> {/* Increased text size and made it bold */}
+              <p className="text-2xl font-bold">Total Amount: Rs. {totalAmount}</p>
               <button
                   onClick={bookTour}
                   className="bg-yellow-500 text-black font-semibold py-2 px-4 rounded-lg transition duration-200 hover:bg-yellow-400"
@@ -240,12 +239,6 @@ export const SpecificTour = () => {
             <NavLinkTour route="meeting">
               Meeting & Pickup
             </NavLinkTour>
-            {/*<NavLinkTour route="dates">*/}
-            {/*  Dates & Prices*/}
-            {/*</NavLinkTour>*/}
-            {/*<NavLinkTour route="reviews">*/}
-            {/*  Reviews*/}
-            {/*</NavLinkTour>*/}
           </ul>
           <div className="px-[8%]">
             <Outlet />
