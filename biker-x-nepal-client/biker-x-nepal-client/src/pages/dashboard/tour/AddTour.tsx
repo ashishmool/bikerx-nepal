@@ -122,6 +122,13 @@ function AddTour() {
                             Choose Image: <Input type="file" onChange={handleImageUpload} />
                         </FormLabel>
                     </FormControl>
+
+
+                    <FormControl>
+                        <FormLabel>Tour Price</FormLabel>
+                        <Input type="number" {...register("tourPrice", { required: "Tour Price is required" })} />
+                        <p>{errors?.tourPrice?.message}</p>
+                    </FormControl>
                 </Stack>
                 <Button variant="contained" type="submit" sx={{ width: '50%', mt: 2, py: 2, fontSize: '1.2rem', fontWeight: 'bold' }}>
                     Add Tour

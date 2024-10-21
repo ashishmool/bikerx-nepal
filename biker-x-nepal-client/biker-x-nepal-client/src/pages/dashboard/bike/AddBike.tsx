@@ -1,4 +1,4 @@
-import * as React from 'react';
+    import * as React from 'react';
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useMutation } from "@tanstack/react-query";
@@ -106,6 +106,18 @@ function AddBike() {
                                         <p>{errors?.description?.message}</p>
                                     </Stack>
                                 </Stack>
+
+
+                                <Stack direction="row" spacing={1}>
+                                    <Stack sx={{ flex: 1 }}>
+                                        <FormLabel>Price *</FormLabel>
+                                        <Input type="number" {...register("bikePrice", { required: "Bike Price is required" })} />
+                                        <p>{errors?.bikePrice?.message}</p>
+                                    </Stack>
+                                </Stack>
+
+
+
                                 <Stack direction="row" spacing={1}>
                                     <Stack sx={{ flex: 1 }}>
                                         <FormLabel>Image</FormLabel>

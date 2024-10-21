@@ -130,13 +130,21 @@ export const SpecificTour = () => {
   const endDate = new Date(tour.endDate);
   const duration = Math.ceil((endDate - startDate) / (1000 * 60 * 60 * 24));
 
+  // const calculateTotal = (quantity, bike) => {
+  //   console.log("Bike Price::: ",bike.bikePrice);
+  //   console.log("Tour Duration::: ",duration);
+  //   const bikePrice = bike ? bike.bikePrice * duration : 0;  // Multiply by duration
+  //   const updatedTotal = (tour.tourPrice * quantity) + bikePrice;
+  //   setTotalAmount(updatedTotal);
+  // };
+
   const calculateTotal = (quantity, bike) => {
-    console.log("Bike Price::: ",bike.bikePrice);
-    console.log("Tour Duration::: ",duration);
-    const bikePrice = bike ? bike.bikePrice * duration : 0;  // Multiply by duration
-    const updatedTotal = (tour.tourPrice * quantity) + bikePrice;
+    const bikePrice = bike ? bike.bikePrice : 0;  // Get the bike price if a bike is selected
+    const updatedTotal = (tour.tourPrice * quantity) + (duration * quantity * bikePrice);  // Apply the correct logic
     setTotalAmount(updatedTotal);
   };
+
+    console.log("Tour Name::: ",tour.tourName);
 
 
   return (
@@ -144,7 +152,7 @@ export const SpecificTour = () => {
         <div className="flex text-[--secundary-color] gap-5 px-[8%] flex-col laptop:flex-row justify-between">
         <span className="gap-2">
           Tours <FaChevronRight className="scale-[0.7] inline-block" />{' '}
-          <span className="text-white">{tour.title}</span>
+          <span className="text-white">{tour.tourName}</span>
         </span>
           <Link
               to="/tours"
@@ -157,12 +165,13 @@ export const SpecificTour = () => {
         </div>
         <div className="grid grid-cols-1 full:grid-cols-2 gap-16 mt-16 px-[8%]">
           <div className="image-class">
-            <img width={600} src={'data:image/png;base64,'+tour.image} />
+            <img width={750} src={'data:image/png;base64,'+tour.image} />
 
 
           </div>
           <div className="text-white flex flex-col items-start gap-6 justify-start border-white/30">
             <div className="flex flex-col items-start gap-6">
+              {tour.tourName}
               <div className="flex items-start justify-start gap-5 tablet:gap-10 border-y border-white/20 w-full py-6">
                 <div className="flex flex-col gap-2 items-start">
                   <h2 className="font-light whitespace-nowrap">Start Date</h2>
