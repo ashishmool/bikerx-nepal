@@ -34,6 +34,8 @@ public class Bike {
     @Column(name = "description", nullable = false)
     private String description;
 
+    @Column(name = "terrain", nullable = true)
+    private String terrain;  // New field for Bike Terrain
 
     @Column(name = "bike_price", nullable = false)
     private Double bikePrice;
@@ -41,7 +43,11 @@ public class Bike {
     @Column(name = "image", nullable = true)
     private String image;
 
-    //NumberPLate
-    //Owner
-    //Mobile
+    @Column(name = "quantity_stock", nullable = false)
+    private int quantityStock;  // New field for stock quantity
+
+    @Column(name = "owner_email", nullable = false)
+    private String ownerEmail;  // New field for owner's email
+
+
 }

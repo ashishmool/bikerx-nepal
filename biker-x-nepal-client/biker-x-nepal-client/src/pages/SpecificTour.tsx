@@ -16,7 +16,7 @@ export const SpecificTour = () => {
   const [error, setError] = useState(null);
   const [quantity, setQuantity] = useState(1);
   const [totalAmount, setTotalAmount] = useState(0);
-  const [selectedBike, setSelectedBike] = useState(null);  // Store bike object
+  const [bikesSelected, setBikesSelected] = useState(Array(1).fill(null)); // Array to track bikes selected for each dropdown
   const [bikesData, setBikesData] = useState(null);
 
   const navigate = useNavigate();
@@ -44,6 +44,10 @@ export const SpecificTour = () => {
     }
   }, [tour]);
 
+  useEffect(() => {
+    fetchBikes();
+  }, []);
+
   const handleQuantityChange = (e) => {
     let value = parseInt(e.target.value);
 
@@ -56,16 +60,32 @@ export const SpecificTour = () => {
     }
 
     setQuantity(value);
-    calculateTotal(value, selectedBike);
+    setBikesSelected(Array(value).fill(null));  // Update array to match the new quantity
+    calculateTotal(value, bikesSelected);
   };
 
-  const handleBikeChange = (e) => {
+  const handleBikeChange = (e, index) => {
     const selectedId = parseInt(e.target.value);
     const bike = bikesData.find(bike => bike.bikeId === selectedId);
-    setSelectedBike(bike);
-    calculateTotal(quantity, bike);
+
+    const updatedBikesSelected = [...bikesSelected];
+    updatedBikesSelected[index] = bike;
+    setBikesSelected(updatedBikesSelected);
+
+    calculateTotal(quantity, updatedBikesSelected);
   };
 
+  const calculateTotal = (quantity, bikesSelected) => {
+    let total = tour.tourPrice * quantity;  // Base tour price for all persons
+
+    bikesSelected.forEach(bike => {
+      if (bike) {
+        total += duration * bike.bikePrice;  // Add bike price per person
+      }
+    });
+
+    setTotalAmount(total);
+  };
 
   const fetchBikes = async () => {
     try {
@@ -76,6 +96,23 @@ export const SpecificTour = () => {
     }
   };
 
+  const getAvailableBikes = (index) => {
+    if (!bikesData) {
+      return [];  // Return an empty array if bikesData is null or undefined
+    }
+
+    return bikesData.map(bike => {
+      const timesSelected = bikesSelected.filter(b => b && b.bikeId === bike.bikeId).length;
+      const remainingStock = bike.quantityStock - timesSelected;
+
+      if (remainingStock > 0 || (bikesSelected[index] && bikesSelected[index].bikeId === bike.bikeId)) {
+        return { ...bike, remainingStock };
+      }
+      return null;
+    }).filter(bike => bike !== null);
+  };
+
+
   const bookTour = async () => {
     if (!localStorage.getItem("accessToken")) {
       navigate('/login');
@@ -85,7 +122,7 @@ export const SpecificTour = () => {
     const userId = localStorage.getItem("userId");
 
     try {
-      const response = await axios.post(
+      await axios.post(
           'http://localhost:8080/booking/save',
           {
             purchaseDate: new Date(),
@@ -94,21 +131,17 @@ export const SpecificTour = () => {
             quantityPersons: quantity,
             paymentStatus: 'PENDING',
             totalAmount: totalAmount,
-            bikeId: selectedBike?.bikeId  // Ensure the selected bike is passed
+            bikeIds: bikesSelected.map(bike => bike?.bikeId).filter(Boolean)  // Send array of selected bikes
           }
       );
       toast.success("Booked Successfully!");
       setQuantity(1);
-      setSelectedBike(null);
+      setBikesSelected(Array(1).fill(null));
       setTotalAmount(0);
     } catch (error) {
       console.error('Error booking tour:', error);
     }
   };
-
-  useEffect(() => {
-    fetchBikes();
-  }, []);
 
   if (loading) {
     return (
@@ -130,23 +163,6 @@ export const SpecificTour = () => {
   const endDate = new Date(tour.endDate);
   const duration = Math.ceil((endDate - startDate) / (1000 * 60 * 60 * 24));
 
-  // const calculateTotal = (quantity, bike) => {
-  //   console.log("Bike Price::: ",bike.bikePrice);
-  //   console.log("Tour Duration::: ",duration);
-  //   const bikePrice = bike ? bike.bikePrice * duration : 0;  // Multiply by duration
-  //   const updatedTotal = (tour.tourPrice * quantity) + bikePrice;
-  //   setTotalAmount(updatedTotal);
-  // };
-
-  const calculateTotal = (quantity, bike) => {
-    const bikePrice = bike ? bike.bikePrice : 0;  // Get the bike price if a bike is selected
-    const updatedTotal = (tour.tourPrice * quantity) + (duration * quantity * bikePrice);  // Apply the correct logic
-    setTotalAmount(updatedTotal);
-  };
-
-    console.log("Tour Name::: ",tour.tourName);
-
-
   return (
       <main className="relative pt-32">
         <div className="flex text-[--secundary-color] gap-5 px-[8%] flex-col laptop:flex-row justify-between">
@@ -156,8 +172,7 @@ export const SpecificTour = () => {
         </span>
           <Link
               to="/tours"
-              className="border-b border-white/40 transition duration-200 hover:text-white flex items-center gap-2
-          w-fit cursor-pointer"
+              className="border-b border-white/40 transition duration-200 hover:text-white flex items-center gap-2 w-fit cursor-pointer"
           >
             <FaArrowLeft />
             Get back
@@ -166,8 +181,6 @@ export const SpecificTour = () => {
         <div className="grid grid-cols-1 full:grid-cols-2 gap-16 mt-16 px-[8%]">
           <div className="image-class">
             <img width={750} src={'data:image/png;base64,'+tour.image} />
-
-
           </div>
           <div className="text-white flex flex-col items-start gap-6 justify-start border-white/30">
             <div className="flex flex-col items-start gap-6">
@@ -204,22 +217,25 @@ export const SpecificTour = () => {
                     className="border rounded-md py-1 px-2 text-black"
                 />
               </div>
-              <div className="flex items-center gap-4">
-                <label htmlFor="bike" className="font-light">Select Bike:</label>
-                <select
-                    id="bike"
-                    name="bike"
-                    onChange={handleBikeChange}
-                    className="border rounded-md py-1 px-2 text-black"
-                >
-                  <option value="">Select a Bike</option>
-                  {bikesData && bikesData.map(bike => (
-                      <option key={bike.bikeId} value={bike.bikeId}>
-                        {bike.makeBrand} {bike.model} (Rs. {bike.bikePrice}/day)
-                      </option>
-                  ))}
-                </select>
-              </div>
+              {Array.from({ length: quantity }).map((_, index) => (
+                  <div className="flex items-center gap-4" key={index}>
+                    <label htmlFor={`bike-${index}`} className="font-light">Select Bike for Person {index + 1}:</label>
+                    <select
+                        id={`bike-${index}`}
+                        name={`bike-${index}`}
+                        onChange={(e) => handleBikeChange(e, index)}
+                        className="border rounded-md py-1 px-2 text-black"
+                        value={bikesSelected[index]?.bikeId || ""}
+                    >
+                      <option value="">Select a Bike</option>
+                      {getAvailableBikes(index).map(bike => (
+                          <option key={bike.bikeId} value={bike.bikeId}>
+                            {bike.makeBrand} {bike.model} (Rs. {bike.bikePrice}/day, Stock: {bike.remainingStock})
+                          </option>
+                      ))}
+                    </select>
+                  </div>
+              ))}
               <p className="text-2xl font-bold">Total Amount: Rs. {totalAmount}</p>
               <button
                   onClick={bookTour}
@@ -237,8 +253,7 @@ export const SpecificTour = () => {
           </div>
         </div>
         <div className="text-white pt-24 relative">
-          <ul className={` text-white/40 flex border-b px-[5%] laptop:px-[0%] laptop:mx-[8%] border-b-white/20
-             flex-nowrap overflow-auto gap-10 whitespace-nowrap`}>
+          <ul className={`text-white/40 flex border-b px-[5%] laptop:px-[0%] laptop:mx-[8%] border-b-white/20 flex-nowrap overflow-auto gap-10 whitespace-nowrap`}>
             <NavLinkTour route="." end={true}>  {/* Set end={true} for Overview */}
               Overview
             </NavLinkTour>

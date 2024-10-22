@@ -38,6 +38,9 @@ public class BikeServiceImpl implements BikeService {
         if (bikePojo.getDescription() == null || bikePojo.getDescription().isEmpty()) {
             throw new IllegalArgumentException("Description cannot be null or empty");
         }
+        if (bikePojo.getOwnerEmail() == null || bikePojo.getOwnerEmail().isEmpty()) {
+            throw new IllegalArgumentException("Owner email cannot be null or empty");
+        }
 
         // Create Bike entity
         Bike bike = new Bike();
@@ -46,6 +49,9 @@ public class BikeServiceImpl implements BikeService {
         bike.setYear(bikePojo.getYear());
         bike.setBikePrice(bikePojo.getBikePrice());
         bike.setDescription(bikePojo.getDescription());
+        bike.setQuantityStock(bikePojo.getQuantityStock());
+        bike.setOwnerEmail(bikePojo.getOwnerEmail());
+        bike.setTerrain(bikePojo.getTerrain());
 
         // Handle image upload if present
         if (bikePojo.getImage() != null && !bikePojo.getImage().isEmpty()) {
@@ -112,9 +118,13 @@ public class BikeServiceImpl implements BikeService {
         // Update fields with new values or retain existing ones if not provided
         existingBike.setMakeBrand(bikePojo.getMakeBrand() != null ? bikePojo.getMakeBrand() : existingBike.getMakeBrand());
         existingBike.setModel(bikePojo.getModel() != null ? bikePojo.getModel() : existingBike.getModel());
-        existingBike.setYear(bikePojo.getYear() != null ? bikePojo.getYear() : existingBike.getYear());
+        existingBike.setYear(bikePojo.getYear() != 0 ? bikePojo.getYear() : existingBike.getYear());
         existingBike.setDescription(bikePojo.getDescription() != null ? bikePojo.getDescription() : existingBike.getDescription());
-        existingBike.setBikePrice(existingBike.getBikePrice());
+        existingBike.setBikePrice(bikePojo.getBikePrice() != null ? bikePojo.getBikePrice() : existingBike.getBikePrice());
+        existingBike.setQuantityStock(bikePojo.getQuantityStock() != 0 ? bikePojo.getQuantityStock() : existingBike.getQuantityStock());
+        existingBike.setOwnerEmail(bikePojo.getOwnerEmail() != null ? bikePojo.getOwnerEmail() : existingBike.getOwnerEmail());
+        existingBike.setTerrain(bikePojo.getTerrain() != null ? bikePojo.getTerrain() : existingBike.getTerrain());
+
         // Handle image update
         if (bikePojo.getImage() != null && !bikePojo.getImage().isEmpty()) {
             // Construct the path for the existing image

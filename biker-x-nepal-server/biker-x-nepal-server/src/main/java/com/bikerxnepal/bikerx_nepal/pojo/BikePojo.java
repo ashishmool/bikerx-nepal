@@ -24,8 +24,14 @@ public class BikePojo {
     private String description;
 
     @Positive(message = "Bike price must be positive")
-    private double bikePrice;
+    private Double bikePrice;
 
     private MultipartFile image;
+
+    private int quantityStock;
+
+    private String ownerEmail;
+
+    private String terrain;
 
 }
