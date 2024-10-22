@@ -8,6 +8,7 @@ import { WrongPage } from './WrongPage';
 import { NavLinkTour } from "../ui/NavLinkTour.tsx";
 import { StarRating } from "../ui/StarRating.tsx";
 import { toast, ToastContainer } from "react-toastify";
+import Breadcrumb from "../utils/Breadcrumb.tsx";
 
 export const SpecificTour = () => {
   const { id } = useParams();
@@ -167,8 +168,9 @@ export const SpecificTour = () => {
       <main className="relative pt-32">
         <div className="flex text-[--secundary-color] gap-5 px-[8%] flex-col laptop:flex-row justify-between">
         <span className="gap-2">
-          Tours <FaChevronRight className="scale-[0.7] inline-block" />{' '}
-          <span className="text-white">{tour.tourName}</span>
+
+          <Breadcrumb tour={tour} />
+
         </span>
           <Link
               to="/tours"
