@@ -22,7 +22,7 @@ INSERT INTO tours (
              '2024-05-15',
              20,
              5,
-             1200.00,
+             90000.00,
              TRUE,
              'annapurna.jpg'
          );
@@ -51,7 +51,7 @@ INSERT INTO tours (
              '2024-06-14',
              15,
              4,
-             800.00,
+             40000.00,
              TRUE,
              'kathmandu_valley.png'
          );
@@ -82,7 +82,7 @@ INSERT INTO tours (
              '2024-07-25',
              10,
              5,
-             2500.00,
+             250000.00,
              FALSE,
              'everest_base_camp.jpg'
          );
@@ -111,7 +111,7 @@ INSERT INTO tours (
              '2024-08-10',
              25,
              4,
-             950.00,
+             95000.00,
              TRUE,
              'pokhara_lakeside.jpg'
          );
@@ -140,7 +140,7 @@ INSERT INTO tours (
              '2024-09-16',
              18,
              5,
-             1100.00,
+             80900.00,
              TRUE,
              'chitwan_jungle.jpg'
          );

@@ -59,7 +59,7 @@ export const Overview = () => {
                     <li>Motorbike (NO GEARS!)</li>
                     <li>Free Wi-Fi</li>
                 </ul>
-                <h1 className="font-semibold text-xl mb-5">Your Tour Package Excludes:</h1>
+                <h1 className="font-semibold text-xl mb-5 mt-5">Your Tour Package Excludes:</h1>
                 <ul className="list-disc font-light tracking-wide pl-8 flex flex-col gap-3 text-white/70">
                     <li>Medical Insurance</li>
                     <li>Biking Gear & Safety</li>

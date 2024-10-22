@@ -40,6 +40,7 @@ function UpdateBike() {
     useEffect(() => {
         if (bikeByIdData) {
             const bikeData = bikeByIdData.data;
+
             // Set form values with the fetched bike data
             setValue("makeBrand", bikeData.makeBrand);
             setValue("model", bikeData.model);
@@ -48,7 +49,8 @@ function UpdateBike() {
             setValue("bikePrice", bikeData.bikePrice);
             setValue("quantityStock", bikeData.quantityStock);
             setValue("ownerEmail", bikeData.ownerEmail);
-            setValue("terrain", bikeData.terrain); // Set terrain value
+            setValue("terrain", bikeData.terrain); // Set default terrain value here
+            setValue("image", bikeData.image); // Set default terrain value here
         }
     }, [bikeByIdData, setValue]);
 
@@ -121,6 +123,7 @@ function UpdateBike() {
                         </Box>
                         <Divider />
                         <Stack spacing={2} sx={{ my: 1 }}>
+
                             <Stack direction="row" spacing={1}>
                                 <Stack sx={{ flex: 1 }}>
                                     <FormLabel>Make/Brand *</FormLabel>
@@ -134,12 +137,17 @@ function UpdateBike() {
                                 </Stack>
                                 <Stack sx={{ flex: 1 }}>
                                     <FormLabel>Terrain *</FormLabel>
-                                    <Select {...register("terrain", { required: "Terrain is required." })} defaultValue="">
-                                        <Option value="">Select Terrain Type</Option>
-                                        <Option value="on-road">On-Road</Option>
-                                        <Option value="off-road">All Terrain</Option>
-                                    </Select>
-                                    <p>{errors.terrain?.message}</p>
+                                    <FormControl error={!!errors.terrain}>
+                                        <Select
+                                            {...register("terrain", { required: "Terrain is required." })}
+                                            defaultValue="" // No need to set a defaultValue here
+                                        >
+                                            <Option value="">Select Terrain Type</Option>
+                                            <Option value="on-road">On-Road</Option>
+                                            <Option value="off-road">Off-Road</Option>
+                                        </Select>
+                                        <p>{errors.terrain?.message}</p>
+                                    </FormControl>
                                 </Stack>
                             </Stack>
                             <Stack direction="row" spacing={1}>
@@ -167,6 +175,10 @@ function UpdateBike() {
                                 </Stack>
                             </Stack>
                             <Stack direction="row" spacing={1}>
+                                {/*/!* Display the image if it exists *!/*/}
+                                {/*<Box sx={{ mb: 2 }}>*/}
+                                {/*    <img width={200} src={`data:image/png;base64,${null}`} alt="Bike" />*/}
+                                {/*</Box>*/}
                                 <Stack sx={{ flex: 1 }}>
                                     <FormLabel>Choose New Image:</FormLabel>
                                     <Input
@@ -174,11 +186,11 @@ function UpdateBike() {
                                         onChange={(e) => setImage(e.target.files[0])} // Set the image file to the state variable
                                     />
                                 </Stack>
-                                <Stack sx={{ flex: 1 }}>
-                                    <FormLabel>Owner's Email *</FormLabel>
-                                    <Input type="text" {...register("ownerEmail", { required: "Owner Email is required." })} />
-                                    <p>{errors.ownerEmail?.message}</p>
-                                </Stack>
+                            </Stack>
+                            <Stack sx={{ flex: 1 }}>
+                                <FormLabel>Owner's Email *</FormLabel>
+                                <Input type="text" {...register("ownerEmail", { required: "Owner Email is required." })} />
+                                <p>{errors.ownerEmail?.message}</p>
                             </Stack>
                         </Stack>
                         <CardActions sx={{ alignSelf: 'flex-end', pt: 2 }}>

@@ -98,7 +98,7 @@ function AddBike() {
                                         <Select {...register("terrain", { required: "Terrain is required" })} defaultValue="">
                                             <Option value="">Select Terrain Type</Option>
                                             <Option value="on-road">On-Road</Option>
-                                            <Option value="off-road">All Terrain</Option>
+                                            <Option value="all-terrain">All Terrain</Option>
                                         </Select>
                                         <p>{errors?.terrain?.message}</p>
                                     </Stack>
@@ -125,8 +125,8 @@ function AddBike() {
                                     </Stack>
                                     <Stack sx={{ flex: 1 }}>
                                         <FormLabel>Quantity *</FormLabel>
-                                        <Input type="number" {...register("stockQuantity", { required: "Quantity is required" })} />
-                                        <p>{errors?.stockQuantity?.message}</p>
+                                        <Input type="number" {...register("quantityStock", { required: "Quantity is required" })} />
+                                        <p>{errors?.quantityStock?.message}</p>
                                     </Stack>
                                 </Stack>
 
