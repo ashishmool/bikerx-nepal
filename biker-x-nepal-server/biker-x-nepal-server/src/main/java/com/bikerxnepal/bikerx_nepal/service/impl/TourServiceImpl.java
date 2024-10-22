@@ -176,4 +176,17 @@ public class TourServiceImpl implements TourService {
                 .filter(t -> t.getTourPrice() >= minPrice && t.getTourPrice() <= maxPrice)
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public List<Tour> searchTours(String tourName, String tourType, Date startDate, Date endDate, Double minPrice, Double maxPrice) {
+        return tourRepo.searchTours(tourName, tourType, startDate, endDate, minPrice, maxPrice)
+                .stream()
+                .map(item -> {
+                    item.setImage(imageToBase64.getImageBase64(item.getImage()));
+                    return item;
+                })
+                .collect(Collectors.toList());
+    }
+
+
 }

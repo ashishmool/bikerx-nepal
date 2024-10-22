@@ -74,4 +74,15 @@ public class TourController {
                                       @RequestParam("maxPrice") double maxPrice) {
         return tourService.getByPriceRange(minPrice, maxPrice);
     }
+
+    @GetMapping("/search")
+    public List<Tour> searchTours(
+            @RequestParam(required = false) String tourName,
+            @RequestParam(required = false) String tourType,
+            @RequestParam(required = false) Date startDate,
+            @RequestParam(required = false) Date endDate,
+            @RequestParam(required = false) Double minPrice,
+            @RequestParam(required = false) Double maxPrice) {
+        return tourService.searchTours(tourName, tourType, startDate, endDate, minPrice, maxPrice);
+    }
 }

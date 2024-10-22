@@ -200,13 +200,30 @@ function sort(sortingMethod: ISorting, tours: ITours[]) {
   }
 }
 
-export function filterAndSort(
-  filtersToAdd: Filters[],
-  sortingMethod: ISorting,
-  allTours: ITours[]
-) {
-  let newArray = applyAllFilters([...filtersToAdd], [...allTours]);
-  let sortedArray = sort(sortingMethod, newArray as ITours[]);
+export const filterAndSort = (
+    addedFilters: Filters[],
+    currentSorting: ISorting,
+    tours: ITours[]
+): ITours[] => {
+  let filteredTours = tours;
 
-  return sortedArray;
-}
+  // Apply filters (like price, group size, etc.)
+  addedFilters.forEach((filter) => {
+    if (filter === "price") {
+      filteredTours = filteredTours.filter(tour => tour.tourPrice < 50000); // Example filter logic
+    }
+    // Add other filters like group size, duration, etc.
+  });
+
+  // Apply sorting
+  if (currentSorting === "PriceLowToHigh") {
+    filteredTours = filteredTours.sort((a, b) => a.tourPrice - b.tourPrice);
+  } else if (currentSorting === "PriceHighToLow") {
+    filteredTours = filteredTours.sort((a, b) => b.tourPrice - a.tourPrice);
+  } else if (currentSorting === "Rating") {
+    filteredTours = filteredTours.sort((a, b) => b.tourRating - a.tourRating);
+  }
+
+  return filteredTours;
+};
+

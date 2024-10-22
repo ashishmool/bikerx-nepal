@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { FilterButtons, Filters, ISorting, ITours } from "../../moduls";
 import { filterAndSort } from "../../services/useFilters";
+import axios from "axios";
 
 // Define the type for the state
 type IFilterSorting = {
@@ -14,6 +15,10 @@ type IFilterSorting = {
   filteredTours: ITours[];
   isLoading: boolean;
   error: any;
+  selectedFilters: {
+    type?: string; // Add relevant filter types as needed
+    price?: number; // For example, to filter by price
+  };
 };
 
 // Define the initial state
@@ -34,20 +39,22 @@ const initialState: IFilterSorting = {
   allTours: [],
   isLoading: false,
   error: null,
+  selectedFilters: {
+    type: undefined,
+    price: undefined,
+  },
 };
 
 // Define async thunk for fetching all tours
-export const getAllTours = createAsyncThunk(
-    "tours/getMyTours",
-    async (_, thunkAPI) => {
+export const getAllTours = createAsyncThunk<ITours[], void>(
+    "tours/getAll",
+    async (_, { rejectWithValue }) => {
       try {
-        // Fetch data from the backend or any external API
-        // For now, let's assume it's fetched successfully
-        const data = await fetchData(); // Implement fetchData function
-        return data;
-      } catch (error) {
-        // Handle errors
-        return thunkAPI.rejectWithValue(error.message);
+        const response = await axios.get("http://localhost:8080/tour/getAll");
+        return response.data;
+      } catch (error: any) {
+        console.error("Error fetching tours:", error);
+        return rejectWithValue(error.response.data || "Failed to fetch tours");
       }
     }
 );
@@ -59,14 +66,14 @@ const filterSortingSlice = createSlice({
   reducers: {
     changeText: (state, { payload }) => {
       state.searchText = payload;
-      state.addedFilters = [];
-      state.page = initialState.page;
+
+      // Filter the tours based on searchText (title) and added filters
       state.filteredTours = filterAndSort(
           state.addedFilters,
           state.currentSorting,
           state.allTours
       ).filter((tour: ITours) =>
-          tour.title?.toLocaleLowerCase().includes(payload.toLowerCase())
+          tour.tourName.toLowerCase().includes(payload.toLowerCase()) // Search by tour name
       );
     },
     cleanSearchBar: (state) => {
@@ -77,7 +84,14 @@ const filterSortingSlice = createSlice({
           state.allTours
       );
       state.page = initialState.page;
+
+      // Reset selected filters if needed
+      state.selectedFilters = {
+        type: undefined,
+        price: undefined,
+      };
     },
+
     toggleFixing: (state, { payload }) => {
       state.isFixed = payload;
     },
@@ -135,6 +149,15 @@ const filterSortingSlice = createSlice({
           state.allTours
       );
     },
+    setSelectedFilters: (state, { payload }) => {
+      state.selectedFilters = payload; // Update selectedFilters
+      // Reapply filtering when selectedFilters change
+      state.filteredTours = filterAndSort(
+          state.addedFilters,
+          state.currentSorting,
+          state.allTours
+      );
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -152,7 +175,7 @@ const filterSortingSlice = createSlice({
         })
         .addCase(getAllTours.rejected, (state, action) => {
           state.isLoading = false;
-          state.error = action.payload;
+          state.error = action.payload; // Set error from payload
         });
   },
 });
@@ -169,10 +192,6 @@ export const {
   clearAllFilters,
   addOrDeleteFilter,
   changeCurrentSorting,
+  setSelectedFilters,
 } = filterSortingSlice.actions;
 export default filterSortingSlice.reducer;
-
-// Define a placeholder function for fetching data from the backend
-async function fetchData() {
-  return Promise.resolve([]); // Placeholder implementation
-}

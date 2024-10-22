@@ -1,5 +1,37 @@
 // moduls.ts
 
+
+export interface ITours {
+  tourId: number;
+  tourName: string;
+  tourDescription: string;
+  tourType: string;
+  tourItinerary?: string;
+  startDate: string; // Ensure correct date format (ISO)
+  endDate: string;   // Ensure correct date format (ISO)
+  maxParticipants: number;
+  tourRating: number;
+  tourPrice: number;
+  tourAvailability: boolean;
+  image?: string;    // or appropriate type for the image if needed
+}
+
+export type Filters = "price" | "groupSize" | "duration" | "bodyType"; // Add more filter types as needed
+export type ISorting = "Featured" | "PriceLowToHigh" | "PriceHighToLow" | "Rating"; // Add more sorting options as needed
+
+export interface IFilterSorting {
+  page: number;
+  isLoading: boolean;
+  filteredTours: ITours[];
+  // Add selectedFilters to handle filter options
+  selectedFilters: {
+    type?: string;    // Example filter for tour type
+    price?: number;   // Example filter for price
+    // Add other filters as needed
+  };
+}
+
+
 export interface IHomeBg {
   tourName: string;
   price: string;
