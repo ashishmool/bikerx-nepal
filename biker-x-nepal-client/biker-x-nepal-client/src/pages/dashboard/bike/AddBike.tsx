@@ -13,7 +13,7 @@ import {
     Input,
     Button,
     Typography,
-    Textarea, Switch
+    Textarea, Switch, Select, Option
 } from '@mui/joy';
 // import { InsertDriveFileRounded as InsertDriveFileRoundedIcon } from '@mui/icons-material';
 import Card from '@mui/joy/Card';
@@ -93,6 +93,15 @@ function AddBike() {
                                         <Input type="text" {...register("model", { required: "Model is required" })} />
                                         <p>{errors?.model?.message}</p>
                                     </Stack>
+                                    <Stack sx={{ flex: 1 }}>
+                                        <FormLabel>Terrain *</FormLabel>
+                                        <Select {...register("terrain", { required: "Terrain is required" })} defaultValue="">
+                                            <Option value="">Select Terrain Type</Option>
+                                            <Option value="on-road">On-Road</Option>
+                                            <Option value="off-road">All Terrain</Option>
+                                        </Select>
+                                        <p>{errors?.terrain?.message}</p>
+                                    </Stack>
                                 </Stack>
                                 <Stack direction="row" spacing={1}>
                                     <Stack sx={{ flex: 1 }}>
@@ -114,6 +123,11 @@ function AddBike() {
                                         <Input type="number" {...register("bikePrice", { required: "Bike Price is required" })} />
                                         <p>{errors?.bikePrice?.message}</p>
                                     </Stack>
+                                    <Stack sx={{ flex: 1 }}>
+                                        <FormLabel>Quantity *</FormLabel>
+                                        <Input type="number" {...register("stockQuantity", { required: "Quantity is required" })} />
+                                        <p>{errors?.stockQuantity?.message}</p>
+                                    </Stack>
                                 </Stack>
 
 
@@ -124,7 +138,14 @@ function AddBike() {
                                         {/* Use the handleImageUpload function */}
                                         <Input type="file" onChange={handleImageUpload} />
                                     </Stack>
+                                    <Stack sx={{ flex: 1 }}>
+                                        <FormLabel>Owner's Email *</FormLabel>
+                                        <Input type="text" {...register("ownerEmail", { required: "Owner Email is required" })} />
+                                        <p>{errors?.ownerEmail?.message}</p>
+                                    </Stack>
                                 </Stack>
+
+
                             </Stack>
 
                             <CardOverflow sx={{ borderTop: '1px solid', borderColor: 'divider' }}>

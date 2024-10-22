@@ -37,7 +37,8 @@ function ListBike() {
                     <th>Brand</th>
                     <th>Model</th>
                     <th>Year</th>
-                    <th>Description</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
                     <th>Action</th>
                 </tr>
                 </thead>
@@ -48,7 +49,8 @@ function ListBike() {
                         <td>{bike.makeBrand}</td>
                         <td>{bike.model}</td>
                         <td>{bike.year}</td>
-                        <td style={{ wordWrap: 'break-word', maxWidth: '200px' }}>{bike.description}</td>
+                        <td>{bike.bikePrice}</td>
+                        <td>{bike.quantityStock}</td>
                         <td>
                             <button onClick={() => navigate(`/dashboard/bike/update/${bike.bikeId}`)}>
                                 <EditIcon />

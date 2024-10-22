@@ -12,6 +12,12 @@ import {
     Input,
     Button,
     Textarea,
+    Select,
+    Option,
+    Typography,
+    Card,
+    CardActions,
+    Divider,
 } from '@mui/joy';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { toast } from 'react-toastify';
@@ -22,6 +28,7 @@ function UpdateBike() {
     const navigate = useNavigate();
     const { register, handleSubmit, setValue, formState } = useForm();
     const { errors } = formState;
+    const [image, setImage] = useState(null);
 
     // Fetch the bike data by ID
     const { data: bikeByIdData, isLoading } = useQuery({
@@ -38,6 +45,10 @@ function UpdateBike() {
             setValue("model", bikeData.model);
             setValue("year", bikeData.year);
             setValue("description", bikeData.description);
+            setValue("bikePrice", bikeData.bikePrice);
+            setValue("quantityStock", bikeData.quantityStock);
+            setValue("ownerEmail", bikeData.ownerEmail);
+            setValue("terrain", bikeData.terrain); // Set terrain value
         }
     }, [bikeByIdData, setValue]);
 
@@ -45,7 +56,6 @@ function UpdateBike() {
     const updateBikeMutation = useMutation({
         mutationKey: ["UPDATE_BIKE"],
         mutationFn: async (updatedData) => {
-            // Use Axios to send a PUT request to the server with form data
             return await axios.put(`http://localhost:8080/bike/update/${id}`, updatedData, {
                 headers: {
                     'Content-Type': 'multipart/form-data' // FormData should have multipart headers
@@ -68,8 +78,8 @@ function UpdateBike() {
         const updatedData = new FormData();
 
         // Handle the image only if it's a new image selection
-        if (formData.image && formData.image.length > 0) {
-            updatedData.append("image", formData.image[0]); // Append the image file if selected
+        if (image) {
+            updatedData.append("image", image); // Append the image file if selected
         }
 
         // Append other form fields
@@ -77,11 +87,10 @@ function UpdateBike() {
         updatedData.append("model", formData.model);
         updatedData.append("year", String(formData.year)); // Ensure that year is a string
         updatedData.append("description", formData.description);
-
-        // Log FormData content for debugging
-        for (let pair of updatedData.entries()) {
-            console.log(`${pair[0]}: ${pair[1]}`);
-        }
+        updatedData.append("bikePrice", formData.bikePrice);
+        updatedData.append("quantityStock", formData.quantityStock);
+        updatedData.append("ownerEmail", formData.ownerEmail);
+        updatedData.append("terrain", formData.terrain); // Append terrain value
 
         // Trigger the mutation to update bike data
         updateBikeMutation.mutate(updatedData);
@@ -90,70 +99,99 @@ function UpdateBike() {
     if (isLoading) return <p>Loading...</p>; // Show a loading message while fetching bike data
 
     return (
-        <Box maxWidth="800px" mx="auto" px={{ xs: 2, md: 6 }} py={{ xs: 2, md: 3 }}>
+        <Box sx={{ flex: 1, width: '100%' }}>
             <IconButton onClick={() => navigate("/dashboard/bike/list")} aria-label="back">
                 <ArrowBackIcon /> Go Back
             </IconButton>
-            <form onSubmit={handleSubmit(onSubmit)}>
-                <Stack spacing={2}>
-                    <FormControl>
-                        <FormLabel>Brand</FormLabel>
-                        <Textarea
-                            {...register("makeBrand", { required: "Make/Brand is required." })}
-                        />
-                        <p>{errors.makeBrand?.message}</p>
-                    </FormControl>
-                    <FormControl>
-                        <FormLabel>Model</FormLabel>
-                        <Textarea
-                            {...register("model", { required: "Model is required." })}
-                        />
-                        <p>{errors.model?.message}</p>
-                    </FormControl>
-                    <FormControl>
-                        <FormLabel>Year</FormLabel>
-                        <Textarea
-                            {...register("year", { required: "Year is required." })}
-                        />
-                        <p>{errors.year?.message}</p>
-                    </FormControl>
-                    <FormControl>
-                        <FormLabel>Description</FormLabel>
-                        <Textarea
-                            {...register("description", { required: "Description is required." })}
-                        />
-                        <p>{errors.description?.message}</p>
-                    </FormControl>
-                    <FormControl>
-                        <FormLabel>Choose New Image:</FormLabel>
-                        <Input
-                            type="file"
-                            {...register("image")} // Allow file input for image
-                        />
-                    </FormControl>
-                </Stack>
-                <Button
-                    variant="contained"
-                    type="submit"
-                    sx={{
-                        width: '50%',
-                        mt: 2,
-                        py: 2,
-                        fontSize: '1.2rem',
-                        fontWeight: 'bold',
-                        backgroundColor: '#1976d2',
-                        color: 'white',
-                        borderRadius: '8px',
-                        boxShadow: '0 3px 5px 2px rgba(0, 0, 0, .3)',
-                        transition: 'background-color 0.3s',
-                        '&:hover': {
-                            backgroundColor: '#1565c0',
-                        },
-                    }}
-                >
-                    Update Bike
-                </Button>
-            </form>
+            <Stack
+                spacing={4}
+                sx={{
+                    display: 'flex',
+                    maxWidth: '1000px',
+                    mx: 'auto',
+                    px: { xs: 2, md: 6 },
+                    py: { xs: 2, md: 3 },
+                }}
+            >
+                <Card>
+                    <form onSubmit={handleSubmit(onSubmit)}>
+                        <Box sx={{ mb: 1 }}>
+                            <Typography level="title-md">Update Bike Details</Typography>
+                            <Typography level="body-sm">Update the details for the selected bike.</Typography>
+                        </Box>
+                        <Divider />
+                        <Stack spacing={2} sx={{ my: 1 }}>
+                            <Stack direction="row" spacing={1}>
+                                <Stack sx={{ flex: 1 }}>
+                                    <FormLabel>Make/Brand *</FormLabel>
+                                    <Input type="text" {...register("makeBrand", { required: "Make/Brand is required." })} />
+                                    <p>{errors.makeBrand?.message}</p>
+                                </Stack>
+                                <Stack sx={{ flex: 1 }}>
+                                    <FormLabel>Model *</FormLabel>
+                                    <Input type="text" {...register("model", { required: "Model is required." })} />
+                                    <p>{errors.model?.message}</p>
+                                </Stack>
+                                <Stack sx={{ flex: 1 }}>
+                                    <FormLabel>Terrain *</FormLabel>
+                                    <Select {...register("terrain", { required: "Terrain is required." })} defaultValue="">
+                                        <Option value="">Select Terrain Type</Option>
+                                        <Option value="on-road">On-Road</Option>
+                                        <Option value="off-road">All Terrain</Option>
+                                    </Select>
+                                    <p>{errors.terrain?.message}</p>
+                                </Stack>
+                            </Stack>
+                            <Stack direction="row" spacing={1}>
+                                <Stack sx={{ flex: 1 }}>
+                                    <FormLabel>Year *</FormLabel>
+                                    <Input type="number" {...register("year", { required: "Year is required." })} />
+                                    <p>{errors.year?.message}</p>
+                                </Stack>
+                                <Stack sx={{ flex: 1 }}>
+                                    <FormLabel>Description *</FormLabel>
+                                    <Textarea {...register("description", { required: "Description is required." })} />
+                                    <p>{errors.description?.message}</p>
+                                </Stack>
+                            </Stack>
+                            <Stack direction="row" spacing={1}>
+                                <Stack sx={{ flex: 1 }}>
+                                    <FormLabel>Price *</FormLabel>
+                                    <Input type="number" {...register("bikePrice", { required: "Bike Price is required." })} />
+                                    <p>{errors.bikePrice?.message}</p>
+                                </Stack>
+                                <Stack sx={{ flex: 1 }}>
+                                    <FormLabel>Quantity *</FormLabel>
+                                    <Input type="number" {...register("quantityStock", { required: "Quantity is required." })} />
+                                    <p>{errors.quantityStock?.message}</p>
+                                </Stack>
+                            </Stack>
+                            <Stack direction="row" spacing={1}>
+                                <Stack sx={{ flex: 1 }}>
+                                    <FormLabel>Choose New Image:</FormLabel>
+                                    <Input
+                                        type="file"
+                                        onChange={(e) => setImage(e.target.files[0])} // Set the image file to the state variable
+                                    />
+                                </Stack>
+                                <Stack sx={{ flex: 1 }}>
+                                    <FormLabel>Owner's Email *</FormLabel>
+                                    <Input type="text" {...register("ownerEmail", { required: "Owner Email is required." })} />
+                                    <p>{errors.ownerEmail?.message}</p>
+                                </Stack>
+                            </Stack>
+                        </Stack>
+                        <CardActions sx={{ alignSelf: 'flex-end', pt: 2 }}>
+                            <Button size="sm" variant="outlined" color="neutral" onClick={() => navigate("/dashboard/bike/list")}>
+                                Cancel
+                            </Button>
+                            <Button size="sm" variant="solid" type="submit">
+                                Update
+                            </Button>
+                        </CardActions>
+                    </form>
+                </Card>
+            </Stack>
         </Box>
     );
 }
