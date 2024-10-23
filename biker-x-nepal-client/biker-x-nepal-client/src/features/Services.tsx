@@ -1,8 +1,9 @@
 import {
   FaPeopleGroup,
-  FaRegMoneyBill1,
   FaMotorcycle,
+  FaUsersRectangle,
 } from "react-icons/fa6";
+
 import { motion } from "framer-motion";
 
 export const Services = () => {
@@ -35,12 +36,10 @@ export const Services = () => {
           className="flex flex-col items-center gap-3 bg-white/20 mx-auto full:mx-5 px-5 py-6 rounded-xl
       max-w-[350px]"
         >
-          <FaRegMoneyBill1 className="scale-[4] my-6" />
-          <h3 className="font-semibold text-xl">Budget Matters</h3>
+          <FaUsersRectangle className="scale-[4] my-6" />
+          <h3 className="font-semibold text-xl">We Capture Memories</h3>
           <p className="font-light text-center">
-            Explore the stunning landscapes of Nepal's Himalayas without breaking the bank.
-            Our affordable packages ensure that you can experience the thrill of the open road without worrying about
-            your savings.
+            Explore the breathtaking landscapes of Nepal's Himalayas with our affordable packages. Experience the thrill of the open road without breaking the bank, and leave the memory-capturing to us!
           </p>
         </motion.div>
         <motion.div

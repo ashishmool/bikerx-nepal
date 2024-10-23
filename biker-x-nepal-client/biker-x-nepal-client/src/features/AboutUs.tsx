@@ -19,7 +19,7 @@ export const AboutUs = () => {
           viewport={{ once: true }}
           className="text-2xl text-yellow-500"
         >
-          ABOUT US
+          WHO WE ARE
         </motion.h1>
         <motion.h3
           initial={{ opacity: 0, translateY: "100%" }}
@@ -28,20 +28,30 @@ export const AboutUs = () => {
           viewport={{ once: true }}
           className="text-4xl laptop:text-5xl text-white font-semibold"
         >
-          Explore All Corners of Nepal With Us
+          The Call of the Himalayas: A Golden City Adventure Riders Story
         </motion.h3>
         <motion.p
-          initial={{ opacity: 0, translateY: "100%" }}
-          whileInView={{ opacity: 1, translateY: "0%" }}
-          transition={{ duration: 0.5 }}
-          viewport={{ once: true }}
-          className="font-light"
+            initial={{ opacity: 0, translateY: "100%" }}
+            whileInView={{ opacity: 1, translateY: "0%" }}
+            transition={{ duration: 0.5 }}
+            viewport={{ once: true }}
+            className="font-light"
         >
-          BikerXNepal is your gateway to the Himalayas, where dreams of exhilarating motorcycle
-          adventures through Nepal's rugged landscapes become an awe-inspiring reality. Founded on a passion for
-          exploration and an unwavering commitment to making the majestic Himalayas accessible to all, we're your
-          trusted partner in experiencing the wonders of this breathtaking region on two wheels.
+          <p className="mt-4 mb-4">
+            More than just a ride, we offer an experience that transforms you. From peaceful valleys to extreme mountain trails, our routes are crafted for every kind of rider. Imagine cruising past snow-capped peaks, through pine forests, with the rush of rivers beside you. Every path is a step into the unknown, a connection to nature and yourself.
+          </p>
+
+          <p className="mt-4 mb-4 indent-8">
+            Whether you're an experienced rider or just starting, we invite you to join us in conquering the Himalayas and discovering Nepal in a way only a bike can offer.
+          </p>
+
+          <p className="mt-4 mb-4 text-amber-400">
+            We are <span className="text-3xl font-bold">Golden City Adventure Riders</span>, and the journey is just beginning!
+          </p>
         </motion.p>
+
+
+
         <motion.button
           initial={{ opacity: 0, translateY: "100%" }}
           whileInView={{ opacity: 1, translateY: "0%" }}
@@ -61,7 +71,7 @@ export const AboutUs = () => {
           transition={{ duration: 1 }}
           viewport={{ once: true }}
           src={temp1}
-          alt="Titan image"
+          alt="Suspension Bridge Nepal"
           className="full:h-[300px]"
         />
         <motion.img
@@ -70,7 +80,7 @@ export const AboutUs = () => {
           transition={{ duration: 1 }}
           viewport={{ once: true }}
           src={temp2}
-          alt="Nereid image"
+          alt="Bouddhanath Nepal"
           className="full:h-[300px] full:mt-12"
         />
       </div>

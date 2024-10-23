@@ -54,16 +54,19 @@ export const HomePhoto = () => {
                     initial={{ opacity: 0, translateY: "200%" }}
                     animate={{ opacity: 1, translateY: "0%" }}
                     transition={{ duration: 1.0 }}
-                    className="absolute text-[--main-font-color] flex gap-3 items-center left-[10%] bottom-6"
+                    className="absolute text-[--main-font-color] flex flex-col items-center gap-3 right-[10%] bottom-6 text-center" // Center aligned
                 >
                   {/* Show tourName */}
                   <h2 className="text-4xl font-bold">{photo.tourName}</h2>
-                  <FaLocationDot />
-                  Conquer Nepal's Terrain: Ride, Travel, Explore!
+                  <div className="flex items-center gap-2 justify-center"> {/* Centered content */}
+                    <FaLocationDot />
+                    Conquer Nepal's Terrain: Ride, Travel, Explore!
+                  </div>
                 </motion.div>
               </div>
           );
         })}
       </div>
   );
+
 };

@@ -19,7 +19,7 @@ export const Home = () => {
         <HomePhoto />
         <motion.div
           initial={{ opacity: 0, translateY: "-100%" }}
-          animate={{ opacity: 1, translateY: "-50%" }}
+          animate={{ opacity: 1, translateY: "-40%" }}
           transition={{ duration: 1.0 }}
           className="absolute top-[50%] translate-y-[-50%] left-[10%] text-[--main-font-color] w-[80%] laptop:w-[50%]
            flex flex-col gap-6"
@@ -29,10 +29,7 @@ export const Home = () => {
 
           </h1>
           <p>
-            BikerXNepal will take you beyond the urban landscape to a Himalayan realm of endless
-              possibilities. Explore the wonders of Nepal's mountainous terrain, from the lush valleys to the
-              towering peaks. Your next great adventure awaits along the winding roads of the Himalayas!
-          </p>
+              This bike tour booking platform is tailored for adventure seekers wanting to explore Nepal on two wheels. It allows users to easily book guided motorcycle tours across diverse terrains, from peaceful valleys to challenging mountain trails. With options for all skill levels, the platform offers detailed itineraries, expert guides, and top-quality bikes, ensuring a safe and thrilling experience through Nepal’s stunning landscapes. Book your next Himalayan adventure here!          </p>
         </motion.div>
       </article>
       <AboutUs />
