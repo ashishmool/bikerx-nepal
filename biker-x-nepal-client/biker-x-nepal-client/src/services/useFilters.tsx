@@ -9,31 +9,31 @@ import {
 } from "../moduls";
 import { options } from "../utils/filterBarOptions.tsx";
 
-function isOfTypeBodyType(value: string): value is IBodyType {
-  return options[0].includes(value);
-}
-function isOfTypePrice(value: string): value is IPrice {
-  return options[3].includes(value);
-}
-function isOfTypeDuration(value: string): value is IDuration {
-  return options[1].includes(value);
-}
-function isOfTypeGroupSize(value: string): value is IGroupSize {
-  return options[2].includes(value);
+function isOfTypeGroupSize(value: string): boolean {
+  return options.groupSize.includes(value);
 }
 
-function whichType(
-  value: string
-): "groupSize" | "duration" | "price" | "bodyType" {
-  if (options[2].includes(value)) {
-    return "groupSize";
-  } else if (options[1].includes(value)) {
-    return "duration";
-  } else if (options[3].includes(value)) {
-    return "price";
-  }
-  return "bodyType";
+function isOfTypeDuration(value: string): boolean {
+  return options.duration.includes(value);
 }
+
+function isOfTypePrice(value: string): boolean {
+  return options.price.includes(value);
+}
+
+function isOfTypeTourType(value: string): boolean {
+  return options.tourType.includes(value);
+}
+
+
+function whichType(value: string): "groupSize" | "duration" | "price" | "tourType" {
+  if (isOfTypeGroupSize(value)) return "groupSize";
+  if (isOfTypeDuration(value)) return "duration";
+  if (isOfTypePrice(value)) return "price";
+  if (isOfTypeTourType(value)) return "tourType";
+  throw new Error("Invalid filter value");
+}
+
 function areAllItemsOfTypes(arr: string[]) {
   let trueOrFalse = false;
   for (let i = 0; i < 4; i++) {
@@ -146,23 +146,63 @@ function groupSize(type: IGroupSize, tours: ITours[] | undefined) {
       );
   }
 }
-function singleFilter(filter: Filters, tours: ITours[]) {
-  if (!tours.length) {
-    return [];
-  }
-  if (isOfTypeBodyType(filter)) {
-    return bodyType(filter, tours);
-  }
-  if (isOfTypeDuration(filter)) {
-    return duration(filter, tours);
-  }
+function singleFilter(filter: string, tours: ITours[]): ITours[] {
   if (isOfTypeGroupSize(filter)) {
-    return groupSize(filter, tours);
+    return tours.filter((tour) => {
+      switch (filter) {
+        case "Less than 10":
+          return tour.groupSize < 10;
+        case "11 - 15 Persons":
+          return tour.groupSize >= 11 && tour.groupSize <= 15;
+        case "More than 16":
+          return tour.groupSize > 16;
+        default:
+          return false;
+      }
+    });
   }
+
+  if (isOfTypeDuration(filter)) {
+    return tours.filter((tour) => {
+      switch (filter) {
+        case "Less than 7 Days":
+          return tour.duration < 7;
+        case "8-10 Days":
+          return tour.duration >= 8 && tour.duration <= 10;
+        case "11 - 15 Days":
+          return tour.duration >= 11 && tour.duration <= 15;
+        case "More than 15 Days":
+          return tour.duration > 15;
+        default:
+          return false;
+      }
+    });
+  }
+
   if (isOfTypePrice(filter)) {
-    return price(filter, tours);
+    return tours.filter((tour) => {
+      switch (filter) {
+        case "Less than Rs. 50,000":
+          return tour.price < 50000;
+        case "Rs. 50,000 - Rs. 99,999":
+          return tour.price >= 50000 && tour.price <= 99999;
+        case "Rs. 100,000 - Rs. 149,999":
+          return tour.price >= 100000 && tour.price <= 149999;
+        case "More than Rs. 150,000":
+          return tour.price > 150000;
+        default:
+          return false;
+      }
+    });
   }
+
+  if (isOfTypeTourType(filter)) {
+    return tours.filter((tour) => tour.tourType === filter);
+  }
+
+  return tours; // Return the unchanged array if no filter matches
 }
+
 
 function applyAllFilters(filtersToAdd: Filters[], originalTours: ITours[]) {
   if (!filtersToAdd || !originalTours) return;

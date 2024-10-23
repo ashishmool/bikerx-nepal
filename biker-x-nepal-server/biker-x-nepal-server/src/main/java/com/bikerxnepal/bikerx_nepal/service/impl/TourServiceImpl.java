@@ -8,6 +8,8 @@ import com.bikerxnepal.bikerx_nepal.service.TourService;
 import com.bikerxnepal.bikerx_nepal.utils.ImageToBase64;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -22,6 +24,9 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class TourServiceImpl implements TourService {
+
+    private static final Logger log = LoggerFactory.getLogger(TourServiceImpl.class);
+
 
     private final TourRepo tourRepo;
 
@@ -144,10 +149,18 @@ public class TourServiceImpl implements TourService {
 
     @Override
     public List<Tour> getTourByMaxParticipants(int maxParticipants) {
+        // Updated logic to include tours with maxParticipants less than or equal to the given maxParticipants
         return tourRepo.findAll().stream()
-                .filter(t -> t.getMaxParticipants() <= maxParticipants)
+                .filter(t -> t.getMaxParticipants() <= maxParticipants) // Filter tours based on maxParticipants
+                .map(item -> {
+                    // Convert image to Base64 format
+                    item.setImage(imageToBase64.getImageBase64(item.getImage()));
+                    return item;
+                })
                 .collect(Collectors.toList());
     }
+
+
 
     @Override
     public List<Tour> getByDuration(Date startDate, Date endDate) {
@@ -178,14 +191,20 @@ public class TourServiceImpl implements TourService {
     }
 
     @Override
-    public List<Tour> searchTours(String tourName, String tourType, Date startDate, Date endDate, Double minPrice, Double maxPrice) {
-        return tourRepo.searchTours(tourName, tourType, startDate, endDate, minPrice, maxPrice)
+    public List<Tour> searchTours(String tourName, String tourType, Date startDate, Date endDate, Double minPrice, Double maxPrice, Integer maxParticipants) {
+        log.info("Searching tours with parameters - Tour Name: {}, Tour Type: {}, Start Date: {}, End Date: {}, Min Price: {}, Max Price: {}, Max Participants: {}",
+                tourName, tourType, startDate, endDate, minPrice, maxPrice, maxParticipants);
+
+        List<Tour> tours = tourRepo.searchTours(tourName, tourType, startDate, endDate, minPrice, maxPrice, maxParticipants)
                 .stream()
                 .map(item -> {
                     item.setImage(imageToBase64.getImageBase64(item.getImage()));
                     return item;
                 })
                 .collect(Collectors.toList());
+
+        log.info("Found {} tours matching the search criteria.", tours.size());
+        return tours;
     }
 
 

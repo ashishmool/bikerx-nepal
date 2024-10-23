@@ -47,6 +47,7 @@ public class SpringSecurityConfig {
                         "/system-user/**",
                         "/dashboard/**",
                         "/tour",
+                        "/tour/search",
                         "/tour/**",
                         "/purchased-tours/**",
                         "/tours/**",

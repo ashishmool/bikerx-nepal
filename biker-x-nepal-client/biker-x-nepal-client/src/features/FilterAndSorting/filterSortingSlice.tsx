@@ -16,8 +16,11 @@ type IFilterSorting = {
   isLoading: boolean;
   error: any;
   selectedFilters: {
-    type?: string; // Add relevant filter types as needed
-    price?: number; // For example, to filter by price
+    type?: string;
+    price?: number;
+    duration?: string; // Added duration
+    tourType?: string; // Added tourType
+    maxParticipants?: number; // Added maxParticipants
   };
 };
 
@@ -30,7 +33,7 @@ const initialState: IFilterSorting = {
     price: false,
     groupSize: false,
     duration: false,
-    bodyType: false,
+    tourType: false,
     sort: false,
   },
   addedFilters: [],
@@ -42,8 +45,13 @@ const initialState: IFilterSorting = {
   selectedFilters: {
     type: undefined,
     price: undefined,
+    duration: undefined,
+    tourType: undefined,
+    maxParticipants: undefined, // Add maxParticipants
   },
 };
+
+
 
 // Define async thunk for fetching all tours
 export const getAllTours = createAsyncThunk<ITours[], void>(
@@ -67,15 +75,36 @@ const filterSortingSlice = createSlice({
     changeText: (state, { payload }) => {
       state.searchText = payload;
 
-      // Filter the tours based on searchText (title) and added filters
+      // Apply search text AND selected filters together
       state.filteredTours = filterAndSort(
           state.addedFilters,
           state.currentSorting,
           state.allTours
-      ).filter((tour: ITours) =>
-          tour.tourName.toLowerCase().includes(payload.toLowerCase()) // Search by tour name
-      );
+      ).filter((tour: ITours) => {
+        const matchesSearch = tour.tourName.toLowerCase().includes(payload.toLowerCase());
+
+        const maxParticipantsMatch = state.selectedFilters.maxParticipants
+            ? tour.maxParticipants <= state.selectedFilters.maxParticipants
+            : true;
+
+        const durationMatch = state.selectedFilters.duration
+            ? tour.duration === state.selectedFilters.duration
+            : true;
+
+        const priceMatch = state.selectedFilters.price
+            ? tour.price <= state.selectedFilters.price
+            : true;
+
+        const tourTypeMatch = state.selectedFilters.tourType
+            ? tour.tourType === state.selectedFilters.tourType
+            : true;
+
+        return (
+            matchesSearch && maxParticipantsMatch && durationMatch && priceMatch && tourTypeMatch
+        );
+      });
     },
+
     cleanSearchBar: (state) => {
       state.searchText = "";
       state.filteredTours = filterAndSort(
@@ -89,9 +118,11 @@ const filterSortingSlice = createSlice({
       state.selectedFilters = {
         type: undefined,
         price: undefined,
+        duration: undefined,
+        tourType: undefined,
+        maxParticipants: undefined, // Reset maxParticipants
       };
     },
-
     toggleFixing: (state, { payload }) => {
       state.isFixed = payload;
     },
@@ -119,12 +150,16 @@ const filterSortingSlice = createSlice({
     clearAllFilters: (state) => {
       state.addedFilters = [];
       state.page = initialState.page;
+      state.selectedFilters = initialState.selectedFilters; // Reset all filters
+
+      // Ensure filteredTours is reset when clearing filters
       state.filteredTours = filterAndSort(
           state.addedFilters,
           state.currentSorting,
           state.allTours
       );
     },
+
     addOrDeleteFilter: (state, { payload }: { payload: Filters }) => {
       if (state.addedFilters.includes(payload)) {
         state.addedFilters = state.addedFilters.filter(
@@ -150,14 +185,33 @@ const filterSortingSlice = createSlice({
       );
     },
     setSelectedFilters: (state, { payload }) => {
-      state.selectedFilters = payload; // Update selectedFilters
-      // Reapply filtering when selectedFilters change
+      state.selectedFilters = { ...state.selectedFilters, ...payload };
+
       state.filteredTours = filterAndSort(
           state.addedFilters,
           state.currentSorting,
           state.allTours
-      );
+      ).filter((tour) => {
+        const maxParticipantsMatch = state.selectedFilters.maxParticipants
+            ? tour.maxParticipants <= state.selectedFilters.maxParticipants
+            : true;
+
+        const durationMatch = state.selectedFilters.duration
+            ? tour.duration === state.selectedFilters.duration
+            : true;
+
+        const priceMatch = state.selectedFilters.price
+            ? tour.price <= state.selectedFilters.price
+            : true;
+
+        const tourTypeMatch = state.selectedFilters.tourType
+            ? tour.tourType === state.selectedFilters.tourType
+            : true;
+
+        return maxParticipantsMatch && durationMatch && priceMatch && tourTypeMatch;
+      });
     },
+
   },
   extraReducers: (builder) => {
     builder
@@ -194,4 +248,5 @@ export const {
   changeCurrentSorting,
   setSelectedFilters,
 } = filterSortingSlice.actions;
+
 export default filterSortingSlice.reducer;

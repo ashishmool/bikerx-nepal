@@ -30,6 +30,5 @@ public interface TourService {
 
     List<Tour> getByPriceRange(double minPrice, double maxPrice);
 
-    List<Tour> searchTours(String tourName, String tourType, Date startDate, Date endDate, Double minPrice, Double maxPrice);
-
+    List<Tour> searchTours(String tourName, String tourType, Date startDate, Date endDate, Double minPrice, Double maxPrice, Integer maxParticipants); // Modified
 }
