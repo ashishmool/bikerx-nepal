@@ -11,7 +11,7 @@ export const products = [
         image: "src/assets/products/hoodie-1.png",
     },
     {
-        productId: 999,
+        productId: 9991,
         productName: "Pagal Toli Logo Patch",
         size: "6in x 4in (L x B)",
         colour: "Black-White",

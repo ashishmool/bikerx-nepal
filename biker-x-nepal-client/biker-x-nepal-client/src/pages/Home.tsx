@@ -29,8 +29,7 @@ export const Home = () => {
               Beyond the City Limits, Awaits the Himalayas!
 
           </h1>
-          <p>
-              This bike tour booking platform is tailored for adventure seekers wanting to explore Nepal on two wheels. It allows users to easily book guided motorcycle tours across diverse terrains, from peaceful valleys to challenging mountain trails. With options for all skill levels, the platform offers detailed itineraries, expert guides, and top-quality bikes, ensuring a safe and thrilling experience through Nepal’s stunning landscapes. Book your next Himalayan adventure here!          </p>
+          <p>This bike tour booking platform is tailored for adventure seekers wanting to explore Nepal on two wheels. It allows users to easily book guided motorcycle tours across diverse terrains, from peaceful valleys to challenging mountain trails. With options for all skill levels, the platform offers detailed itineraries, expert guides, and top-quality bikes, ensuring a safe and thrilling experience through Nepal’s stunning landscapes. Book your next Himalayan adventure here!</p>
         </motion.div>
       </article>
       <AboutUs />

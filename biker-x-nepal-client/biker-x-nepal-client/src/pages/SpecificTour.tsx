@@ -137,17 +137,19 @@ export const SpecificTour = () => {
             endDate: tour.endDate       // Include end date
           }
       );
-      toast.success("Booked Successfully!");
-
-      // Delay navigation by 2 seconds (2000 milliseconds)
-      setTimeout(() => {
-        navigate("/tours");
-      }, 2000); // Adjust the duration as needed
-
       // Reset the state after booking
       setQuantity(1);
       setBikesSelected(Array(1).fill(null));
       setTotalAmount(0);
+
+      toast.success("Booked Successfully!");
+
+      // Delay navigation by 2 seconds (2000 milliseconds)
+      setTimeout(() => {
+        navigate(`/my-tour/${userId}`, { replace: true });
+      }, 1000); // Adjust the duration as needed
+
+
 
     } catch (error) {
       console.error('Error booking tour:', error);
