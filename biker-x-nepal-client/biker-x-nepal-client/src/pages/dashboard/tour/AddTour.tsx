@@ -86,9 +86,10 @@ function AddTour() {
                         <FormLabel>Tour Type</FormLabel>
                         <Select {...register("tourType", { required: "Tour type is required" })} defaultValue="">
                             <Option value="">Select Tour Type</Option>
-                            <Option value="on-road">On-road</Option>
-                            <Option value="off-road">Off-road</Option>
-                            <Option value="on-off-combined">On-Off Combined</Option>
+                            <Option value="adventure">Adventure</Option>
+                            <Option value="leisure">Leisure</Option>
+                            <Option value="city">City</Option>
+                            <Option value="extreme">Extreme</Option>
                         </Select>
                         <p>{errors?.tourType?.message}</p>
                     </FormControl>

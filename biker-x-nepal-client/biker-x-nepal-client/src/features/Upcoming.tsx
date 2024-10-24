@@ -1,5 +1,8 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
+import { StarRating } from "../ui/StarRating.tsx";
+import { Link } from "react-router-dom"; // Import Link for navigation
+import TwoWheelerIcon from '@mui/icons-material/TwoWheeler';
 
 export const Upcoming = () => {
     const [upcomingTours, setUpcomingTours] = useState([]);
@@ -77,10 +80,10 @@ export const Upcoming = () => {
                         <div className="w-full flex justify-between items-center py-2 border-b border-white font-bold">
                             <span className="w-[16.6%] text-center">Tour Destination</span>
                             <span className="w-[16.6%] text-center">Start Date</span>
-                            <span className="w-[16.6%] text-center">End Date</span>
                             <span className="w-[16.6%] text-center">No. of Days</span>
-                            <span className="w-[16.6%] text-center">Max Participants</span>
+                            <span className="w-[16.6%] text-center">Tour Difficulty</span>
                             <span className="w-[16.6%] text-center text-yellow-500">Days to Go</span>
+                            <span className="w-[16.6%] text-center">Book Now</span>
                         </div>
 
                         {/* Table Rows (Mapped Tours) */}
@@ -95,10 +98,21 @@ export const Upcoming = () => {
                             >
                                 <span className="w-[16.6%] text-center font-semibold">{tour.tourName}</span>
                                 <span className="w-[16.6%] text-center">{tour.startDate}</span>
-                                <span className="w-[16.6%] text-center">{tour.endDate}</span>
-                                <span className="w-[16.6%] text-center">{calculateDuration(tour.startDate, tour.endDate)} days</span>
-                                <span className="w-[16.6%] text-center">{tour.maxParticipants}</span>
-                                <span className="w-[16.6%] text-center text-yellow-500">{calculateDaysToGo(tour.startDate)} days</span>
+                                <span className="w-[16.6%] text-center">
+                                    {calculateDuration(tour.startDate, tour.endDate)} {calculateDuration(tour.startDate, tour.endDate) <= 1 ? "day" : "days"}
+                                </span>
+                                <span className="w-[16.6%] text-center"><StarRating tourRating={tour.tourRating} /></span>
+                                <span className="w-[16.6%] text-center text-yellow-500">
+                                    {calculateDaysToGo(tour.startDate)} {calculateDaysToGo(tour.startDate) <= 1 ? "day" : "days"}
+                                </span>
+                                <span className="w-[16.6%] text-center cursor-pointer">
+                                    <Link
+                                        to={`/tours/${tour.tourId}`} // Link to the specific tour booking page
+                                        className="flex items-center justify-center p-2 rounded-full bg-transparent hover:bg-white/20 transition duration-200"
+                                    >
+                                        <TwoWheelerIcon /> {/* Button Icon */}
+                                    </Link>
+                                </span>
                             </motion.div>
                         ))}
                     </>
