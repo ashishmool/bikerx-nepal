@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { StarRating } from "../ui/StarRating.tsx";
+import HelmetRating from "../ui/HelmetRating"; // Import the HelmetRating component
 import { Link } from "react-router-dom"; // Import Link for navigation
 import TwoWheelerIcon from '@mui/icons-material/TwoWheeler';
 
@@ -101,7 +101,9 @@ export const Upcoming = () => {
                                 <span className="w-[16.6%] text-center">
                                     {calculateDuration(tour.startDate, tour.endDate)} {calculateDuration(tour.startDate, tour.endDate) <= 1 ? "day" : "days"}
                                 </span>
-                                <span className="w-[16.6%] text-center"><StarRating tourRating={tour.tourRating} /></span>
+                                <span className="w-[16.6%] text-center">
+                                    <HelmetRating difficultyRating={tour.tourRating} /> {/* Use HelmetRating */}
+                                </span>
                                 <span className="w-[16.6%] text-center text-yellow-500">
                                     {calculateDaysToGo(tour.startDate)} {calculateDaysToGo(tour.startDate) <= 1 ? "day" : "days"}
                                 </span>
