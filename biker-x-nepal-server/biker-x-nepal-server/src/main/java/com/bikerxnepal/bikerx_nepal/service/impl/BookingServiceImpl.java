@@ -25,13 +25,16 @@ public class BookingServiceImpl implements BookingService {
         booking.setPurchaseDate(new Date());
         booking.setTourId(bookingPojo.getTourId());
         booking.setUserId(bookingPojo.getUserId());
-        booking.setBikeId(bookingPojo.getBikeId());
+        booking.setBikeIds(bookingPojo.getBikeIds());
         booking.setQuantityPersons(bookingPojo.getQuantityPersons());
         booking.setPaymentStatus(BookingEnum.PENDING); // Default status
         booking.setTotalAmount(bookingPojo.getTotalAmount());
 
-//        userPurchasedTour.setTotalAmount(userPurchasedTourPojo.getTourPrice() * userPurchasedTourPojo.getQuantityPersons());
+        // Set start and end dates for duration calculation
+        booking.setStartDate(bookingPojo.getStartDate());
+        booking.setEndDate(bookingPojo.getEndDate());
 
+        // The duration will be automatically calculated in the getDuration method
 
         return bookingRepo.save(booking);
     }
@@ -42,6 +45,9 @@ public class BookingServiceImpl implements BookingService {
                 .orElseThrow(() -> new EntityNotFoundException("Purchase not found with ID: " + purchaseId));
 
         existingPurchase.setPaymentStatus(bookingPojo.getPaymentStatus());
+        existingPurchase.setBikeIds(bookingPojo.getBikeIds());
+        existingPurchase.setStartDate(bookingPojo.getStartDate());
+        existingPurchase.setEndDate(bookingPojo.getEndDate());
 
         return bookingRepo.save(existingPurchase);
     }
@@ -67,8 +73,10 @@ public class BookingServiceImpl implements BookingService {
     }
 
     @Override
-    public List<Booking> getPurchasesByUserId(Long userId){
-        return bookingRepo.findByUserId(userId);}
+    public List<Booking> getPurchasesByUserId(Long userId) {
+        return bookingRepo.findByUserId(userId);
+    }
+
     @Override
     public List<Booking> getPurchasesByPaymentStatus(BookingEnum paymentStatus) {
         return bookingRepo.findByPaymentStatus(paymentStatus);

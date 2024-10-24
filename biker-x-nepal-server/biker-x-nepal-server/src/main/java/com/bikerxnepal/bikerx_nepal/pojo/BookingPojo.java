@@ -1,13 +1,12 @@
 package com.bikerxnepal.bikerx_nepal.pojo;
 
-import com.bikerxnepal.bikerx_nepal.entity.SystemUser;
-import com.bikerxnepal.bikerx_nepal.entity.Tour;
 import com.bikerxnepal.bikerx_nepal.enums.BookingEnum;
 import lombok.Getter;
 import lombok.Setter;
 
 import jakarta.validation.constraints.NotNull;
 import java.util.Date;
+import java.util.List;
 
 @Getter
 @Setter
@@ -24,7 +23,8 @@ public class BookingPojo {
     @NotNull(message = "User is required")
     private Long userId;
 
-    private Long bikeId;
+    // List of chosen bike IDs
+    private List<Long> bikeIds;
 
     @NotNull(message = "Quantity of persons is required")
     private Integer quantityPersons;
@@ -33,4 +33,14 @@ public class BookingPojo {
 
     @NotNull(message = "Payment status is required")
     private BookingEnum paymentStatus;
+
+    // Dates for calculating duration
+    @NotNull(message = "Start date is required")
+    private Date startDate;
+
+    @NotNull(message = "End date is required")
+    private Date endDate;
+
+    // Optionally include derived duration in Pojo (optional)
+    private Long duration;
 }

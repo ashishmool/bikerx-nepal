@@ -6,6 +6,7 @@ import lombok.Setter;
 
 import jakarta.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "bookings")
@@ -21,26 +22,11 @@ public class Booking {
     @Column(name = "purchase_date", nullable = false)
     private Date purchaseDate;
 
-
-    @Column(name = "tour_id")
+    @Column(name = "tour_id", nullable = false)
     private Long tourId;
 
-    @Column(name = "bike_id")
-    private Long bikeId;
-
-    @Column(name = "user_id")
+    @Column(name = "user_id", nullable = false)
     private Long userId;
-
-
-//    @ManyToOne
-//    @JoinColumn(name = "tour_id", nullable = false)
-//    private Tour tour;
-//
-//    @ManyToOne
-//    @JoinColumn(name = "user_id", nullable = false)
-//    private SystemUser user;
-
-
 
     @Column(name = "quantity_persons", nullable = false)
     private Integer quantityPersons;
@@ -51,4 +37,31 @@ public class Booking {
     @Enumerated(EnumType.STRING)
     @Column(name = "payment_status", nullable = false)
     private BookingEnum paymentStatus;
+
+    // List of chosen bike IDs
+    @ElementCollection
+    @CollectionTable(name = "booking_bikes", joinColumns = @JoinColumn(name = "purchase_id"))
+    @Column(name = "bike_id")
+    private List<Long> bikeIds;
+
+    // Derived duration attribute
+    @Transient
+    private Long duration;
+
+    // Start and end date for calculating the duration
+    @Column(name = "start_date", nullable = false)
+    private Date startDate;
+
+    @Column(name = "end_date", nullable = false)
+    private Date endDate;
+
+    // Calculate duration based on startDate and endDate
+    public Long getDuration() {
+        if (startDate != null && endDate != null) {
+            long diffInMillies = endDate.getTime() - startDate.getTime();
+            return diffInMillies / (1000 * 60 * 60 * 24); // Convert milliseconds to days
+        }
+        return null;
+    }
 }
+

@@ -54,9 +54,8 @@ public class BookingController {
         return bookingService.getPurchasesByPaymentStatus(paymentStatus);
     }
 
-
-    @GetMapping("/getByUserId/{userId}") // Updated mapping to retrieve userId from path
-    public List<Booking> getPurchasesByUserId(@PathVariable Long userId) { // Use @PathVariable to retrieve userId from path
+    @GetMapping("/getByUserId/{userId}")
+    public List<Booking> getPurchasesByUserId(@PathVariable Long userId) {
         return bookingService.getPurchasesByUserId(userId);
     }
 }

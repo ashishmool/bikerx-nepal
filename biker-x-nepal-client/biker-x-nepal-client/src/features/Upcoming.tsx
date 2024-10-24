@@ -80,7 +80,7 @@ export const Upcoming = () => {
                             <span className="w-[16.6%] text-center">End Date</span>
                             <span className="w-[16.6%] text-center">No. of Days</span>
                             <span className="w-[16.6%] text-center">Max Participants</span>
-                            <span className="w-[16.6%] text-center">Days to Go</span>
+                            <span className="w-[16.6%] text-center text-yellow-500">Days to Go</span>
                         </div>
 
                         {/* Table Rows (Mapped Tours) */}
@@ -98,7 +98,7 @@ export const Upcoming = () => {
                                 <span className="w-[16.6%] text-center">{tour.endDate}</span>
                                 <span className="w-[16.6%] text-center">{calculateDuration(tour.startDate, tour.endDate)} days</span>
                                 <span className="w-[16.6%] text-center">{tour.maxParticipants}</span>
-                                <span className="w-[16.6%] text-center">{calculateDaysToGo(tour.startDate)} days</span>
+                                <span className="w-[16.6%] text-center text-yellow-500">{calculateDaysToGo(tour.startDate)} days</span>
                             </motion.div>
                         ))}
                     </>

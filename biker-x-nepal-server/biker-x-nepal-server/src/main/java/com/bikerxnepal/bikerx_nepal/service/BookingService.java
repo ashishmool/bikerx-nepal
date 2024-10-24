@@ -1,8 +1,8 @@
 package com.bikerxnepal.bikerx_nepal.service;
 
 import com.bikerxnepal.bikerx_nepal.entity.Booking;
-import com.bikerxnepal.bikerx_nepal.enums.BookingEnum;
 import com.bikerxnepal.bikerx_nepal.pojo.BookingPojo;
+import com.bikerxnepal.bikerx_nepal.enums.BookingEnum;
 
 import java.util.Date;
 import java.util.List;
@@ -15,7 +15,6 @@ public interface BookingService {
     Optional<Booking> getPurchaseById(Long purchaseId);
     List<Booking> getAllPurchases();
     List<Booking> getPurchasesByDate(Date purchaseDate);
-
     List<Booking> getPurchasesByUserId(Long userId);
     List<Booking> getPurchasesByPaymentStatus(BookingEnum paymentStatus);
 }

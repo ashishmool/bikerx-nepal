@@ -132,17 +132,29 @@ export const SpecificTour = () => {
             quantityPersons: quantity,
             paymentStatus: 'PENDING',
             totalAmount: totalAmount,
-            bikeIds: bikesSelected.map(bike => bike?.bikeId).filter(Boolean)  // Send array of selected bikes
+            bikeIds: bikesSelected.map(bike => bike?.bikeId).filter(Boolean),  // Send array of selected bikes
+            startDate: tour.startDate,  // Include start date
+            endDate: tour.endDate       // Include end date
           }
       );
       toast.success("Booked Successfully!");
+
+      // Delay navigation by 2 seconds (2000 milliseconds)
+      setTimeout(() => {
+        navigate("/tours");
+      }, 2000); // Adjust the duration as needed
+
+      // Reset the state after booking
       setQuantity(1);
       setBikesSelected(Array(1).fill(null));
       setTotalAmount(0);
+
     } catch (error) {
       console.error('Error booking tour:', error);
     }
   };
+
+
 
   if (loading) {
     return (
