@@ -22,6 +22,7 @@ export const TourCatalog = () => {
   const [groupSize, setGroupSize] = useState<string>(''); // State for group size selection
   const [tourType, setTourType] = useState<string>(''); // State for tour type selection
   const [duration, setDuration] = useState<string>(''); // State for duration selection
+  const [uniqueTourTypes, setUniqueTourTypes] = useState<string[]>([]); // State for unique tour types
 
   // Fetch all tours when the component mounts
   useEffect(() => {
@@ -29,6 +30,10 @@ export const TourCatalog = () => {
       try {
         const response = await axios.get("http://localhost:8080/tour/getAll");
         setTours(response.data);
+
+        // Extract unique tour types
+        const uniqueTypes = [...new Set(response.data.map((tour: ITours) => tour.tourType))];
+        setUniqueTourTypes(uniqueTypes);
       } catch (error) {
         console.error("Error fetching tours:", error);
       }
@@ -86,7 +91,7 @@ export const TourCatalog = () => {
     if (tours.length) {
       applyFilters(); // Apply filters whenever tours or selected filters are updated
     }
-  }, [tours, searchText, groupSize, tourType, duration]); // Include duration in dependency array
+  }, [tours, searchText, groupSize, tourType, duration]);
 
   const handleGroupSizeChange = (event: ChangeEvent<HTMLSelectElement>) => {
     setGroupSize(event.target.value); // Update group size based on dropdown selection
@@ -122,7 +127,6 @@ export const TourCatalog = () => {
             <div>Loading...</div> // Replace with your actual Spinner component if needed
         ) : (
             <>
-
               {/* Filter and sorting UI */}
               <div className="text-white flex gap-4 h-[60px] text-lg text-[--third-color] border-[#ffffff34] mb-4 relative z-[2]" ref={filterNSort}>
                 {/* Group Size Filter */}
@@ -149,10 +153,12 @@ export const TourCatalog = () => {
                       className="w-full bg-black text-white border border-[#ffffff34] text-lg h-[60px] flex items-center px-4 rounded-md shadow-md transition-all duration-300 hover:border-gray-500 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-opacity-50"
                   >
                     <option value="">Select Tour Type</option>
-                    <option value="Adventure">Adventure</option>
-                    <option value="Extreme">Extreme</option>
-                    <option value="Cultural">Cultural</option>
-                    <option value="Leisure">Leisure</option>
+                    {/* Dynamically generate the options */}
+                    {uniqueTourTypes.map((type, index) => (
+                        <option key={index} value={type}>
+                          {type}
+                        </option>
+                    ))}
                   </select>
                 </div>
 

@@ -10,7 +10,9 @@ export const Upcoming = () => {
             try {
                 const response = await fetch("http://localhost:8080/tour/getAll");
                 const tours = await response.json();
-                const futureTours = tours.filter((tour) => isFutureTour(tour.startDate));
+                const futureTours = tours
+                    .filter((tour) => isFutureTour(tour.startDate))
+                    .sort((a, b) => calculateDaysToGo(a.startDate) - calculateDaysToGo(b.startDate)); // Sort by "Days to Go"
                 setUpcomingTours(futureTours);
             } catch (error) {
                 console.error("Error fetching tours:", error);
@@ -34,6 +36,15 @@ export const Upcoming = () => {
         const diffTime = Math.abs(end.getTime() - start.getTime());
         const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
         return diffDays;
+    };
+
+    // Helper function to calculate days remaining until the tour starts
+    const calculateDaysToGo = (startDate) => {
+        const today = new Date();
+        const start = new Date(startDate);
+        const diffTime = start.getTime() - today.getTime();
+        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+        return diffDays > 0 ? diffDays : 0;  // Avoid negative days
     };
 
     return (
@@ -64,11 +75,12 @@ export const Upcoming = () => {
                     <>
                         {/* Table Header */}
                         <div className="w-full flex justify-between items-center py-2 border-b border-white font-bold">
-                            <span className="w-[20%] text-center">Tour Destination</span>
-                            <span className="w-[20%] text-center">Start Date</span>
-                            <span className="w-[20%] text-center">End Date</span>
-                            <span className="w-[20%] text-center">No. of Days</span>
-                            <span className="w-[20%] text-center">Max Participants</span>
+                            <span className="w-[16.6%] text-center">Tour Destination</span>
+                            <span className="w-[16.6%] text-center">Start Date</span>
+                            <span className="w-[16.6%] text-center">End Date</span>
+                            <span className="w-[16.6%] text-center">No. of Days</span>
+                            <span className="w-[16.6%] text-center">Max Participants</span>
+                            <span className="w-[16.6%] text-center">Days to Go</span>
                         </div>
 
                         {/* Table Rows (Mapped Tours) */}
@@ -81,11 +93,12 @@ export const Upcoming = () => {
                                 viewport={{ once: true }}
                                 className="w-full flex justify-between items-center py-4 border-b border-white"
                             >
-                                <span className="w-[20%] text-center font-semibold">{tour.tourName}</span>
-                                <span className="w-[20%] text-center">{tour.startDate}</span>
-                                <span className="w-[20%] text-center">{tour.endDate}</span>
-                                <span className="w-[20%] text-center">{calculateDuration(tour.startDate, tour.endDate)} days</span>
-                                <span className="w-[20%] text-center">{tour.maxParticipants}</span>
+                                <span className="w-[16.6%] text-center font-semibold">{tour.tourName}</span>
+                                <span className="w-[16.6%] text-center">{tour.startDate}</span>
+                                <span className="w-[16.6%] text-center">{tour.endDate}</span>
+                                <span className="w-[16.6%] text-center">{calculateDuration(tour.startDate, tour.endDate)} days</span>
+                                <span className="w-[16.6%] text-center">{tour.maxParticipants}</span>
+                                <span className="w-[16.6%] text-center">{calculateDaysToGo(tour.startDate)} days</span>
                             </motion.div>
                         ))}
                     </>
