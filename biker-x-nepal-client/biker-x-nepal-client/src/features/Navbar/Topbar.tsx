@@ -38,7 +38,7 @@ export const Topbar = () => {
                   <NavlinkTopbar route="/dashboard/home">Dashboard</NavlinkTopbar>
               )}
               <NavlinkTopbar route="tours">Tours</NavlinkTopbar>
-              <NavlinkTopbar route="shop">Store</NavlinkTopbar>
+              {/*<NavlinkTopbar route="shop">Store</NavlinkTopbar>*/}
               <NavlinkTopbar route="rides">Rides</NavlinkTopbar>
               <NavlinkTopbar route="about">Who We Are</NavlinkTopbar>
               {role === "Customer" && (

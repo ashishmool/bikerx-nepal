@@ -83,7 +83,7 @@ export const Upcoming = () => {
                             <span className="w-[16.6%] text-center">No. of Days</span>
                             <span className="w-[16.6%] text-center">Tour Difficulty</span>
                             <span className="w-[16.6%] text-center text-yellow-500">Days to Go</span>
-                            <span className="w-[16.6%] text-center">Book Now</span>
+                            <span className="w-[16.6%] text-center text-yellow-500">Book Now</span>
                         </div>
 
                         {/* Table Rows (Mapped Tours) */}
@@ -101,9 +101,10 @@ export const Upcoming = () => {
                                 <span className="w-[16.6%] text-center">
                                     {calculateDuration(tour.startDate, tour.endDate)} {calculateDuration(tour.startDate, tour.endDate) <= 1 ? "day" : "days"}
                                 </span>
-                                <span className="w-[16.6%] text-center">
+                                <span className="w-[16.6%] text-center flex justify-center">
                                     <HelmetRating difficultyRating={tour.tourRating} /> {/* Use HelmetRating */}
                                 </span>
+
                                 <span className="w-[16.6%] text-center text-yellow-500">
                                     {calculateDaysToGo(tour.startDate)} {calculateDaysToGo(tour.startDate) <= 1 ? "day" : "days"}
                                 </span>
