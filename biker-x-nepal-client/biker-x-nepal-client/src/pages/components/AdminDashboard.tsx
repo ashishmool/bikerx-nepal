@@ -16,7 +16,7 @@ function AdminDashboard() {
     const data = {
         tours: 10,
         bikes: 15,
-        testimonials: 20,
+        informations: 20,
         users: 30
     };
 

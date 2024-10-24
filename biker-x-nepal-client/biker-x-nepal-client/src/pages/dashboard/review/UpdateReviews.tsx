@@ -19,45 +19,45 @@ import {toast} from "react-toastify";
 
 function UpdateReviews() {
     const { id } = useParams();
-    console.log("Testimonial ID:", id);
+    console.log("Information ID:", id);
 
     const navigate = useNavigate();
-    const [testimonialData, setTestimonialData] = useState(null);
+    const [informationData, setInformationData] = useState(null);
     const { register, handleSubmit, formState } = useForm();
     const { errors } = formState;
 
-    const { data: testimonialByIdData, isLoading } = useQuery({
-        queryKey: ["GET_TESTIMONIAL_BY_ID", id],
+    const { data: informationByIdData, isLoading } = useQuery({
+        queryKey: ["GET_INFORMATION_BY_ID", id],
         queryFn() {
-            return axios.get(`http://localhost:8080/testimonial/getById/${id}`);
+            return axios.get(`http://localhost:8080/information/getById/${id}`);
         },
         enabled: !!id
     });
 
     useEffect(() => {
-        if (testimonialByIdData) {
-            setTestimonialData(testimonialByIdData.data);
+        if (informationByIdData) {
+            setInformationData(informationByIdData.data);
         }
-    }, [testimonialByIdData]);
+    }, [informationByIdData]);
 
-    const updateTestimonialMutation = useMutation({
-        mutationKey: ["UPDATE_TESTIMONIAL"],
+    const updateInformationMutation = useMutation({
+        mutationKey: ["UPDATE_INFORMATION"],
         mutationFn(payload) {
-            return axios.put(`http://localhost:8080/testimonial/update/${id}`, payload);
+            return axios.put(`http://localhost:8080/information/update/${id}`, payload);
         },
         onSuccess() {
             toast.success('Review Updated Successfully)')
-            navigate("/dashboard/testimonials/manage");
+            navigate("/dashboard/informations/manage");
         }
     });
 
     const onSubmit = (formData) => {
         const mergedData = {
-            ...testimonialData,
+            ...informationData,
             ...formData,
         };
-        if (updateTestimonialMutation) {
-            updateTestimonialMutation.mutate(mergedData);
+        if (updateInformationMutation) {
+            updateInformationMutation.mutate(mergedData);
         }
     };
 
@@ -65,39 +65,39 @@ function UpdateReviews() {
 
     return (
         <Box maxWidth="800px" mx="auto" px={{ xs: 2, md: 6 }} py={{ xs: 2, md: 3 }}>
-            <IconButton onClick={() => navigate("/dashboard/testimonial/list")} aria-label="back">
+            <IconButton onClick={() => navigate("/dashboard/information/list")} aria-label="back">
                 <ArrowBackIcon /> Go Back
             </IconButton>
             <form onSubmit={handleSubmit(onSubmit)}>
                 <Stack spacing={2}>
                     <FormControl>
                         <FormLabel>Title</FormLabel>
-                        <Textarea defaultValue={testimonialData?.title} {...register("title")} />
+                        <Textarea defaultValue={informationData?.title} {...register("title")} />
                         <p>{errors?.title?.message}</p>
                     </FormControl>
                     <FormControl>
                         <FormLabel>Description</FormLabel>
-                        <Textarea defaultValue={testimonialData?.description} {...register("description")} />
+                        <Textarea defaultValue={informationData?.description} {...register("description")} />
                         <p>{errors?.description?.message}</p>
                     </FormControl>
                     <FormControl>
                         <FormLabel>Full Name</FormLabel>
-                        <Textarea defaultValue={testimonialData?.fullName} {...register("fullName")} />
+                        <Textarea defaultValue={informationData?.fullName} {...register("fullName")} />
                         <p>{errors?.fullName?.message}</p>
                     </FormControl>
                     <FormControl>
                         <FormLabel>Designation</FormLabel>
-                        <Textarea defaultValue={testimonialData?.designation} {...register("designation")} />
+                        <Textarea defaultValue={informationData?.designation} {...register("designation")} />
                         <p>{errors?.designation?.message}</p>
                     </FormControl>
                     <FormControl>
                         <FormLabel>Company</FormLabel>
-                        <Textarea defaultValue={testimonialData?.company} {...register("company")} />
+                        <Textarea defaultValue={informationData?.company} {...register("company")} />
                         <p>{errors?.company?.message}</p>
                     </FormControl>
                     <FormControl>
                         <FormLabel>Review Rating</FormLabel>
-                        <Textarea defaultValue={testimonialData?.reviewRating} {...register("reviewRating")} />
+                        <Textarea defaultValue={informationData?.reviewRating} {...register("reviewRating")} />
                         <p>{errors?.reviewRating?.message}</p>
                     </FormControl>
                 </Stack>
@@ -120,7 +120,7 @@ function UpdateReviews() {
                         },
                     }}
                 >
-                    Update Testimonial
+                    Update Information
                 </Button>
             </form>
         </Box>

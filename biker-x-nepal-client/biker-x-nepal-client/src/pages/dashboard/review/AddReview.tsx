@@ -26,14 +26,14 @@ function AddReview() {
     const navigate = useNavigate();
 
     const useApiCall = useMutation({
-        mutationKey: ["POST_TESTIMONIAL_CREATE"],
+        mutationKey: ["POST_INFORMATION_CREATE"],
         mutationFn: (payload) => {
             console.log(payload);
-            return axios.post("http://localhost:8080/testimonial/save", payload);
+            return axios.post("http://localhost:8080/information/save", payload);
         },
         onSuccess() {
             toast.success('Added Review Successfully');
-            navigate("/dashboard/testimonial/list");
+            navigate("/dashboard/information/list");
         }
     });
 
@@ -61,7 +61,7 @@ function AddReview() {
                     <Card>
                         <form onSubmit={handleSubmit(onSubmit)}>
                             <Box sx={{ mb: 1 }}>
-                                <Typography level="title-md">Add New Testimonial</Typography>
+                                <Typography level="title-md">Add New Information</Typography>
                                 <Typography level="body-sm">
                                     Provide details about the review.
                                 </Typography>

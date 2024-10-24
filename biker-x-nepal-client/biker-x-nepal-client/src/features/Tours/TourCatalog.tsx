@@ -122,6 +122,7 @@ export const TourCatalog = () => {
             <div>Loading...</div> // Replace with your actual Spinner component if needed
         ) : (
             <>
+
               {/* Filter and sorting UI */}
               <div className="text-white flex gap-4 h-[60px] text-lg text-[--third-color] border-[#ffffff34] mb-4 relative z-[2]" ref={filterNSort}>
                 {/* Group Size Filter */}
@@ -130,7 +131,7 @@ export const TourCatalog = () => {
                       id="group-size"
                       value={groupSize}
                       onChange={handleGroupSizeChange}
-                      className="w-full bg-black text-white border-white text-lg h-[60px] flex items-center px-4 rounded-md shadow-md transition-all duration-300 hover:border-gray-500 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-opacity-50"
+                      className="w-full bg-black text-white border border-[#ffffff34] text-lg h-[60px] flex items-center px-4 rounded-md shadow-md transition-all duration-300 hover:border-gray-500 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-opacity-50"
                   >
                     <option value="">Select Group Size</option>
                     <option value="Upto 10">Upto 10</option>
@@ -145,7 +146,7 @@ export const TourCatalog = () => {
                       id="tour-type"
                       value={tourType}
                       onChange={handleTourTypeChange}
-                      className="w-full bg-black text-white border-white text-lg h-[60px] flex items-center px-4 rounded-md shadow-md transition-all duration-300 hover:border-gray-500 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-opacity-50"
+                      className="w-full bg-black text-white border border-[#ffffff34] text-lg h-[60px] flex items-center px-4 rounded-md shadow-md transition-all duration-300 hover:border-gray-500 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-opacity-50"
                   >
                     <option value="">Select Tour Type</option>
                     <option value="Adventure">Adventure</option>
@@ -161,7 +162,7 @@ export const TourCatalog = () => {
                       id="duration"
                       value={duration}
                       onChange={handleDurationChange}
-                      className="w-full bg-black text-white border-white text-lg h-[60px] flex items-center px-4 rounded-md shadow-md transition-all duration-300 hover:border-gray-500 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-opacity-50"
+                      className="w-full bg-black text-white border border-[#ffffff34] text-lg h-[60px] flex items-center px-4 rounded-md shadow-md transition-all duration-300 hover:border-gray-500 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-opacity-50"
                   >
                     <option value="">Select Duration</option>
                     <option value="Less than 7 Days">Less than 7 Days</option>
@@ -169,8 +170,9 @@ export const TourCatalog = () => {
                   </select>
                 </div>
 
+                {/* Reset Filters Button (40% smaller) */}
                 <button
-                    className="w-full justify-center bg-black text-[#fff] flex border border-[#ffffff34] items-center transition-all duration-300 hover:underline"
+                    className="w-[60%] justify-center bg-black text-[#fff] flex border border-[#ffffff34] items-center transition-all duration-300 hover:underline text-md py-2"
                     onClick={resetFilters}
                 >
                   <FaSliders />

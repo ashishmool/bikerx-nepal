@@ -12,7 +12,7 @@ export const ReviewsHome = () => {
     useEffect(() => {
         const fetchReviews = async () => {
             try {
-                const response = await axios.get('http://localhost:8080/testimonial/getAll');
+                const response = await axios.get('http://localhost:8080/information/getAll');
                 const fetchedReviews = response.data;
                 console.log('Fetched Reviews:::', fetchedReviews);
                 setReviewsHome(fetchedReviews); // Update state with fetched reviews
@@ -82,11 +82,11 @@ export const ReviewsHome = () => {
                         </div>
                         <div className="grid gap-4 mt-4 full:mt-0">
                             <p className="font-light text-center h-fit">{fetchedReview.description}</p>
-                            <p className="text-2xl laptop:text-3xl text-center mt-5 laptop:mt-0">{fetchedReview.fullName}</p>
-                            <p className="underline text-center transition-all duration-200 text-yellow-500">{fetchedReview.company}</p>
-                            <p className="font-light text-center h-fit">{fetchedReview.designation}</p>
-                            <p className="text-center font-light">
-                                <strong>Reviewed On:</strong> {new Date(fetchedReview.date).toLocaleDateString('en-GB', {
+                            {/*<p className="text-2xl laptop:text-3xl text-center mt-5 laptop:mt-0">{fetchedReview.fullName}</p>*/}
+                            {/*<p className="underline text-center transition-all duration-200 text-yellow-500">{fetchedReview.company}</p>*/}
+                            {/*<p className="font-light text-center h-fit">{fetchedReview.designation}</p>*/}
+                            <p className="underline text-center transition-all duration-200 text-yellow-500">
+                                {new Date(fetchedReview.date).toLocaleDateString('en-GB', {
                                 weekday: 'long',
                                 day: '2-digit',
                                 month: 'short',

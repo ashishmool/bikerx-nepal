@@ -13,16 +13,16 @@ function ListReviews() {
     const navigate = useNavigate();
 
     const { data, refetch } = useQuery({
-        queryKey: ["GET_TESTIMONIALS"],
+        queryKey: ["GET_INFORMATIONS"],
         queryFn() {
-            return axios.get("http://localhost:8080/testimonial/getAll");
+            return axios.get("http://localhost:8080/information/getAll");
         }
     });
 
     const deleteByIdApi = useMutation({
-        mutationKey: ["DELETE_TESTIMONIAL_BY_ID"],
+        mutationKey: ["DELETE_INFORMATION_BY_ID"],
         mutationFn(id) {
-            return axios.delete(`http://localhost:8080/testimonial/delete/${id}`);
+            return axios.delete(`http://localhost:8080/information/delete/${id}`);
         },
         onSuccess() {
             toast.success('Review Delete Success');
@@ -46,29 +46,29 @@ function ListReviews() {
                 </tr>
                 </thead>
                 <tbody>
-                {data?.data.map((testimonial) => (
-                    <tr key={testimonial.testimonialId} style={{ borderBottom: '1px solid #ddd' }}>
-                        <td style={{ wordWrap: 'break-word', maxWidth: '30px' }}>{testimonial.testimonialId}</td>
-                        <td style={{ wordWrap: 'break-word', maxWidth: '80px' }}>{testimonial.title}</td>
-                        <td style={{ wordWrap: 'break-word', maxWidth: '80px' }}>{testimonial.description}</td>
-                        <td style={{ wordWrap: 'break-word', maxWidth: '50px' }}>{testimonial.fullName}</td>
-                        <td style={{ wordWrap: 'break-word', maxWidth: '50px' }}>{testimonial.designation}</td>
-                        <td style={{ wordWrap: 'break-word', maxWidth: '50px' }}>{testimonial.company}</td>
+                {data?.data.map((information) => (
+                    <tr key={information.informationId} style={{ borderBottom: '1px solid #ddd' }}>
+                        <td style={{ wordWrap: 'break-word', maxWidth: '30px' }}>{information.informationId}</td>
+                        <td style={{ wordWrap: 'break-word', maxWidth: '80px' }}>{information.title}</td>
+                        <td style={{ wordWrap: 'break-word', maxWidth: '80px' }}>{information.description}</td>
+                        <td style={{ wordWrap: 'break-word', maxWidth: '50px' }}>{information.fullName}</td>
+                        <td style={{ wordWrap: 'break-word', maxWidth: '50px' }}>{information.designation}</td>
+                        <td style={{ wordWrap: 'break-word', maxWidth: '50px' }}>{information.company}</td>
                         <td style={{ wordWrap: 'break-word', maxWidth: '50px' , textAlign:'center'}}>
 
                             <Rate
-                                value={testimonial.reviewRating}
+                                value={information.reviewRating}
                                 disabled={true}
                                 className="justify-evenly block text-center"
                             />
 
                             </td>
                         <td style={{ textAlign:'center'}}>
-                            <button onClick={() => navigate(`/dashboard/testimonial/update/${testimonial.testimonialId}`)}>
+                            <button onClick={() => navigate(`/dashboard/information/update/${information.informationId}`)}>
                                 <EditIcon />
                                 Edit
                             </button>
-                            <button onClick={() => deleteByIdApi.mutate(testimonial.testimonialId)}>
+                            <button onClick={() => deleteByIdApi.mutate(information.informationId)}>
                                 <DeleteIcon />
                                 Delete
                             </button>

@@ -14,9 +14,9 @@ import java.util.Date;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class TestimonialPojo {
+public class InformationPojo {
 
-    private Long testimonialId;
+    private Long informationId;
 
     @NotBlank(message = "Title is required")
     private String title;

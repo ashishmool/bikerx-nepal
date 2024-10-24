@@ -350,16 +350,16 @@ export default function Sidebar() {
                             <ListItemButton
                                 role="menuitem"
                                 component="a"
-                                href="/dashboard/testimonial/add"
-                                selected={location.pathname === '/dashboard/testimonial/add'}
+                                href="/dashboard/information/add"
+                                selected={location.pathname === '/dashboard/information/add'}
                             >Add New Review</ListItemButton>
                         </ListItem>
                         <ListItem sx={{ mt: 0.5 }}>
                             <ListItemButton
                                 role="menuitem"
                                 component="a"
-                                href="/dashboard/testimonial/list"
-                                selected={location.pathname === '/dashboard/testimonial/list'}
+                                href="/dashboard/information/list"
+                                selected={location.pathname === '/dashboard/information/list'}
                             >Manage Reviews</ListItemButton>
                         </ListItem>
                     </List>

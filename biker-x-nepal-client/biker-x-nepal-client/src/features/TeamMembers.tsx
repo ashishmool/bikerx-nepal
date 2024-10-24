@@ -52,7 +52,7 @@ export const TeamMembers = () => {
                       alt={`Team member ${member.name}`}
                       className="h-[175px] rounded-full"
                   />
-                  <div className="flex flex-col items-center gap-2">
+                  <div className="flex flex-col items-center gap-2 mt-6">
                     <h2 className="font-semibold text-2xl">{member.name}</h2>
                     <h3 className="font-light">{member.quote}</h3>
                   </div>

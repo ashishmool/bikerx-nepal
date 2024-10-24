@@ -4,6 +4,7 @@ import { ReviewsHome } from "../features/ReviewsHome";
 import { Services } from "../features/Services";
 import { HomePhoto } from "../ui/HomePhoto";
 import { motion } from "framer-motion";
+import {Upcoming} from "../features/Upcoming.tsx";
 export const Home = () => {
   /*ERRORS TO SOLVE
   NOTE: At the end erase all cardImages and tourImages as they are extracted from supabase, not from the project
@@ -33,6 +34,7 @@ export const Home = () => {
         </motion.div>
       </article>
       <AboutUs />
+        <Upcoming />
       <Services />
       <div className="grid grid-cols-1 full:grid-cols-2 gap-14 full:gap-0">
         <ReviewsHome />

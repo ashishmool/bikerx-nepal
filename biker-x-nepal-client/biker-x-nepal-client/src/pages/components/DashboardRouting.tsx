@@ -128,9 +128,9 @@ export default function DashboardRouting() {
                     <Route path="bike/list" element={<ListBike />} />
                     <Route path="bike/update/:id" element={<UpdateBike/>} />
 
-                    <Route path="testimonial/add" element={<AddReview />} />
-                    <Route path="testimonial/list" element={<ListReviews />} />
-                    <Route path="testimonial/update/:id" element={<UpdateReviews/>} />
+                    <Route path="information/add" element={<AddReview />} />
+                    <Route path="information/list" element={<ListReviews />} />
+                    <Route path="information/update/:id" element={<UpdateReviews/>} />
 
                     <Route path="user/list" element={<ListUser />} />
                     <Route path="user/add" element={<AddNewUser />} />

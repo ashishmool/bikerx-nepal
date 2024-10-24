@@ -14,6 +14,7 @@ import { motion } from "framer-motion";
 import { ReviewsHome } from "../features/ReviewsHome";
 import { FAQ } from "../features/FAQ";
 import { TourCatalog } from "../features/Tours/TourCatalog";
+import {Upcoming} from "../features/Upcoming.tsx";
 
 export const Tours = () => {
   const dispatch = useDispatch() as ThunkDispatch<
@@ -80,6 +81,7 @@ export const Tours = () => {
         <TourSearchBar />
       </div>
       <div ref={catalog}><TourCatalog /></div>
+      <Upcoming/>
       <Services />
       <div className="px-[10%] full:px-[3%] min-[1200px]:px-[10%] grid grid-cols-1 full:grid-cols-2 gap-14 full:gap-0 mt-20">
         <ReviewsHome />

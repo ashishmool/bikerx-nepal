@@ -9,17 +9,17 @@ import lombok.Setter;
 import java.util.Date;
 
 @Entity
-@Table(name = "testimonials")
+@Table(name = "informations")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Testimonial {
+public class Information {
 
     @Id
-    @SequenceGenerator(name = "testimonials_seq_gen", sequenceName = "testimonials_id_seq", allocationSize = 1)
-    @GeneratedValue(generator = "testimonials_seq_gen", strategy = GenerationType.SEQUENCE)
-    private Long testimonialId;
+    @SequenceGenerator(name = "informations_seq_gen", sequenceName = "informations_id_seq", allocationSize = 1)
+    @GeneratedValue(generator = "informations_seq_gen", strategy = GenerationType.SEQUENCE)
+    private Long informationId;
 
     @Column(name = "title", nullable = false)
     private String title;

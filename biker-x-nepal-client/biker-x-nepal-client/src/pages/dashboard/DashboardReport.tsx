@@ -18,7 +18,7 @@ function DashboardReport() {
     const [data, setData] = useState({
         tours: 0,
         bikes: 0,
-        testimonials: 0,
+        informations: 0,
         users: 0
     });
     const [tourDates, setTourDates] = useState<Date[]>([]);
@@ -29,13 +29,13 @@ function DashboardReport() {
             try {
                 const toursResponse = await axios.get("http://localhost:8080/tour/getAll");
                 const bikesResponse = await axios.get("http://localhost:8080/bike/getAll");
-                const testimonialsResponse = await axios.get("http://localhost:8080/testimonial/getAll");
+                const informationsResponse = await axios.get("http://localhost:8080/information/getAll");
                 const usersResponse = await axios.get("http://localhost:8080/system-user/getAllWithoutPassword");
 
                 setData({
                     tours: toursResponse.data.length,
                     bikes: bikesResponse.data.length,
-                    testimonials: testimonialsResponse.data.length,
+                    informations: informationsResponse.data.length,
                     users: usersResponse.data.length
                 });
             } catch (error) {
@@ -104,11 +104,11 @@ function DashboardReport() {
                 </Card>
                 <Card sx={{ width: 200, textAlign: 'center' }}>
                     <CardContent>
-                        <Typography variant="h6" component={Link} to="/dashboard/testimonial/list">
+                        <Typography variant="h6" component={Link} to="/dashboard/information/list">
                             <GradingIcon/> Reviews
                         </Typography>
                         <Typography variant="body2" color="text.secondary">
-                            {data.testimonials}
+                            {data.informations}
                         </Typography>
                     </CardContent>
                 </Card>

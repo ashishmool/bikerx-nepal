@@ -89,15 +89,15 @@ export const TourCard = ({
               <p className="font-medium text-sm text-left">
                 Duration: {differenceInDays} days
               </p>
-              <StarRating tourRating={tourRating} />{" "}
-              {!totalReviews ? (
-                  <span className="font-light text-white/70 italic">No reviews yet</span>
-              ) : (
-                  <div className="flex gap-3 font-light text-white/70 items-center">
-                    <StarRating tourRating={tourRating} />{" "}
-                    <span className="mb-1">{`(${totalReviews})`}</span>
-                  </div>
-              )}
+              <StarRating tourRating={tourRating} />
+              {/*{!totalReviews ? (*/}
+              {/*    <span className="font-light text-white/70 italic">No reviews yet</span>*/}
+              {/*) : (*/}
+              {/*    <div className="flex gap-3 font-light text-white/70 items-center">*/}
+              {/*      <StarRating tourRating={tourRating} />{" "}*/}
+              {/*      <span className="mb-1">{`(${totalReviews})`}</span>*/}
+              {/*    </div>*/}
+              {/*)}*/}
             </div>
             <h3 className="font-medium text-md text-left">Max. Participants: {maxParticipants}</h3>
 
