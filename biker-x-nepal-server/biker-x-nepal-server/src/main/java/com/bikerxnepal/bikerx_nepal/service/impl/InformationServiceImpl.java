@@ -30,10 +30,7 @@ public class InformationServiceImpl implements InformationService {
 
         information.setTitle(informationPojo.getTitle());
         information.setDescription(informationPojo.getDescription());
-        information.setFullName(informationPojo.getFullName());
-        information.setDesignation(informationPojo.getDesignation());
-        information.setCompany(informationPojo.getCompany());
-        information.setReviewRating(informationPojo.getReviewRating());
+
         // Get the current date
         Date currentDate = new Date();
         information.setDate(currentDate);

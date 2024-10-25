@@ -73,12 +73,12 @@ export const ReviewsHome = () => {
                     >
                         <div className="relative">
                             <p className="text-2xl laptop:text-3xl text-center mb-5 laptop:mt-0">{fetchedReview.title}</p>
-                            <span className="block text-9xl h-[60px] px-4">"</span>
-                            <Rate
-                                value={fetchedReview.reviewRating}
-                                disabled={true}
-                                className="block text-center absolute left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%]"
-                            />
+                            {/*<span className="block text-9xl h-[60px] px-4">"</span>*/}
+                            {/*<Rate*/}
+                            {/*    value={fetchedReview.reviewRating}*/}
+                            {/*    disabled={true}*/}
+                            {/*    className="block text-center absolute left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%]"*/}
+                            {/*/>*/}
                         </div>
                         <div className="grid gap-4 mt-4 full:mt-0">
                             <p className="font-light text-center h-fit">{fetchedReview.description}</p>

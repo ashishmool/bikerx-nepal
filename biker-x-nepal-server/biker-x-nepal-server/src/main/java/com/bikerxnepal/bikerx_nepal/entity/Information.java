@@ -30,16 +30,4 @@ public class Information {
     @Column(name = "date", nullable = false)
     private Date date;
 
-    @Column(name = "full_name", nullable = false)
-    private String fullName;
-
-    @Column(name = "designation", nullable = false)
-    private String designation;
-
-    @Column(name = "company", nullable = false)
-    private String company;
-
-    @Column(name = "review_rating", nullable = false)
-    private Integer reviewRating;
-
 }

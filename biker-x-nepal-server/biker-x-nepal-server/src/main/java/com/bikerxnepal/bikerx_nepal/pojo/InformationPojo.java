@@ -28,17 +28,5 @@ public class InformationPojo {
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     private Date date;
 
-    @NotBlank(message = "Full name is required")
-    private String fullName;
-
-    @NotBlank(message = "Designation is required")
-    private String designation;
-
-    @NotBlank(message = "Company is required")
-    private String company;
-
-    @NotNull(message = "Rating is required")
-    private Integer reviewRating;
-
 
 }
