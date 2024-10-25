@@ -43,4 +43,17 @@ public class BookingPojo {
 
     // Optionally include derived duration in Pojo (optional)
     private Long duration;
+
+    private String userEmail; // Add this field
+
+
+    // Getters and Setters
+    public String getUserEmail() {
+        return userEmail;
+    }
+
+    public void setUserEmail(String userEmail) {
+        this.userEmail = userEmail;
+    }
+
 }

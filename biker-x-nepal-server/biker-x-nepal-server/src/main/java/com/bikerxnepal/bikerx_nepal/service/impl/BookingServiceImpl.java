@@ -2,29 +2,34 @@ package com.bikerxnepal.bikerx_nepal.service.impl;
 
 import com.bikerxnepal.bikerx_nepal.entity.Bike;
 import com.bikerxnepal.bikerx_nepal.entity.Booking;
+import com.bikerxnepal.bikerx_nepal.entity.SystemUser;
 import com.bikerxnepal.bikerx_nepal.enums.BookingEnum;
 import com.bikerxnepal.bikerx_nepal.pojo.BookingPojo;
 import com.bikerxnepal.bikerx_nepal.repo.BikeRepo;
 import com.bikerxnepal.bikerx_nepal.repo.BookingRepo;
+import com.bikerxnepal.bikerx_nepal.repo.SystemUserRepo;
 import com.bikerxnepal.bikerx_nepal.service.BookingService;
+import com.bikerxnepal.bikerx_nepal.service.EmailService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
 public class BookingServiceImpl implements BookingService {
 
     private final BookingRepo bookingRepo;
-    private final BikeRepo bikeRepo; // Repository to manage bike stock
+    private final BikeRepo bikeRepo;
+    private final EmailService emailService;
+    private final SystemUserRepo systemUserRepo;
+
 
 
     @Override
     public Booking purchaseTour(BookingPojo bookingPojo) {
+        // Create a new Booking instance
         Booking booking = new Booking();
         booking.setPurchaseDate(new Date());
         booking.setTourId(bookingPojo.getTourId());
@@ -49,7 +54,17 @@ public class BookingServiceImpl implements BookingService {
             bikeRepo.save(bike); // Save updated stock
         });
 
-        return bookingRepo.save(booking);
+        // Save the booking
+        Booking savedBooking = bookingRepo.save(booking);
+
+        // Get the email directly from bookingPojo
+        String userEmail = bookingPojo.getUserEmail(); // Use email from bookingPojo
+
+        // Send booking confirmation email
+        emailService.sendBookingConfirmation(savedBooking, userEmail);
+
+
+        return savedBooking;
     }
 
     @Override

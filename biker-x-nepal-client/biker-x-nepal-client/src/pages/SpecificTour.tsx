@@ -121,6 +121,7 @@ export const SpecificTour = () => {
     }
 
     const userId = localStorage.getItem("userId");
+    const userEmail = localStorage.getItem("email"); // Get the user's email from localStorage
 
     try {
       await axios.post(
@@ -132,11 +133,13 @@ export const SpecificTour = () => {
             quantityPersons: quantity,
             paymentStatus: 'PENDING',
             totalAmount: totalAmount,
-            bikeIds: bikesSelected.map(bike => bike?.bikeId).filter(Boolean),  // Send array of selected bikes
+            bikeIds: bikesSelected.map(bike => bike?.bikeId).filter(Boolean), // Send array of selected bikes
             startDate: tour.startDate,  // Include start date
-            endDate: tour.endDate       // Include end date
+            endDate: tour.endDate,      // Include end date
+            userEmail: userEmail         // Include email in the request
           }
       );
+
       // Reset the state after booking
       setQuantity(1);
       setBikesSelected(Array(1).fill(null));
@@ -149,12 +152,11 @@ export const SpecificTour = () => {
         navigate(`/my-tour/${userId}`, { replace: true });
       }, 1000); // Adjust the duration as needed
 
-
-
     } catch (error) {
       console.error('Error booking tour:', error);
     }
   };
+
 
 
 
