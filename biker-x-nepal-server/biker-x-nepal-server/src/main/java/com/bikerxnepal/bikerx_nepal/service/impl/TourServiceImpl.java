@@ -36,18 +36,19 @@ public class TourServiceImpl implements TourService {
     public String save(TourPojo tourPojo) throws IOException {
         Tour tour = new Tour();
         if (tourPojo.getImage() != null && !tourPojo.getImage().isEmpty()) {
-            Path fileNameAndPath = Paths.get("uploads/", tourPojo.getImage().getOriginalFilename());
+            Path fileNameAndPath = Paths.get("image_uploads/", tourPojo.getImage().getOriginalFilename());
             Files.write(fileNameAndPath, tourPojo.getImage().getBytes());
             tour.setImage(tourPojo.getImage().getOriginalFilename());
         }
         tour.setTourName(tourPojo.getTourName());
         tour.setTourDescription(tourPojo.getTourDescription());
+        tour.setTourItinerary(tourPojo.getTourItinerary());
         tour.setTourType(tourPojo.getTourType());
         tour.setStartDate(tourPojo.getStartDate());
         tour.setEndDate(tourPojo.getEndDate());
         tour.setMaxParticipants(tourPojo.getMaxParticipants());
         tour.setTourPrice(tourPojo.getTourPrice());
-        tour.setTourAvailability(true); // Default availability is true
+        tour.setTourRating(tourPojo.getTourRating());
         tourRepo.save(tour);
         return "Tour saved successfully!";
     }
@@ -135,7 +136,6 @@ public class TourServiceImpl implements TourService {
             existingTour.setTourPrice(tourPojo.getTourPrice());
         }
 
-        existingTour.setTourAvailability(tourPojo.isTourAvailability());
 
         // Handle image update if provided
         if (tourPojo.getImage() != null && !tourPojo.getImage().isEmpty()) {

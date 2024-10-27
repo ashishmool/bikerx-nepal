@@ -44,12 +44,10 @@ public class TourPojo {
 
     @Min(value = 1, message = "Tour rating must be at least 1")
     @Max(value = 5, message = "Tour rating cannot be more than 5")
-    private Long tourRating;
+    private Double tourRating;
 
     @Positive(message = "Tour price must be positive")
     private double tourPrice;
-
-    private boolean tourAvailability;
 
     private MultipartFile image; // Add custom validators if needed
 }

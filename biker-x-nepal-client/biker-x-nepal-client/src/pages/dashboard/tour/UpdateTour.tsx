@@ -6,49 +6,48 @@ import { useNavigate, useParams } from "react-router-dom";
 import {
     Box,
     Stack,
-    IconButton,
-    FormControl,
     FormLabel,
     Input,
+    Select,
+    Option,
     Button,
+    Typography,
     Textarea,
+    Card,
+    CardActions,
+    CardOverflow,
+    Divider,
 } from '@mui/joy';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 
 function UpdateTour() {
     const { id } = useParams();
     const navigate = useNavigate();
     const [image, setImage] = useState(null);
-
-    // Form management using react-hook-form
     const { register, handleSubmit, setValue, formState } = useForm();
     const { errors } = formState;
 
-    // Fetching tour data based on ID
     const { data: tourByIdData, isLoading } = useQuery({
         queryKey: ["GET_TOUR_BY_ID", id],
         queryFn: () => axios.get(`http://localhost:8080/tour/getById/${id}`),
         enabled: !!id
     });
 
-    // Populate form fields when the data is fetched
     useEffect(() => {
         if (tourByIdData) {
-            const { tourName, tourDescription, tourType, startDate, endDate, maxParticipants, tourRating, tourPrice } = tourByIdData.data;
+            const { tourName, tourDescription, tourItinerary, tourType, startDate, endDate, maxParticipants, tourRating, tourPrice } = tourByIdData.data;
             setValue("tourName", tourName);
             setValue("tourDescription", tourDescription);
+            setValue("tourItinerary", tourItinerary);
             setValue("tourType", tourType);
-            setValue("startDate", new Date(startDate).toISOString().split("T")[0]); // Format date
-            setValue("endDate", new Date(endDate).toISOString().split("T")[0]); // Format date
+            setValue("startDate", new Date(startDate).toISOString().split("T")[0]);
+            setValue("endDate", new Date(endDate).toISOString().split("T")[0]);
             setValue("maxParticipants", maxParticipants);
             setValue("tourRating", tourRating);
             setValue("tourPrice", tourPrice);
         }
     }, [tourByIdData, setValue]);
 
-    // Updating the tour mutation
     const updateTourMutation = useMutation({
         mutationKey: ["UPDATE_TOUR"],
         mutationFn(formData) {
@@ -63,128 +62,137 @@ function UpdateTour() {
         }
     });
 
-    // Submit handler to trigger the update mutation
     const onSubmit = (formData) => {
         const updatedData = new FormData();
-
-        // Handle the image only if it's a new image selection
-        if (image) {
-            updatedData.append("image", image); // Include the image file if selected
-        }
-
-        // Append other form fields
+        if (image) updatedData.append("image", image);
         updatedData.append("tourName", formData.tourName);
         updatedData.append("tourDescription", formData.tourDescription);
+        updatedData.append("tourItinerary", formData.tourItinerary);
         updatedData.append("tourType", formData.tourType);
         updatedData.append("startDate", formData.startDate);
         updatedData.append("endDate", formData.endDate);
         updatedData.append("maxParticipants", String(formData.maxParticipants));
         updatedData.append("tourRating", String(formData.tourRating));
-        updatedData.append("tourPrice", String(formData.tourPrice)); // Ensure it's a string to avoid NaN issues
+        updatedData.append("tourPrice", String(formData.tourPrice));
 
-        // Log FormData content for debugging
-        for (let pair of updatedData.entries()) {
-            console.log(`${pair[0]}: ${pair[1]}`);
-        }
-
-        // Trigger the mutation to update tour data
         updateTourMutation.mutate(updatedData);
     };
 
-    // Image upload handler
     const handleImageUpload = (event) => {
         setImage(event?.target?.files[0]);
     };
 
-    if (isLoading) return <p>Loading...</p>; // Show a loading message while fetching tour data
+    if (isLoading) return <p>Loading...</p>;
 
     return (
-        <Box maxWidth="800px" mx="auto" px={{ xs: 2, md: 6 }} py={{ xs: 2, md: 3 }}>
-            <IconButton onClick={() => navigate("/dashboard/tour/list")} aria-label="back">
-                <ArrowBackIcon /> Go Back
-            </IconButton>
-            <form onSubmit={handleSubmit(onSubmit)}>
-                <Stack spacing={2}>
-                    <FormControl>
-                        <FormLabel>Tour Name</FormLabel>
-                        <Textarea
-                            {...register("tourName", { required: "Tour name is required" })}
-                        />
-                        <p>{errors.tourName?.message}</p>
-                    </FormControl>
-                    <FormControl>
-                        <FormLabel>Description</FormLabel>
-                        <Textarea
-                            {...register("tourDescription", { required: "Description is required" })}
-                        />
-                        <p>{errors.tourDescription?.message}</p>
-                    </FormControl>
-                    <FormControl>
-                        <FormLabel>Tour Type</FormLabel>
-                        <Input
-                            {...register("tourType", { required: "Tour type is required" })}
-                        />
-                        <p>{errors.tourType?.message}</p>
-                    </FormControl>
+        <Box sx={{ flex: 1, width: '100%' }}>
+            <Stack
+                spacing={4}
+                sx={{
+                    display: 'flex',
+                    maxWidth: '1000px',
+                    mx: 'auto',
+                    px: { xs: 2, md: 6 },
+                    py: { xs: 2, md: 3 },
+                }}
+            >
+                <Card>
+                    <form onSubmit={handleSubmit(onSubmit)}>
+                        <Box sx={{ mb: 1 }}>
+                            <Typography level="title-md">Update Tour</Typography>
+                            <Typography level="body-sm">
+                                Update the details of the tour.
+                            </Typography>
+                        </Box>
+                        <Divider />
+                        <Stack spacing={2} sx={{ my: 1 }}>
+                            <Stack direction="row" spacing={1}>
+                                <Stack sx={{ flex: 1 }}>
+                                    <FormLabel>Tour Name *</FormLabel>
+                                    <Textarea {...register("tourName", { required: "Tour name is required" })} />
+                                    <p>{errors?.tourName?.message}</p>
+                                </Stack>
+                                <Stack sx={{ flex: 1 }}>
+                                    <FormLabel>Tour Type *</FormLabel>
+                                    <Select {...register("tourType", { required: "Tour type is required" })} defaultValue="">
+                                        <Option value="">Select Tour Type</Option>
+                                        <Option value="dual-sports">Dual-Sports</Option>
+                                        <Option value="trail">Trail</Option>
+                                        <Option value="circuit">Circuit</Option>
+                                        <Option value="extreme">Extreme</Option>
+                                    </Select>
+                                    <p>{errors?.tourType?.message}</p>
+                                </Stack>
+                            </Stack>
+                            <Stack spacing={2}>
+                                <FormLabel>Description *</FormLabel>
+                                <Textarea {...register("tourDescription", { required: "Description is required" })} />
+                                <p>{errors?.tourDescription?.message}</p>
+                            </Stack>
+                            <Stack spacing={2}>
+                                <FormLabel>Itinerary *</FormLabel>
+                                <Textarea {...register("tourItinerary", { required: "Brief Itinerary is required" })} />
+                                <p>{errors?.tourItinerary?.message}</p>
+                            </Stack>
+                            <Stack direction="row" spacing={1}>
+                                <Stack sx={{ flex: 1 }}>
+                                    <FormLabel>Start Date *</FormLabel>
+                                    <Input type="date" {...register("startDate", { required: "Start date is required" })} />
+                                    <p>{errors?.startDate?.message}</p>
+                                </Stack>
+                                <Stack sx={{ flex: 1 }}>
+                                    <FormLabel>End Date *</FormLabel>
+                                    <Input type="date" {...register("endDate", { required: "End date is required" })} />
+                                    <p>{errors?.endDate?.message}</p>
+                                </Stack>
+                            </Stack>
+                            <Stack direction="row" spacing={1}>
+                                <Stack sx={{ flex: 1 }}>
+                                    <FormLabel>Max Participants *</FormLabel>
+                                    <Input type="number" {...register("maxParticipants", { required: "Max participants is required" })} />
+                                    <p>{errors?.maxParticipants?.message}</p>
+                                </Stack>
+                                <Stack sx={{ flex: 1 }}>
+                                    <FormLabel>Tour Rating *</FormLabel>
+                                    <Input
+                                        type="text" // Switch to "text" to bypass strict integer validation
+                                        inputMode="decimal" // Provides a decimal keyboard on mobile devices
+                                        {...register("tourRating", {
+                                            required: "Rating is required",
+                                            pattern: {
+                                                value: /^[0-9]+(\.[0-9]{1,2})?$/, // Allows integers and up to 2 decimal places
+                                                message: "Please enter a valid rating (e.g., 3.5)"
+                                            }
+                                        })}
+                                    />                                    <p>{errors?.tourRating?.message}</p>
+                                </Stack>
+                            </Stack>
+                            <Stack direction="row" spacing={1}>
+                                <Stack sx={{ flex: 1 }}>
+                                    <FormLabel>Tour Price *</FormLabel>
+                                    <Input type="number" {...register("tourPrice", { required: "Price is required", min: { value: 0, message: "Tour price must be positive" } })} />
+                                    <p>{errors?.tourPrice?.message}</p>
+                                </Stack>
+                                <Stack sx={{ flex: 1 }}>
+                                    <FormLabel>Choose New Image</FormLabel>
+                                    <Input type="file" onChange={handleImageUpload} />
+                                </Stack>
+                            </Stack>
+                        </Stack>
 
-                    <FormControl>
-                        <FormLabel>Start Date</FormLabel>
-                        <Input type="date" {...register("startDate", { required: "Start date is required" })} />
-                        <p>{errors.startDate?.message}</p>
-                    </FormControl>
-
-                    <FormControl>
-                        <FormLabel>End Date</FormLabel>
-                        <Input type="date" {...register("endDate", { required: "End date is required" })} />
-                        <p>{errors.endDate?.message}</p>
-                    </FormControl>
-
-                    <FormControl>
-                        <FormLabel>Max Participants</FormLabel>
-                        <Input type="number" {...register("maxParticipants", { required: "Max participants is required" })} />
-                        <p>{errors.maxParticipants?.message}</p>
-                    </FormControl>
-
-                    <FormControl>
-                        <FormLabel>Tour Rating</FormLabel>
-                        <Input type="number" {...register("tourRating", { required: "Rating is required" })} />
-                        <p>{errors.tourRating?.message}</p>
-                    </FormControl>
-
-                    <FormControl>
-                        <FormLabel>Tour Price</FormLabel>
-                        <Input type="number" {...register("tourPrice", { required: "Price is required", min: { value: 0, message: "Tour price must be positive" } } )} />
-                        <p>{errors.tourPrice?.message}</p>
-                    </FormControl>
-
-                    <FormControl>
-                        <FormLabel>
-                            Choose New Image: <Input type="file" onChange={handleImageUpload} />
-                        </FormLabel>
-                    </FormControl>
-                </Stack>
-                <Button
-                    variant="contained"
-                    type="submit"
-                    sx={{
-                        width: '50%',
-                        mt: 2,
-                        py: 2,
-                        fontSize: '1.2rem',
-                        fontWeight: 'bold',
-                        backgroundColor: '#1976d2',
-                        color: 'white',
-                        borderRadius: '8px',
-                        boxShadow: '0 3px 5px 2px rgba(0, 0, 0, .3)',
-                        transition: 'background-color 0.3s',
-                        '&:hover': {
-                            backgroundColor: '#1565c0',
-                        },
-                    }}
-                >
-                    Update Tour
-                </Button>
-            </form>
+                        <CardOverflow sx={{ borderTop: '1px solid', borderColor: 'divider' }}>
+                            <CardActions sx={{ alignSelf: 'flex-end', pt: 2 }}>
+                                <Button size="sm" variant="outlined" color="neutral" onClick={() => navigate("/dashboard/tour/list")}>
+                                    Cancel
+                                </Button>
+                                <Button size="sm" variant="solid" type="submit">
+                                    Update Tour
+                                </Button>
+                            </CardActions>
+                        </CardOverflow>
+                    </form>
+                </Card>
+            </Stack>
         </Box>
     );
 }

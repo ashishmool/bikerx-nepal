@@ -21,16 +21,16 @@ public class Tour {
     @GeneratedValue(generator = "tours_seq_gen", strategy = GenerationType.SEQUENCE)
     private Long tourId;
 
-    @Column(name = "tour_name", nullable = false)
+    @Column(name = "tour_name", nullable = false, length = 500)
     private String tourName;
 
-    @Column(name = "description", nullable = false)
+    @Column(name = "description", nullable = false, columnDefinition = "TEXT")
     private String tourDescription;
 
     @Column(name = "type", nullable = false)
     private String tourType;
 
-    @Column(name = "itinerary", nullable = true)
+    @Column(name = "itinerary", nullable = true, columnDefinition = "TEXT")
     private String tourItinerary;
 
     @Column(name = "start_date", nullable = false)
@@ -45,13 +45,10 @@ public class Tour {
     private Integer maxParticipants;
 
     @Column(name = "rating")
-    private Long tourRating;
+    private Double tourRating;
 
     @Column(name = "tour_price", nullable = false)
     private Double tourPrice;
-
-    @Column(name = "availability", nullable = false)
-    private Boolean tourAvailability;
 
     private String image;
 
