@@ -85,7 +85,7 @@ export const SpecificTour = () => {
       }
     });
 
-    setTotalAmount(total);
+    setTotalAmount(parseFloat(total.toFixed(2)));
   };
 
   const fetchBikes = async () => {
@@ -214,7 +214,7 @@ export const SpecificTour = () => {
                 </div>
                 <div className="flex flex-col gap-2 items-center tablet:items-start text-center ">
                   <h2 className="font-light whitespace-nowrap">Duration</h2>
-                  <h2 className="font-semibold text-lg">{duration} days</h2>
+                  <h2 className="font-semibold text-lg">{duration} nights | {duration+1} days</h2>
                 </div>
                 <div className="flex flex-col gap-2 items-center tablet:items-start text-center ">
                   <h2 className="font-light whitespace-nowrap">Max. Participants</h2>

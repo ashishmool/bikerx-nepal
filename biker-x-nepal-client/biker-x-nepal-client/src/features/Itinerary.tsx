@@ -26,7 +26,7 @@ export const Itinerary = () => {
         setError(null); // Clear previous errors
 
         const response = await axios.get<ItinerarySection>(
-            `http://localhost:8080/itinerary/getByTourId/${tourId}` // Use tourId in API URL
+            `http://localhost:8080/tour/getById/${tourId}` // Use tourId in API URL
         );
 
         console.log("Response Itinerary:::: ", response.data);
@@ -58,10 +58,10 @@ export const Itinerary = () => {
 
   return (
       <div className="py-16">
-        <div className="mb-10 border-b pb-4">
-          <h2 className="text-xl font-semibold">
-            Day {itinerary.noOfDays}: {itinerary.description}
-          </h2>
+        <div className="mb-10 pb-4">
+          <p className="text-xl">
+            {itinerary.tourItinerary}
+          </p>
           {/* Add any additional details here if needed */}
         </div>
       </div>

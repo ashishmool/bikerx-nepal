@@ -99,7 +99,7 @@ export const Upcoming = () => {
                                 <span className="w-[16.6%] text-center font-semibold">{tour.tourName}</span>
                                 <span className="w-[16.6%] text-center">{tour.startDate}</span>
                                 <span className="w-[16.6%] text-center">
-                                    {calculateDuration(tour.startDate, tour.endDate)} {calculateDuration(tour.startDate, tour.endDate) <= 1 ? "day" : "days"}
+                                    {calculateDuration(tour.startDate, tour.endDate)+1} {calculateDuration(tour.startDate, tour.endDate)+1 <= 1 ? "day" : "days"}
                                 </span>
                                 <span className="w-[16.6%] text-center flex justify-center">
                                     <HelmetRating difficultyRating={tour.tourRating} /> {/* Use HelmetRating */}
