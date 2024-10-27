@@ -1,24 +1,22 @@
 import { useEffect, useRef, useState } from "react";
-import { Coordinates} from "../../moduls";
+import { Coordinates } from "../../moduls";
 // import { ImageCont } from "../../ui/ImageCont";
 import { BlurBall } from "../../ui/BlurBall";
 import { Link } from "react-router-dom";
 import { StarRating } from "../../ui/StarRating";
-import TwoWheelerIcon from '@mui/icons-material/TwoWheeler'
+import TwoWheelerIcon from '@mui/icons-material/TwoWheeler';
 
 export const TourCard = ({
                            image,
                            tourPrice,
                            tourName,
-                           // Need to use tourDuration instead of Start Date,
-    startDate,
-    endDate,
+                           startDate,
+                           endDate,
                            tourDuration,
-
                            tourId,
                            tourRating,
                            totalReviews,
-    maxParticipants,
+                           maxParticipants,
                          }: {
   image: string;
   tourPrice: number;
@@ -39,11 +37,9 @@ export const TourCard = ({
 
   const parsedStartDate = new Date(startDate);
   const parsedEndDate = new Date(endDate);
-  // Calculate the difference in days
   const differenceInDays = Math.floor(
       (parsedEndDate.getTime() - parsedStartDate.getTime()) / (1000 * 3600 * 24)
   );
-
 
   useEffect(() => {
     if (ref.current) {
@@ -85,33 +81,38 @@ export const TourCard = ({
             <div className="flex flex-col items-start gap-2">
               <h1 className="font-bold text-lg text-left">{tourName}</h1>
 
-              <p className="font-light text-white/50">{parsedStartDate.toLocaleDateString('en-GB', { weekday: 'long', day: '2-digit', month: 'short', year: 'numeric' })} - {parsedEndDate.toLocaleDateString('en-GB', { weekday: 'long', day: '2-digit', month: 'short', year: 'numeric' })}</p>
+              <p className="font-light text-white/50">
+                {parsedStartDate.toLocaleDateString('en-GB', { weekday: 'long', day: '2-digit', month: 'short', year: 'numeric' })}
+                {" - "}
+                {parsedEndDate.toLocaleDateString('en-GB', { weekday: 'long', day: '2-digit', month: 'short', year: 'numeric' })}
+              </p>
               <p className="font-medium text-sm text-left">
-                Duration: {differenceInDays} days
+                Duration: {differenceInDays+1} {differenceInDays+1 <=1 ? "day" : "days"}
               </p>
               <StarRating tourRating={tourRating} />
-              {/*{!totalReviews ? (*/}
-              {/*    <span className="font-light text-white/70 italic">No reviews yet</span>*/}
-              {/*) : (*/}
-              {/*    <div className="flex gap-3 font-light text-white/70 items-center">*/}
-              {/*      <StarRating tourRating={tourRating} />{" "}*/}
-              {/*      <span className="mb-1">{`(${totalReviews})`}</span>*/}
-              {/*    </div>*/}
-              {/*)}*/}
             </div>
-            <h3 className="font-medium text-md text-left">Max. Participants: {maxParticipants}</h3>
+
+            {/* Conditional rendering based on maxParticipants */}
+            {maxParticipants === 0 ? (
+                <h3 className="font-medium text-md text-left text-red-600">
+                  No Seats Left
+                </h3>
+            ) : (
+                <h3 className="font-medium text-md text-left">
+                  Max. Participants: {maxParticipants}
+                </h3>
+            )}
 
             <div className="flex justify-between items-end">
-            <span className="font-bold">From Rs.{String(tourPrice).replace(
-                /\B(?=(\d{3})+(?!\d))/g,
-                ","
-            )}.*</span>
+              <span className="font-bold">
+                From Rs.{String(tourPrice).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}*
+              </span>
               <Link
                   to={`/tours/${String(tourId)}`}
                   className="px-3 py-2 border-2 border-white/50 bg-transparent hover:bg-white/90 hover:text-black
                 transition duration-200"
               >
-                <TwoWheelerIcon/> View Tour
+                <TwoWheelerIcon /> View Tour
               </Link>
             </div>
           </div>

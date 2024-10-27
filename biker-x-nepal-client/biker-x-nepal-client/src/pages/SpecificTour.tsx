@@ -222,52 +222,54 @@ export const SpecificTour = () => {
                 </div>
               </div>
             </div>
-            <div className="text-white flex flex-col w-full gap-5 pt-2">
-              <FaRegCalendar />
-              <div className="flex items-center gap-4">
-                <label htmlFor="quantity" className="font-light">No of Persons:</label>
-                <input
-                    type="number"
-                    id="quantity"
-                    name="quantity"
-                    value={quantity}
-                    onChange={handleQuantityChange}
-                    className="border rounded-md py-1 px-2 text-black"
-                />
-              </div>
-              {Array.from({ length: quantity }).map((_, index) => (
-                  <div className="flex items-center gap-4" key={index}>
-                    <label htmlFor={`bike-${index}`} className="font-light">Select Bike for Person {index + 1}:</label>
-                    <select
-                        id={`bike-${index}`}
-                        name={`bike-${index}`}
-                        onChange={(e) => handleBikeChange(e, index)}
+
+            {/* Conditionally render booking section or fully booked message */}
+            {tour.maxParticipants === 0 ? (
+                <div className="text-white text-xl font-bold py-4">
+                  This Tour is Fully Booked! Check for future dates.
+                </div>
+            ) : (
+                <div className="text-white flex flex-col w-full gap-5 pt-2">
+                  <FaRegCalendar />
+                  <div className="flex items-center gap-4">
+                    <label htmlFor="quantity" className="font-light">No of Persons:</label>
+                    <input
+                        type="number"
+                        id="quantity"
+                        name="quantity"
+                        value={quantity}
+                        onChange={handleQuantityChange}
                         className="border rounded-md py-1 px-2 text-black"
-                        value={bikesSelected[index]?.bikeId || ""}
-                    >
-                      <option value="">Select a Bike</option>
-                      {getAvailableBikes(index).map(bike => (
-                          <option key={bike.bikeId} value={bike.bikeId}>
-                            {bike.makeBrand} {bike.model} (Rs. {bike.bikePrice}/day, Stock: {bike.remainingStock})
-                          </option>
-                      ))}
-                    </select>
+                    />
                   </div>
-              ))}
-              <p className="text-2xl font-bold">Total Amount: Rs. {totalAmount}</p>
-              <button
-                  onClick={bookTour}
-                  className="bg-yellow-500 text-black font-semibold py-2 px-4 rounded-lg transition duration-200 hover:bg-yellow-400"
-              >
-                Book Tour
-              </button>
-            </div>
-            {/*<div className="flex items-center gap-3">*/}
-            {/*  <StarRating rating={tour.reviewRating} />*/}
-            {/*  <span className="text-white/60 text-base mb-1 font-light">*/}
-            {/*  {!tour.reviewRating ? "( No reviews yet )" : `( ${tour.tourId} reviews )`}*/}
-            {/*</span>*/}
-            {/*</div>*/}
+                  {Array.from({ length: quantity }).map((_, index) => (
+                      <div className="flex items-center gap-4" key={index}>
+                        <label htmlFor={`bike-${index}`} className="font-light">Select Bike for Person {index + 1}:</label>
+                        <select
+                            id={`bike-${index}`}
+                            name={`bike-${index}`}
+                            onChange={(e) => handleBikeChange(e, index)}
+                            className="border rounded-md py-1 px-2 text-black"
+                            value={bikesSelected[index]?.bikeId || ""}
+                        >
+                          <option value="">Select a Bike</option>
+                          {getAvailableBikes(index).map(bike => (
+                              <option key={bike.bikeId} value={bike.bikeId}>
+                                {bike.makeBrand} {bike.model} (Rs. {bike.bikePrice}/day, Stock: {bike.remainingStock})
+                              </option>
+                          ))}
+                        </select>
+                      </div>
+                  ))}
+                  <p className="text-2xl font-bold">Total Amount: Rs. {totalAmount}</p>
+                  <button
+                      onClick={bookTour}
+                      className="bg-yellow-500 text-black font-semibold py-2 px-4 rounded-lg transition duration-200 hover:bg-yellow-400"
+                  >
+                    Book Tour
+                  </button>
+                </div>
+            )}
           </div>
         </div>
         <div className="text-white pt-24 relative">

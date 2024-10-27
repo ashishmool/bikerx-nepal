@@ -78,12 +78,13 @@ export const Upcoming = () => {
                     <>
                         {/* Table Header */}
                         <div className="w-full flex justify-between items-center py-2 border-b border-white font-bold">
-                            <span className="w-[16.6%] text-center">Tour Destination</span>
-                            <span className="w-[16.6%] text-center">Start Date</span>
-                            <span className="w-[16.6%] text-center">No. of Days</span>
-                            <span className="w-[16.6%] text-center">Tour Difficulty</span>
-                            <span className="w-[16.6%] text-center text-yellow-500">Days to Go</span>
-                            <span className="w-[16.6%] text-center text-yellow-500">Book Now</span>
+                            <span className="w-[14.28%] text-center">Tour Destination</span>
+                            <span className="w-[14.28%] text-center">Start Date</span>
+                            <span className="w-[14.28%] text-center">No. of Days</span>
+                            <span className="w-[14.28%] text-center">Tour Difficulty</span>
+                            <span className="w-[14.28%] text-center">Seats Left</span> {/* New column */}
+                            <span className="w-[14.28%] text-center text-yellow-500">Days to Go</span>
+                            <span className="w-[14.28%] text-center text-yellow-500">Book Now</span>
                         </div>
 
                         {/* Table Rows (Mapped Tours) */}
@@ -96,25 +97,38 @@ export const Upcoming = () => {
                                 viewport={{ once: true }}
                                 className="w-full flex justify-between items-center py-4 border-b border-white"
                             >
-                                <span className="w-[16.6%] text-center font-semibold">{tour.tourName}</span>
-                                <span className="w-[16.6%] text-center">{tour.startDate}</span>
-                                <span className="w-[16.6%] text-center">
-                                    {calculateDuration(tour.startDate, tour.endDate)+1} {calculateDuration(tour.startDate, tour.endDate)+1 <= 1 ? "day" : "days"}
+                                <span className="w-[14.28%] text-center font-semibold">{tour.tourName}</span>
+                                <span className="w-[14.28%] text-center">{tour.startDate}</span>
+                                <span className="w-[14.28%] text-center">
+                                    {calculateDuration(tour.startDate, tour.endDate) + 1} {calculateDuration(tour.startDate, tour.endDate) + 1 <= 1 ? "day" : "days"}
                                 </span>
-                                <span className="w-[16.6%] text-center flex justify-center">
+                                <span className="w-[14.28%] text-center flex justify-center">
                                     <HelmetRating difficultyRating={tour.tourRating} /> {/* Use HelmetRating */}
                                 </span>
 
-                                <span className="w-[16.6%] text-center text-yellow-500">
+                                {/* Display "Fully Booked" if maxParticipants is 0 */}
+                                <span className="w-[14.28%] text-center">
+                                    {tour.maxParticipants > 0 ? tour.maxParticipants : "Fully Booked"}
+                                </span>
+
+                                <span className="w-[14.28%] text-center text-yellow-500">
                                     {calculateDaysToGo(tour.startDate)} {calculateDaysToGo(tour.startDate) <= 1 ? "day" : "days"}
                                 </span>
-                                <span className="w-[16.6%] text-center cursor-pointer">
-                                    <Link
-                                        to={`/tours/${tour.tourId}`} // Link to the specific tour booking page
-                                        className="flex items-center justify-center p-2 rounded-full bg-transparent hover:bg-white/20 transition duration-200"
-                                    >
-                                        <TwoWheelerIcon /> {/* Button Icon */}
-                                    </Link>
+
+                                {/* Conditionally render "Book Now" based on tour availability */}
+                                <span className="w-[14.28%] text-center cursor-pointer">
+                                    {calculateDaysToGo(tour.startDate) <= 0 || tour.maxParticipants === 0 ? (
+                                        <div className="flex items-center justify-center p-2 rounded-full bg-gray-500 cursor-not-allowed text-gray-300">
+                                            <TwoWheelerIcon /> {/* Disabled icon */}
+                                        </div>
+                                    ) : (
+                                        <Link
+                                            to={`/tours/${tour.tourId}`} // Link to the specific tour booking page
+                                            className="flex items-center justify-center p-2 rounded-full bg-transparent hover:bg-white/20 transition duration-200"
+                                        >
+                                            <TwoWheelerIcon /> {/* Button Icon */}
+                                        </Link>
+                                    )}
                                 </span>
                             </motion.div>
                         ))}

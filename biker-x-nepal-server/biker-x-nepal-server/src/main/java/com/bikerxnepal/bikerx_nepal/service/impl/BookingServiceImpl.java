@@ -3,11 +3,13 @@ package com.bikerxnepal.bikerx_nepal.service.impl;
 import com.bikerxnepal.bikerx_nepal.entity.Bike;
 import com.bikerxnepal.bikerx_nepal.entity.Booking;
 import com.bikerxnepal.bikerx_nepal.entity.SystemUser;
+import com.bikerxnepal.bikerx_nepal.entity.Tour;
 import com.bikerxnepal.bikerx_nepal.enums.BookingEnum;
 import com.bikerxnepal.bikerx_nepal.pojo.BookingPojo;
 import com.bikerxnepal.bikerx_nepal.repo.BikeRepo;
 import com.bikerxnepal.bikerx_nepal.repo.BookingRepo;
 import com.bikerxnepal.bikerx_nepal.repo.SystemUserRepo;
+import com.bikerxnepal.bikerx_nepal.repo.TourRepo;
 import com.bikerxnepal.bikerx_nepal.service.BookingService;
 import com.bikerxnepal.bikerx_nepal.service.EmailService;
 import jakarta.persistence.EntityNotFoundException;
@@ -24,6 +26,7 @@ public class BookingServiceImpl implements BookingService {
     private final BikeRepo bikeRepo;
     private final EmailService emailService;
     private final SystemUserRepo systemUserRepo;
+    private final TourRepo tourRepo;
 
 
 
@@ -42,6 +45,19 @@ public class BookingServiceImpl implements BookingService {
         // Set start and end dates for duration calculation
         booking.setStartDate(bookingPojo.getStartDate());
         booking.setEndDate(bookingPojo.getEndDate());
+
+        // Fetch the tour by its ID
+        Tour tour = tourRepo.findById(bookingPojo.getTourId())
+                .orElseThrow(() -> new EntityNotFoundException("Tour not found with ID: " + bookingPojo.getTourId()));
+
+        // Check if there are enough spots available
+        if (tour.getMaxParticipants() < bookingPojo.getQuantityPersons()) {
+            throw new IllegalStateException("Not enough spots available for this tour.");
+        }
+
+        // Update maxParticipants by reducing available spots
+        tour.setMaxParticipants(tour.getMaxParticipants() - bookingPojo.getQuantityPersons());
+        tourRepo.save(tour); // Save the updated tour with reduced participants
 
         // Update stock for each bike in the booking
         bookingPojo.getBikeIds().forEach(bikeId -> {
