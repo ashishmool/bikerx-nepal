@@ -24,6 +24,8 @@ public class TourPojo {
     @NotBlank(message = "Tour description is required")
     private String tourDescription;
 
+    private String tourMap;
+
     @NotBlank(message = "Tour type is required")
     private String tourType;
 
@@ -45,6 +47,10 @@ public class TourPojo {
     @Min(value = 1, message = "Tour rating must be at least 1")
     @Max(value = 5, message = "Tour rating cannot be more than 5")
     private Double tourRating;
+
+    @Min(value = 1, message = "Comfort rating must be at least 1")
+    @Max(value = 5, message = "Comfort rating cannot be more than 5")
+    private Double comfortRating;
 
     @Positive(message = "Tour price must be positive")
     private double tourPrice;

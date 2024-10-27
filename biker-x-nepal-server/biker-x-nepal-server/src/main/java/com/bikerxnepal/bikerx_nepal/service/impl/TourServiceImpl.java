@@ -43,6 +43,7 @@ public class TourServiceImpl implements TourService {
         tour.setTourName(tourPojo.getTourName());
         tour.setTourDescription(tourPojo.getTourDescription());
         tour.setTourItinerary(tourPojo.getTourItinerary());
+        tour.setTourMap(tourPojo.getTourMap());
         tour.setTourType(tourPojo.getTourType());
         tour.setStartDate(tourPojo.getStartDate());
         tour.setEndDate(tourPojo.getEndDate());
@@ -110,6 +111,10 @@ public class TourServiceImpl implements TourService {
 
         if (tourPojo.getTourType() != null && !tourPojo.getTourType().isEmpty()) {
             existingTour.setTourType(tourPojo.getTourType());
+        }
+
+        if (tourPojo.getTourMap() != null && !tourPojo.getTourMap().isEmpty()) {
+            existingTour.setTourMap(tourPojo.getTourMap());
         }
 
         if (tourPojo.getTourItinerary() != null && !tourPojo.getTourItinerary().isEmpty()) {

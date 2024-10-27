@@ -7,3 +7,4 @@ VALUES
     (3, 'Safety Gear', 'Always wear a helmet, gloves, and sturdy boots. Nepal''s unpredictable weather and road conditions make protective gear essential for safe riding.', '2024-09-10'),
 
     (4, 'Permits & Fees', 'For riding in restricted areas like Upper Mustang or Manang, a special permit is required. Permits can be obtained from the Department of Immigration.', '2024-09-08');
+

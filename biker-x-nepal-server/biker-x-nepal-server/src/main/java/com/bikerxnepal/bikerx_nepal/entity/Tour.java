@@ -33,6 +33,9 @@ public class Tour {
     @Column(name = "itinerary", nullable = true, columnDefinition = "TEXT")
     private String tourItinerary;
 
+    @Column(name = "map", nullable = true, columnDefinition = "TEXT")
+    private String tourMap;
+
     @Column(name = "start_date", nullable = false)
     @Temporal(TemporalType.DATE)
     private Date startDate;
@@ -46,6 +49,9 @@ public class Tour {
 
     @Column(name = "rating")
     private Double tourRating;
+
+    @Column(name = "comfort_rating")
+    private Double comfortRating;
 
     @Column(name = "tour_price", nullable = false)
     private Double tourPrice;

@@ -2,13 +2,22 @@ import * as React from 'react';
 import { useState, useEffect } from 'react';
 import { Link, Outlet, useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { FaArrowLeft, FaRegCalendar, FaChevronRight } from 'react-icons/fa';
+import { FaArrowLeft, FaRegCalendar, FaCalendarCheck } from 'react-icons/fa';
 import { Spinner } from '../ui/Spinner';
 import { WrongPage } from './WrongPage';
 import { NavLinkTour } from "../ui/NavLinkTour.tsx";
-import { StarRating } from "../ui/StarRating.tsx";
+// import { StarRating } from "../ui/StarRating.tsx";
 import { toast, ToastContainer } from "react-toastify";
 import Breadcrumb from "../utils/Breadcrumb.tsx";
+import TwoWheelerIcon from "@mui/icons-material/TwoWheeler";
+import HotelIcon from '@mui/icons-material/Hotel';
+import EventRepeatIcon from '@mui/icons-material/EventRepeat';
+import { motion } from 'framer-motion';
+
+import { FaUserGroup } from "react-icons/fa6";
+import {FaClockRotateLeft} from "react-icons/fa6";
+
+
 
 export const SpecificTour = () => {
   const { id } = useParams();
@@ -183,11 +192,9 @@ export const SpecificTour = () => {
   return (
       <main className="relative pt-32">
         <div className="flex text-[--secundary-color] gap-5 px-[8%] flex-col laptop:flex-row justify-between">
-        <span className="gap-2">
-
-          <Breadcrumb tour={tour} />
-
-        </span>
+      <span className="gap-2">
+        <Breadcrumb tour={tour} />
+      </span>
           <Link
               to="/tours"
               className="border-b border-white/40 transition duration-200 hover:text-white flex items-center gap-2 w-fit cursor-pointer"
@@ -196,29 +203,110 @@ export const SpecificTour = () => {
             Get back
           </Link>
         </div>
+
         <div className="grid grid-cols-1 full:grid-cols-2 gap-16 mt-16 px-[8%]">
           <div className="image-class">
-            <img width={750} src={'data:image/png;base64,'+tour.image} />
+            <img width={750} src={'data:image/png;base64,' + tour.image} />
+            {/* Attribute Icons Section */}
+            <motion.div
+                className="flex justify-around py-8 bg-white/10 rounded-lg mt-8"
+                initial={{ opacity: 0, y: -20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5 }}
+            >
+              {/* Riding Level */}
+              <div className="flex flex-col items-center">
+                <h2 className="text-xl font-bold text-yellow-500 relative mb-2">
+                  <span className="rounded-full bg-yellow-500 text-black px-3 py-1 absolute -top-6">{tour.tourRating}</span>
+                </h2>
+                <TwoWheelerIcon fontSize="large" className="text-white/70" />
+                <span className="text-sm text-white/60">Riding Level</span>
+              </div>
+
+              {/* Comfort */}
+              <div className="flex flex-col items-center">
+                <h2 className="text-xl font-bold text-yellow-500 relative mb-2">
+                  <span className="rounded-full bg-yellow-500 text-black px-3 py-1 absolute -top-6">{tour.comfortRating}</span>
+                </h2>
+                <HotelIcon fontSize="large" className="text-white/70" />
+                <span className="text-sm text-white/60">Comfort</span>
+              </div>
+
+              {/* Period */}
+              <div className="flex flex-col items-center">
+                <EventRepeatIcon fontSize="large" className="text-white/70" />
+                <span className="text-sm text-white/60">Period</span>
+                {/* Start and End Month Display */}
+                <div className="text-xs text-yellow-400 mt-1 text-center"> {/* Center-align the months */}
+                  {new Date(tour.startDate).toLocaleString('en-US', { month: 'short' })}
+                  {new Date(tour.startDate).getMonth() === new Date(tour.endDate).getMonth()
+                      ? ` - ${new Date(new Date(tour.startDate).setMonth(new Date(tour.startDate).getMonth() + 1)).toLocaleString('en-US', { month: 'short' })}`
+                      : ` - ${new Date(tour.endDate).toLocaleString('en-US', { month: 'short' })}`}
+                </div>
+              </div>
+            </motion.div>
           </div>
+
           <div className="text-white flex flex-col items-start gap-6 justify-start border-white/30">
             <div className="flex flex-col items-start gap-6">
-              {tour.tourName}
+              <div className="flex flex-col gap-2 items-start text-2xl text-yellow-500 font-extrabold">
+                {tour.tourName}
+              </div>
+              {/* Google Map Embed */}
+              <div className="mt-0 flex justify-center">
+                <iframe
+                    src={tour.tourMap}
+                    width="700"
+                    height="250"
+                    style={{ border: 0 }}
+                    allowFullScreen={true}
+                    loading="lazy"
+                    referrerPolicy="no-referrer-when-downgrade"
+                ></iframe>
+              </div>
               <div className="flex items-start justify-start gap-5 tablet:gap-10 border-y border-white/20 w-full py-6">
-                <div className="flex flex-col gap-2 items-start">
-                  <h2 className="font-light whitespace-nowrap">Start Date</h2>
-                  <h2 className="font-semibold text-lg">{startDate.toLocaleDateString('en-GB', { weekday: 'long', day: '2-digit', month: 'short', year: 'numeric' })}</h2>
+                {/* Start Date Section */}
+                <div className="flex flex-col gap-2 items-center"> {/* Changed to items-center */}
+                  <div className="flex items-center gap-2"> {/* Align icon and title inline */}
+                    <FaRegCalendar className="text-yellow-500" />
+                    <h2 className="font-light whitespace-nowrap text-yellow-500">Start Date</h2>
+                  </div>
+                  <h2 className="font-semibold text-lg text-center "> {/* Center align value */}
+                    {startDate.toLocaleDateString('en-GB', { weekday: 'long', day: '2-digit', month: 'short', year: 'numeric' })}
+                  </h2>
                 </div>
-                <div className="flex flex-col gap-2 items-start">
-                  <h2 className="font-light whitespace-nowrap">End Date</h2>
-                  <h2 className="font-semibold text-lg">{endDate.toLocaleDateString('en-GB', { weekday: 'long', day: '2-digit', month: 'short', year: 'numeric' })}</h2>
+
+                {/* End Date Section */}
+                <div className="flex flex-col gap-2 items-center"> {/* Changed to items-center */}
+                  <div className="flex items-center gap-2"> {/* Align icon and title inline */}
+                    <FaCalendarCheck className="text-yellow-500" />
+                    <h2 className="font-light whitespace-nowrap text-yellow-500">End Date</h2>
+                  </div>
+                  <h2 className="font-semibold text-lg text-center"> {/* Center align value */}
+                    {endDate.toLocaleDateString('en-GB', { weekday: 'long', day: '2-digit', month: 'short', year: 'numeric' })}
+                  </h2>
                 </div>
-                <div className="flex flex-col gap-2 items-center tablet:items-start text-center ">
-                  <h2 className="font-light whitespace-nowrap">Duration</h2>
-                  <h2 className="font-semibold text-lg">{duration} nights | {duration+1} days</h2>
+
+                {/* Duration Section */}
+                <div className="flex flex-col gap-2 items-center"> {/* Changed to items-center */}
+                  <div className="flex items-center gap-2"> {/* Align icon and title inline */}
+                    <FaClockRotateLeft className="text-yellow-500" />
+                    <h2 className="font-light whitespace-nowrap text-yellow-500">Duration</h2>
+                  </div>
+                  <h2 className="font-semibold text-lg text-center"> {/* Center align value */}
+                    {duration} nights | {duration + 1} days
+                  </h2>
                 </div>
-                <div className="flex flex-col gap-2 items-center tablet:items-start text-center ">
-                  <h2 className="font-light whitespace-nowrap">Max. Participants</h2>
-                  <h2 className="font-semibold text-lg w-fit max-w-[100px] tablet:max-w-fit">{tour.maxParticipants} persons</h2>
+
+                {/* Max Participants Section */}
+                <div className="flex flex-col gap-2 items-center"> {/* Changed to items-center */}
+                  <div className="flex items-center gap-2"> {/* Align icon and title inline */}
+                    <FaUserGroup className="text-yellow-500" />
+                    <h2 className="font-light whitespace-nowrap text-yellow-500">Max. Participants</h2>
+                  </div>
+                  <h2 className="font-semibold text-lg w-fit max-w-[100px] tablet:max-w-fit text-center"> {/* Center align value */}
+                    {tour.maxParticipants} persons
+                  </h2>
                 </div>
               </div>
             </div>
@@ -230,7 +318,6 @@ export const SpecificTour = () => {
                 </div>
             ) : (
                 <div className="text-white flex flex-col w-full gap-5 pt-2">
-                  <FaRegCalendar />
                   <div className="flex items-center gap-4">
                     <label htmlFor="quantity" className="font-light">No of Persons:</label>
                     <input
@@ -291,4 +378,5 @@ export const SpecificTour = () => {
         </div>
       </main>
   );
+
 };
