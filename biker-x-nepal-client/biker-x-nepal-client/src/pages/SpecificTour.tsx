@@ -262,12 +262,12 @@ export const SpecificTour = () => {
                 Book Tour
               </button>
             </div>
-            <div className="flex items-center gap-3">
-              <StarRating rating={tour.reviewRating} />
-              <span className="text-white/60 text-base mb-1 font-light">
-              {!tour.reviewRating ? "( No reviews yet )" : `( ${tour.tourId} reviews )`}
-            </span>
-            </div>
+            {/*<div className="flex items-center gap-3">*/}
+            {/*  <StarRating rating={tour.reviewRating} />*/}
+            {/*  <span className="text-white/60 text-base mb-1 font-light">*/}
+            {/*  {!tour.reviewRating ? "( No reviews yet )" : `( ${tour.tourId} reviews )`}*/}
+            {/*</span>*/}
+            {/*</div>*/}
           </div>
         </div>
         <div className="text-white pt-24 relative">
