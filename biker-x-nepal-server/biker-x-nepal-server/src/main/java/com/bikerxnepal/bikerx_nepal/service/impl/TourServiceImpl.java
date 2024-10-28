@@ -50,6 +50,7 @@ public class TourServiceImpl implements TourService {
         tour.setMaxParticipants(tourPojo.getMaxParticipants());
         tour.setTourPrice(tourPojo.getTourPrice());
         tour.setTourRating(tourPojo.getTourRating());
+        tour.setComfortRating(tourPojo.getComfortRating());
         tourRepo.save(tour);
         return "Tour saved successfully!";
     }
@@ -135,6 +136,10 @@ public class TourServiceImpl implements TourService {
 
         if (tourPojo.getTourRating() != null) {
             existingTour.setTourRating(tourPojo.getTourRating());
+        }
+
+        if (tourPojo.getComfortRating() != null) {
+            existingTour.setComfortRating(tourPojo.getComfortRating());
         }
 
         if (tourPojo.getTourPrice() > 0) {

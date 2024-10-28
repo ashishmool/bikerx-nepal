@@ -93,13 +93,13 @@ function AddTour() {
                                     <p>{errors?.tourType?.message}</p>
                                 </Stack>
                             </Stack>
-                            <Stack spacing={2}>
+                            <Stack spacing={1}>
                                 <FormLabel>Description *</FormLabel>
                                 <Textarea {...register("tourDescription", { required: "Description is required" })} />
                                 <p>{errors?.tourDescription?.message}</p>
                             </Stack>
-                            <Stack spacing={2}>
-                                <FormLabel>Itinerary</FormLabel>
+                            <Stack spacing={1}>
+                                <FormLabel>Itinerary (Optional)</FormLabel>
                                 <Textarea {...register("tourItinerary")} />
                                 <p>{errors?.tourItinerary?.message}</p>
                             </Stack>
@@ -114,17 +114,48 @@ function AddTour() {
                                     <Input type="date" {...register("endDate", { required: "End date is required" })} />
                                     <p>{errors?.endDate?.message}</p>
                                 </Stack>
-                            </Stack>
-                            <Stack direction="row" spacing={1}>
                                 <Stack sx={{ flex: 1 }}>
                                     <FormLabel>Max Participants *</FormLabel>
                                     <Input type="number" {...register("maxParticipants", { required: "Max participants is required" })} />
                                     <p>{errors?.maxParticipants?.message}</p>
                                 </Stack>
+                            </Stack>
+                            <Stack direction="row" spacing={1}>
                                 <Stack sx={{ flex: 1 }}>
                                     <FormLabel>Tour Rating *</FormLabel>
-                                    <Input type="number" {...register("tourRating", { required: "Rating is required" })} />
+                                    <Input
+                                        type="text" // Switch to text to accept decimal input
+                                        inputMode="decimal" // Provides a decimal keyboard on mobile
+                                        {...register("tourRating", {
+                                            required: "Rating is required",
+                                            pattern: {
+                                                value: /^[0-9]+(\.[0-9]{1,2})?$/, // Allows integers and up to 2 decimal places
+                                                message: "Please enter a valid rating (e.g., 3.5)"
+                                            }
+                                        })}
+                                    />
                                     <p>{errors?.tourRating?.message}</p>
+                                </Stack>
+                                <Stack sx={{ flex: 1 }}>
+                                    <FormLabel>Comfort Rating *</FormLabel>
+                                    <Input
+                                        type="text"
+                                        inputMode="decimal"
+                                        {...register("comfortRating", {
+                                            required: "Comfort Rating is required",
+                                            pattern: {
+                                                value: /^[0-9]+(\.[0-9]{1,2})?$/,
+                                                message: "Please enter a valid comfort rating (e.g., 4.5)"
+                                            }
+                                        })}
+                                    />
+                                    <p>{errors?.comfortRating?.message}</p>
+                                </Stack>
+
+                                <Stack sx={{ flex: 2 }}>
+                                    <FormLabel>Google Map Link (Optional)</FormLabel>
+                                    <Textarea {...register("tourMap")} />
+                                    <p>{errors?.tourMap?.message}</p>
                                 </Stack>
                             </Stack>
                             <Stack direction="row" spacing={1}>

@@ -6,64 +6,71 @@ interface ItinerarySection {
   itineraryId: number;
   tourId: number;
   noOfDays: number;
-  description: string;
+  tourItinerary: string;
 }
 
 export const Itinerary = () => {
-  // Fetch 'id' from the URL using useParams (matches ':id' in the route)
-  const { id: tourId } = useParams<{ id: string }>(); // 'id' corresponds to 'tours/:id' in the route
-  const [itinerary, setItinerary] = useState<ItinerarySection | null>(null); // State to store a single itinerary object
-  const [loading, setLoading] = useState(true); // State to track loading
-  const [error, setError] = useState<string | null>(null); // State to track any errors
-
-  console.log("fetch Tour ID:::", tourId);
+  const { id: tourId } = useParams<{ id: string }>();
+  const [itinerary, setItinerary] = useState<ItinerarySection | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    // Fetch itinerary by tourId from API
     const fetchItinerary = async () => {
       try {
-        setLoading(true); // Start loading
-        setError(null); // Clear previous errors
-
+        setLoading(true);
+        setError(null);
         const response = await axios.get<ItinerarySection>(
-            `http://localhost:8080/tour/getById/${tourId}` // Use tourId in API URL
+            `http://localhost:8080/tour/getById/${tourId}`
         );
-
-        console.log("Response Itinerary:::: ", response.data);
-        setItinerary(response.data); // Set the single itinerary object directly
+        setItinerary(response.data);
       } catch (error) {
         console.error("Error fetching itinerary:", error);
         setError("Failed to fetch itinerary data.");
       } finally {
-        setLoading(false); // Set loading to false when request is done
+        setLoading(false);
       }
     };
 
     if (tourId) {
-      fetchItinerary(); // Fetch itinerary if tourId exists
+      fetchItinerary();
     }
-  }, [tourId]); // Rerun effect when tourId changes
+  }, [tourId]);
 
   if (loading) {
-    return <div>Loading...</div>; // Show loading state while data is fetched
+    return <div>Loading...</div>;
   }
 
   if (error) {
-    return <div>{error}</div>; // Display error if any
+    return <div>{error}</div>;
   }
 
-  if (!itinerary) {
-    return <div>No itinerary found for this tour.</div>; // Handle no itinerary case
+  if (!itinerary || !itinerary.tourItinerary) {
+    return <div>No itinerary found for this tour.</div>;
   }
+
+  // Updated regex pattern to capture "Day" variations more accurately
+  const daySections = itinerary.tourItinerary.split(/(Days?\s*\d+(?:\s*[-toTO]+\s*\d+)*\s*:)/i).filter(Boolean);
 
   return (
-      <div className="py-16">
+      <div className="py-4">
         <div className="mb-10 pb-4">
-          <p className="text-xl">
-            {itinerary.tourItinerary}
-          </p>
-          {/* Add any additional details here if needed */}
+          {daySections.map((section, index) => {
+            // Check if the section matches a "Day" header format
+            const isDayHeader = /Days?\s*\d+(?:\s*[-toTO]+\s*\d+)*\s*:/i.test(section.trim());
+
+            return (
+                <p
+                    key={index}
+                    className={isDayHeader ? "font-bold text-yellow-500" : "text-base"}
+                    style={isDayHeader ? { marginTop: '1rem' } : {}}
+                >
+                  {section.trim()}
+                </p>
+            );
+          })}
         </div>
       </div>
   );
+
 };

@@ -221,6 +221,9 @@ export const SpecificTour = () => {
                 </h2>
                 <TwoWheelerIcon fontSize="large" className="text-white/70" />
                 <span className="text-sm text-white/60">Riding Level</span>
+                <div className="text-xs text-yellow-400 mt-1 text-center">
+                  Beginner (1) - Expert (5)
+                </div>
               </div>
 
               {/* Comfort */}
@@ -230,6 +233,9 @@ export const SpecificTour = () => {
                 </h2>
                 <HotelIcon fontSize="large" className="text-white/70" />
                 <span className="text-sm text-white/60">Comfort</span>
+                <div className="text-xs text-yellow-400 mt-1 text-center">
+                    Basic (1) - Luxury (5)
+                </div>
               </div>
 
               {/* Period */}
@@ -253,6 +259,7 @@ export const SpecificTour = () => {
                 {tour.tourName}
               </div>
               {/* Google Map Embed */}
+              {/* Google Map Embed */}
               <div className="mt-0 flex justify-center">
                 <iframe
                     src={tour.tourMap}
@@ -264,6 +271,7 @@ export const SpecificTour = () => {
                     referrerPolicy="no-referrer-when-downgrade"
                 ></iframe>
               </div>
+
               <div className="flex items-start justify-start gap-5 tablet:gap-10 border-y border-white/20 w-full py-6">
                 {/* Start Date Section */}
                 <div className="flex flex-col gap-2 items-center"> {/* Changed to items-center */}
@@ -326,28 +334,33 @@ export const SpecificTour = () => {
                         name="quantity"
                         value={quantity}
                         onChange={handleQuantityChange}
-                        className="border rounded-md py-1 px-2 text-black"
+                        className="border rounded-md py-1 px-2 text-black w-1/5"
                     />
                   </div>
-                  {Array.from({ length: quantity }).map((_, index) => (
-                      <div className="flex items-center gap-4" key={index}>
-                        <label htmlFor={`bike-${index}`} className="font-light">Select Bike for Person {index + 1}:</label>
-                        <select
-                            id={`bike-${index}`}
-                            name={`bike-${index}`}
-                            onChange={(e) => handleBikeChange(e, index)}
-                            className="border rounded-md py-1 px-2 text-black"
-                            value={bikesSelected[index]?.bikeId || ""}
-                        >
-                          <option value="">Select a Bike</option>
-                          {getAvailableBikes(index).map(bike => (
-                              <option key={bike.bikeId} value={bike.bikeId}>
-                                {bike.makeBrand} {bike.model} (Rs. {bike.bikePrice}/day, Stock: {bike.remainingStock})
-                              </option>
-                          ))}
-                        </select>
-                      </div>
-                  ))}
+                  <div className="grid grid-cols-2 gap-4">
+                    {Array.from({ length: quantity }).map((_, index) => (
+                        <div className="flex items-center gap-2" key={index}>
+                          <label htmlFor={`bike-${index}`} className="font-light">
+                            Bike {index + 1}:
+                          </label>
+                          <select
+                              id={`bike-${index}`}
+                              name={`bike-${index}`}
+                              onChange={(e) => handleBikeChange(e, index)}
+                              className="border rounded-md py-1 px-2 text-black w-2/3" // Reduces size to 2/3
+                              value={bikesSelected[index]?.bikeId || ""}
+                          >
+                            <option value="">Select a Bike</option>
+                            {getAvailableBikes(index).map((bike) => (
+                                <option key={bike.bikeId} value={bike.bikeId}>
+                                  {bike.makeBrand} {bike.model} (Rs. {bike.bikePrice}/day, Stock: {bike.remainingStock})
+                                </option>
+                            ))}
+                          </select>
+                        </div>
+                    ))}
+                  </div>
+
                   <p className="text-2xl font-bold">Total Amount: Rs. {totalAmount}</p>
                   <button
                       onClick={bookTour}

@@ -20,9 +20,13 @@ INSERT INTO tours (
 As you traverse the rugged terrain, prepare to be captivated by panoramic views of lush hills, serene valleys, and vibrant local culture. Each turn reveals a new aspect of this hidden gem, making every moment truly unforgettable. Whether you''re navigating through challenging trails or cruising along picturesque roads, the Lamidanda region promises an adrenaline-fueled experience that will leave you with lasting memories.
 
 Join us for this unique adventure and immerse yourself in the natural beauty and adventure that Lamidanda has to offer!',
-             'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d111474.00218416998!2d86.56653853682818!3d27.241314725155924!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39e93148613feefd%3A0xc5f51f8d453423dc!2z4KSy4KS-4KSu4KWA4KSh4KS-4KSB4KSh4KS-!5e1!3m2!1sne!2snp!4v1730050682427!5m2!1sne!2snp',
+             'https://www.google.com/maps/embed/v1/place?key=AIzaSyCT-8t5hsxRtQCHZ2NSLo93PnbqXlw1fxw&q=Lamidanda,Nepal',
              'Dual-Sports',
-             'Arrive in Lamidanda, check into accommodations, and attend a welcome briefing. Day 2 begins with an exhilarating off-road exploration in the morning, followed by outdoor activities like hiking or biking in the afternoon. After dinner, participants can share their experiences. On Day 3, enjoy a scenic on-road ride in the morning, followed by final activities and a feedback session before departing Lamidanda.',
+             'Day 1: Arrive in Lamidanda, check into accommodations, and attend a welcome briefing.
+
+Day 2: Begin with an exhilarating off-road exploration in the morning, followed by optional outdoor activities like hiking or biking in the afternoon. After dinner, participants can gather to share their experiences of the day.
+
+Day 3: Enjoy a scenic on-road ride in the morning, followed by final activities and a feedback session before departing Lamidanda.',
              '2024-11-02',
              '2024-11-04',
              8,
@@ -31,86 +35,25 @@ Join us for this unique adventure and immerse yourself in the natural beauty and
              3000.00,
              'lamidanda-trail.jpg'
          ),
-
-
-      (
+         (
              10001,
-             'Annapurna Circuit Adventure',
-             'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d264263.98351803643!2d83.58467958952325!3d28.47123801711487!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3995f69b98264d51%3A0x48fd51cb6932d80b!2z4KSY4KS-4KSo4KWN4KSm4KWN4KSw4KWB4KSVIDMzNzAw!5e1!3m2!1sne!2snp!4v1730050834050!5m2!1sne!2snp',
-             'Experience the breathtaking Annapurna Circuit with stunning mountain views.',
-             'Off-Road & On-Road',
-             'Day 1: Arrival and briefing\nDay 2-14: Trekking through diverse landscapes\nDay 15: Return and departure',
-             '2025-05-01',
-             '2025-05-10',
-             6,
-             3.5,
-             4,
-             79699.89,
-             'annapurna.jpg'
+             'Mustang Circuit Trail Adventure',
+             'Experience the untamed beauty of the Mustang region on this dual-sport adventure, where rugged trails and serene mountain paths combine to create a journey of a lifetime. Tailored for adventure enthusiasts, this tour leads you through the breathtaking landscapes of Mustang, known for its dramatic cliffs, deep gorges, and hidden monasteries.
+Each ride presents a new discovery: traverse ancient trade routes, encounter remote villages, and revel in the solitude of the Mustang wilderness. Whether you’re conquering steep trails or navigating open valleys, this adventure offers a thrilling, scenic escape into one of the Himalayas'''' most treasured regions. Don’t miss this chance to be part of an unforgettable journey!',
+             'https://www.google.com/maps/embed/v1/place?key=AIzaSyCT-8t5hsxRtQCHZ2NSLo93PnbqXlw1fxw&q=Lo+Manthang+33100,Nepal',
+             'Dual-Sports',
+             'Day 1 : Depart from Bhaktapur, City Guest House, and travel to Jomsom. Begin with a scenic briefing, followed by an initial ride along the rocky trails surrounding Jomsom. Get settled and prepare for the adventure ahead.
+
+Day 2 : Start the day riding deeper into the Mustang valley, navigating a mix of on- and off-road segments. Enjoy stops at iconic viewpoints and immerse yourself in the breathtaking scenery of Mustang.
+
+Days 3 to 8 : Continue exploring various routes and landscapes within Mustang valley. Each day offers a blend of challenging terrains and cultural encounters, with opportunities for short hikes and visits to local communities and monasteries.
+
+Day 9 : Conclude the adventure with a scenic ride back to Jomsom. Celebrate the journey with a farewell dinner, and afterward, return to Bhaktapur, City Guest House to mark the end of the tour.',
+             '2024-11-10',
+             '2024-11-18',
+             7,
+             4.2,
+             3.8,
+             4299.00,
+             'mustang.jpg'
          );
-
-
--- -- Insert Itinerary for Tour 1: Annapurna Circuit Adventure
--- INSERT INTO itineraries (
---     itinerary_id,
---     tour_id,
---     no_of_days,
---     description
--- ) VALUES (
---              2001, -- Assuming a separate sequence for itinerary_id starting at 2001
---              1001,
---              15,
---              'A comprehensive trekking experience through the Annapurna region, covering diverse terrains and cultures.'
---          );
---
--- -- Insert Itinerary for Tour 2: Kathmandu Valley Bike Tour
--- INSERT INTO itineraries (
---     itinerary_id,
---     tour_id,
---     no_of_days,
---     description
--- ) VALUES (
---              2002,
---              1002,
---              4,
---              'A cultural exploration of Kathmandu Valley, visiting key historical and religious sites by bike.'
---          );
---
--- -- Insert Itinerary for Tour 3: Everest Base Camp Expedition
--- INSERT INTO itineraries (
---     itinerary_id,
---     tour_id,
---     no_of_days,
---     description
--- ) VALUES (
---              2003,
---              1003,
---              11,
---              'An extreme biking expedition to Everest Base Camp, including acclimatization days and high-altitude riding.'
---          );
---
--- -- Insert Itinerary for Tour 4: Pokhara Lakeside Cycling
--- INSERT INTO itineraries (
---     itinerary_id,
---     tour_id,
---     no_of_days,
---     description
--- ) VALUES (
---              2004,
---              1004,
---              6,
---              'Leisurely cycling around Pokhara Lakeside with opportunities for sightseeing and relaxation.'
---          );
---
--- -- Insert Itinerary for Tour 5: Chitwan Jungle Bike Safari
--- INSERT INTO itineraries (
---     itinerary_id,
---     tour_id,
---     no_of_days,
---     description
--- ) VALUES (
---              2005,
---              1005,
---              6,
---              'A unique combination of biking and wildlife safari in Chitwan National Park, including guided tours.'
---          );

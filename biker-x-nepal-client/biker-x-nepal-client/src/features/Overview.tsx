@@ -45,7 +45,7 @@ export const Overview = () => {
     }
 
     return (
-        <div className="py-16 grid grid-cols-1 laptop:grid-cols-2 gap-y-12 gap-x-8">
+        <div className="py-4 grid grid-cols-1 laptop:grid-cols-2 gap-y-12 gap-x-8">
             {/* Left Section */}
             <div className="flex flex-col items-start gap-8 overflow-hidden">
                 <h1 className="text-2xl font-semibold tracking-wider text-yellow-500">
@@ -62,14 +62,16 @@ export const Overview = () => {
                 <h1 className="font-semibold text-xl mb-5">Your Tour Package Includes:</h1>
                 <ul className="list-disc font-light tracking-wide pl-8 flex flex-col gap-3 text-white/70">
                     <li>Bed & Breakfast</li>
-                    <li>Motorbike (NO GEARS!)</li>
-                    <li>Free Wi-Fi</li>
+                    <li>Free Wi-Fi (UPON AVAILABILITY!)</li>
                 </ul>
 
                 <h1 className="font-semibold text-xl mb-5 mt-5">Your Tour Package Excludes:</h1>
                 <ul className="list-disc font-light tracking-wide pl-8 flex flex-col gap-3 text-white/70">
+                    <li>Motorbike</li>
                     <li>Medical Insurance</li>
+                    <li>Photography/Videography</li>
                     <li>Biking Gear & Safety</li>
+                    <li>Permits & Fees</li>
                     <li>Driving License and Authority from Government of Nepal will cost extra.</li>
                 </ul>
             </div>

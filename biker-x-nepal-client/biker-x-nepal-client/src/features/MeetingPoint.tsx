@@ -17,7 +17,7 @@ export const MeetingPoint = () => {
     popupAnchor: [0, -46], // point from which the popup should open relative to the iconAnchor
   });
   return (
-    <div className="my-12">
+    <div className="my-4">
       <div className="grid full:grid-cols-2 full:mb-20 mb-10">
         <div className="flex flex-col p-5 gap-4">
           <h3 className="text-lg text-yellow-500">Bhaktapur, Nepal</h3>

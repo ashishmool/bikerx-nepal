@@ -35,7 +35,19 @@ function UpdateTour() {
 
     useEffect(() => {
         if (tourByIdData) {
-            const { tourName, tourDescription, tourItinerary, tourType, startDate, endDate, maxParticipants, tourRating, tourPrice } = tourByIdData.data;
+            const {
+                tourName,
+                tourDescription,
+                tourItinerary,
+                tourType,
+                startDate,
+                endDate,
+                maxParticipants,
+                tourRating,
+                comfortRating,
+                tourMap,
+                tourPrice,
+            } = tourByIdData.data;
             setValue("tourName", tourName);
             setValue("tourDescription", tourDescription);
             setValue("tourItinerary", tourItinerary);
@@ -44,6 +56,8 @@ function UpdateTour() {
             setValue("endDate", new Date(endDate).toISOString().split("T")[0]);
             setValue("maxParticipants", maxParticipants);
             setValue("tourRating", tourRating);
+            setValue("comfortRating", comfortRating);
+            setValue("tourMap", tourMap);
             setValue("tourPrice", tourPrice);
         }
     }, [tourByIdData, setValue]);
@@ -51,7 +65,12 @@ function UpdateTour() {
     const updateTourMutation = useMutation({
         mutationKey: ["UPDATE_TOUR"],
         mutationFn(formData) {
-            return axios.put(`http://localhost:8080/tour/update/${id}`, formData);
+            const updatedData = new FormData();
+            if (image) updatedData.append("image", image);
+            Object.entries(formData).forEach(([key, value]) => {
+                updatedData.append(key, value);
+            });
+            return axios.put(`http://localhost:8080/tour/update/${id}`, updatedData);
         },
         onSuccess() {
             toast.success("Tour updated successfully!");
@@ -63,19 +82,7 @@ function UpdateTour() {
     });
 
     const onSubmit = (formData) => {
-        const updatedData = new FormData();
-        if (image) updatedData.append("image", image);
-        updatedData.append("tourName", formData.tourName);
-        updatedData.append("tourDescription", formData.tourDescription);
-        updatedData.append("tourItinerary", formData.tourItinerary);
-        updatedData.append("tourType", formData.tourType);
-        updatedData.append("startDate", formData.startDate);
-        updatedData.append("endDate", formData.endDate);
-        updatedData.append("maxParticipants", String(formData.maxParticipants));
-        updatedData.append("tourRating", String(formData.tourRating));
-        updatedData.append("tourPrice", String(formData.tourPrice));
-
-        updateTourMutation.mutate(updatedData);
+        updateTourMutation.mutate(formData);
     };
 
     const handleImageUpload = (event) => {
@@ -155,8 +162,8 @@ function UpdateTour() {
                                 <Stack sx={{ flex: 1 }}>
                                     <FormLabel>Tour Rating *</FormLabel>
                                     <Input
-                                        type="text" // Switch to "text" to bypass strict integer validation
-                                        inputMode="decimal" // Provides a decimal keyboard on mobile devices
+                                        type="text" // Switch to text to accept decimal input
+                                        inputMode="decimal" // Provides a decimal keyboard on mobile
                                         {...register("tourRating", {
                                             required: "Rating is required",
                                             pattern: {
@@ -164,13 +171,36 @@ function UpdateTour() {
                                                 message: "Please enter a valid rating (e.g., 3.5)"
                                             }
                                         })}
-                                    />                                    <p>{errors?.tourRating?.message}</p>
+                                    />
+                                    <p>{errors?.tourRating?.message}</p>
+                                </Stack>
+                                <Stack sx={{ flex: 1 }}>
+                                    <FormLabel>Comfort Rating *</FormLabel>
+                                    <Input
+                                        type="text"
+                                        inputMode="decimal"
+                                        {...register("comfortRating", {
+                                            required: "Comfort Rating is required",
+                                            pattern: {
+                                                value: /^[0-9]+(\.[0-9]{1,2})?$/,
+                                                message: "Please enter a valid comfort rating (e.g., 4.5)"
+                                            }
+                                        })}
+                                    />
+                                    <p>{errors?.comfortRating?.message}</p>
+                                </Stack>
+
+                            </Stack>
+                            <Stack direction="row" spacing={1}>
+                                <Stack sx={{ flex: 1 }}>
+                                    <FormLabel>Google Map Link (Optional)</FormLabel>
+                                    <Textarea {...register("tourMap")} />
                                 </Stack>
                             </Stack>
                             <Stack direction="row" spacing={1}>
                                 <Stack sx={{ flex: 1 }}>
                                     <FormLabel>Tour Price *</FormLabel>
-                                    <Input type="number" {...register("tourPrice", { required: "Price is required", min: { value: 0, message: "Tour price must be positive" } })} />
+                                    <Input type="number" {...register("tourPrice", { required: "Tour Price is required" })} />
                                     <p>{errors?.tourPrice?.message}</p>
                                 </Stack>
                                 <Stack sx={{ flex: 1 }}>
