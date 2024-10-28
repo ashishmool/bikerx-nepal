@@ -372,7 +372,7 @@ export const SpecificTour = () => {
             )}
           </div>
         </div>
-        <div className="text-white pt-24 relative">
+        <div className="text-white pt-8 relative">
           <ul className={`text-white/40 flex border-b px-[5%] laptop:px-[0%] laptop:mx-[8%] border-b-white/20 flex-nowrap overflow-auto gap-10 whitespace-nowrap`}>
             <NavLinkTour route="." end={true}>  {/* Set end={true} for Overview */}
               Overview

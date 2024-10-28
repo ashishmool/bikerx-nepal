@@ -20,7 +20,7 @@ INSERT INTO tours (
 As you traverse the rugged terrain, prepare to be captivated by panoramic views of lush hills, serene valleys, and vibrant local culture. Each turn reveals a new aspect of this hidden gem, making every moment truly unforgettable. Whether you''re navigating through challenging trails or cruising along picturesque roads, the Lamidanda region promises an adrenaline-fueled experience that will leave you with lasting memories.
 
 Join us for this unique adventure and immerse yourself in the natural beauty and adventure that Lamidanda has to offer!',
-             'https://www.google.com/maps/embed/v1/place?key=AIzaSyCT-8t5hsxRtQCHZ2NSLo93PnbqXlw1fxw&q=Lamidanda,Nepal',
+             'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d52466.74809511446!2d86.62895573494887!3d27.249031470468914!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39e93148613feefd%3A0xc5f51f8d453423dc!2sLamidanda!5e1!3m2!1sen!2snp!4v1730109509210!5m2!1sen!2snp',
              'Dual-Sports',
              'Day 1: Arrive in Lamidanda, check into accommodations, and attend a welcome briefing.
 
@@ -40,7 +40,7 @@ Day 3: Enjoy a scenic on-road ride in the morning, followed by final activities 
              'Mustang Circuit Trail Adventure',
              'Experience the untamed beauty of the Mustang region on this dual-sport adventure, where rugged trails and serene mountain paths combine to create a journey of a lifetime. Tailored for adventure enthusiasts, this tour leads you through the breathtaking landscapes of Mustang, known for its dramatic cliffs, deep gorges, and hidden monasteries.
 Each ride presents a new discovery: traverse ancient trade routes, encounter remote villages, and revel in the solitude of the Mustang wilderness. Whether you’re conquering steep trails or navigating open valleys, this adventure offers a thrilling, scenic escape into one of the Himalayas'''' most treasured regions. Don’t miss this chance to be part of an unforgettable journey!',
-             'https://www.google.com/maps/embed/v1/place?key=AIzaSyCT-8t5hsxRtQCHZ2NSLo93PnbqXlw1fxw&q=Lo+Manthang+33100,Nepal',
+             'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d206081.79611473947!2d83.708885790786!3d29.19198911964531!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39be5ddc2e44b94b%3A0x2f76f6f2ff621b3c!2sLo%20Manthang%20Village!5e1!3m2!1sen!2snp!4v1730109424211!5m2!1sen!2snp',
              'Dual-Sports',
              'Day 1 : Depart from Bhaktapur, City Guest House, and travel to Jomsom. Begin with a scenic briefing, followed by an initial ride along the rocky trails surrounding Jomsom. Get settled and prepare for the adventure ahead.
 
