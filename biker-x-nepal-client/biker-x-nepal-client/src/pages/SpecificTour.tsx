@@ -209,17 +209,15 @@ export const SpecificTour = () => {
   return (
       <main className="relative pt-32">
         <div className="flex text-[--secundary-color] gap-5 px-[8%] flex-col laptop:flex-row justify-between">
-      <span className="gap-2">
-        <Breadcrumb tour={tour} />
-      </span>
           <Link
               to="/tours"
               className="border-b border-white/40 transition duration-200 hover:text-white flex items-center gap-2 w-fit cursor-pointer"
           >
             <FaArrowLeft />
-            Get back
+            Back to Destinations
           </Link>
         </div>
+
 
         <div className="grid grid-cols-1 full:grid-cols-2 gap-16 mt-16 px-[8%]">
           <div className="image-class">
@@ -274,8 +272,13 @@ export const SpecificTour = () => {
             <div className="flex flex-col items-start gap-6">
               <div className="flex flex-col gap-2 items-start text-2xl text-yellow-500 font-extrabold">
                 {tour.tourName}
+
               </div>
-              {/* Google Map Embed */}
+
+              <div className="flex flex-col gap-2 items-start text-sm text-yellow-500 font-regular">
+                <Breadcrumb tour={tour} />
+              </div>
+
               {/* Google Map Embed */}
               <div className="mt-0 flex justify-center">
                 <iframe
@@ -388,7 +391,9 @@ export const SpecificTour = () => {
                   <div className="text-xs text-yellow-400 mt-1 text-center">
                     Please Note: Tours can be booked for any number of available seats. However, for two (2) or more than two (2) participants, the system allows one participant to bring their own bike and only pay for the tour cost.
                   </div>
+
                 </div>
+
             )}
           </div>
         </div>

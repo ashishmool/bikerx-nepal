@@ -6,7 +6,7 @@ const Breadcrumb = ({ tour }) => {
         <nav className="flex items-center">
       <span className="gap-2">
         <Link to="/tours" className="text-yellow-500 hover:underline"> {/* Adjust the styling as needed */}
-            Tours
+            Destinations
         </Link>
         <FaChevronRight className="scale-[0.7] inline-block" />
         <span className="text-white">{tour.tourName}</span>
