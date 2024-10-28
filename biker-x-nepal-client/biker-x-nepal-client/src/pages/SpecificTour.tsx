@@ -132,10 +132,16 @@ export const SpecificTour = () => {
     const userId = localStorage.getItem("userId");
     const userEmail = localStorage.getItem("email"); // Get the user's email from localStorage
 
-    // Check if the number of selected bikes matches the requirement (quantity - 1)
+    // Check if the number of selected bikes matches the requirement
     const selectedBikesCount = bikesSelected.filter(bike => bike !== null).length;
 
-    if (selectedBikesCount < quantity - 1) {
+    // Condition for when quantity is 1 or more than 1
+    if (quantity === 1 && selectedBikesCount < 1) {
+      toast.warn("You must select 1 bike for 1 participant.");
+      return; // Exit the function if the condition is not met
+    }
+
+    if (quantity > 1 && selectedBikesCount < quantity - 1) {
       toast.warn(`You must select at least (${quantity - 1}) bike(s) for ${quantity} participant(s).`);
       return; // Exit the function if the condition is not met
     }
@@ -173,6 +179,7 @@ export const SpecificTour = () => {
       console.error('Error booking tour:', error);
     }
   };
+
 
 
 
@@ -320,7 +327,7 @@ export const SpecificTour = () => {
                 <div className="flex flex-col gap-2 items-center"> {/* Changed to items-center */}
                   <div className="flex items-center gap-2"> {/* Align icon and title inline */}
                     <FaUserGroup className="text-yellow-500" />
-                    <h2 className="font-light whitespace-nowrap text-yellow-500">Max. Participants</h2>
+                    <h2 className="font-light whitespace-nowrap text-yellow-500">Available Seats</h2>
                   </div>
                   <h2 className="font-semibold text-lg w-fit max-w-[100px] tablet:max-w-fit text-center"> {/* Center align value */}
                     {tour.maxParticipants} persons
@@ -378,6 +385,9 @@ export const SpecificTour = () => {
                   >
                     Book Tour
                   </button>
+                  <div className="text-xs text-yellow-400 mt-1 text-center">
+                    Please Note: Tours can be booked for any number of available seats. However, for two (2) or more than two (2) participants, the system allows one participant to bring their own bike and only pay for the tour cost.
+                  </div>
                 </div>
             )}
           </div>
