@@ -26,6 +26,7 @@ export const SpecificTour = () => {
   const [error, setError] = useState(null);
   const [quantity, setQuantity] = useState(1);
   const [totalAmount, setTotalAmount] = useState(0);
+  const [breakdown, setBreakdown] = useState([]);
   const [bikesSelected, setBikesSelected] = useState(Array(1).fill(null)); // Array to track bikes selected for each dropdown
   const [bikesData, setBikesData] = useState(null);
 
@@ -50,7 +51,7 @@ export const SpecificTour = () => {
 
   useEffect(() => {
     if (tour) {
-      setTotalAmount(tour.tourPrice);  // Set initial amount to tour price
+      setTotalAmount(tour.tourPrice * [duration+1]);  // Set initial amount to tour price
     }
   }, [tour]);
 
@@ -86,16 +87,24 @@ export const SpecificTour = () => {
   };
 
   const calculateTotal = (quantity, bikesSelected) => {
-    let total = tour.tourPrice * quantity;  // Base tour price for all persons
+    // Calculate the total cost for the tour, considering the duration as well
+    let baseTotal = tour.tourPrice * quantity * [duration+1];  // Tour price for all participants over the duration
+    let breakdown = [`No. of Participants x Tour Cost per Person x Duration = ${quantity} x ${formatAmount(tour.tourPrice)} x ${duration+1} = ${formatAmount(baseTotal)}`];
 
+    // Calculate additional charges for bikes
     bikesSelected.forEach(bike => {
       if (bike) {
-        total += duration * bike.bikePrice;  // Add bike price per person
+        const bikeTotal = [duration+1] * bike.bikePrice;
+        breakdown.push(`${bike.makeBrand} ${bike.model} : ${duration+1} (Day/s) x ${formatAmount(bike.bikePrice)} (Bike Price per Day) = ${formatAmount(bikeTotal)}`);
+        baseTotal += bikeTotal;  // Add bike price per person
       }
     });
 
-    setTotalAmount(parseFloat(total.toFixed(2)));
+    setTotalAmount(baseTotal);
+    setBreakdown(breakdown);
   };
+
+
 
   const fetchBikes = async () => {
     try {
@@ -205,6 +214,16 @@ export const SpecificTour = () => {
   const startDate = new Date(tour.startDate);
   const endDate = new Date(tour.endDate);
   const duration = Math.ceil((endDate - startDate) / (1000 * 60 * 60 * 24));
+
+
+  // Helper function to format the amount in NPR style with commas
+  const formatAmount = (amount) => {
+    return amount.toLocaleString("en-IN", {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    });
+  };
+
 
   return (
       <main className="relative pt-32">
@@ -381,7 +400,13 @@ export const SpecificTour = () => {
                     ))}
                   </div>
 
-                  <p className="text-2xl font-bold">Total Amount: Rs. {totalAmount}</p>
+                  <p className="text-2xl font-bold">Total Amount: NPR {formatAmount(totalAmount)}</p>
+                  <div className="text-sm text-white/70">
+                    {breakdown.map((line, index) => (
+                        <p key={index}>{line}</p>
+                    ))}
+                  </div>
+
                   <button
                       onClick={bookTour}
                       className="bg-yellow-500 text-black font-semibold py-2 px-4 rounded-lg transition duration-200 hover:bg-yellow-400"
