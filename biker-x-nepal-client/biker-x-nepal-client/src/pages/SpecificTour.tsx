@@ -227,7 +227,7 @@ export const SpecificTour = () => {
 
   return (
       <main className="relative pt-32">
-        <div className="flex text-[--secundary-color] gap-5 px-[8%] flex-col laptop:flex-row justify-between">
+        <div className="flex text-[--secundary-color] gap-5 px-[8%] flex-col laptop:flex-row justify-between mt-16">
           <Link
               to="/tours"
               className="border-b border-white/40 transition duration-200 hover:text-white flex items-center gap-2 w-fit cursor-pointer"
@@ -238,7 +238,7 @@ export const SpecificTour = () => {
         </div>
 
 
-        <div className="grid grid-cols-1 full:grid-cols-2 gap-16 mt-16 px-[8%]">
+        <div className="grid grid-cols-1 full:grid-cols-2 gap-16 mt-4 px-[8%]">
           <div className="image-class">
             <img width={750} src={'data:image/png;base64,' + tour.image} />
             {/* Attribute Icons Section */}

@@ -255,42 +255,42 @@ export default function Sidebar() {
             </Toggler>
           </ListItem>
 
-            <ListItem nested>
-                <Toggler
-                    defaultExpanded = {false}
-                    renderToggle={({ open, setOpen }) => (
-                        <ListItemButton onClick={() => setOpen(!open)}>
-                            <MapIcon />
-                            <ListItemContent>
-                                <Typography level="title-sm">Itineraries</Typography>
-                            </ListItemContent>
-                            <KeyboardArrowDownIcon
-                                sx={{ transform: open ? 'rotate(180deg)' : 'none' }}
-                            />
-                        </ListItemButton>
-                    )}
-                >
-                    <List sx={{ gap: 0.5 }}>
-                        <ListItem>
-                            <ListItemButton
-                                role="menuitem"
-                                component="a"
-                                href="/dashboard/itinerary/add"
-                                selected={location.pathname === '/dashboard/itinerary/add'}
-                            >Add New Itinerary</ListItemButton>
-                        </ListItem>
-                        <ListItem sx={{ mt: 0.5 }}>
-                            <ListItemButton
-                                role="menuitem"
-                                component="a"
-                                href="/dashboard/itinerary/list"
-                                selected={location.pathname === '/dashboard/itinerary/list'}
-                            >Manage Itinerary</ListItemButton>
-                        </ListItem>
+            {/*<ListItem nested>*/}
+            {/*    <Toggler*/}
+            {/*        defaultExpanded = {false}*/}
+            {/*        renderToggle={({ open, setOpen }) => (*/}
+            {/*            <ListItemButton onClick={() => setOpen(!open)}>*/}
+            {/*                <MapIcon />*/}
+            {/*                <ListItemContent>*/}
+            {/*                    <Typography level="title-sm">Itineraries</Typography>*/}
+            {/*                </ListItemContent>*/}
+            {/*                <KeyboardArrowDownIcon*/}
+            {/*                    sx={{ transform: open ? 'rotate(180deg)' : 'none' }}*/}
+            {/*                />*/}
+            {/*            </ListItemButton>*/}
+            {/*        )}*/}
+            {/*    >*/}
+            {/*        <List sx={{ gap: 0.5 }}>*/}
+            {/*            <ListItem>*/}
+            {/*                <ListItemButton*/}
+            {/*                    role="menuitem"*/}
+            {/*                    component="a"*/}
+            {/*                    href="/dashboard/itinerary/add"*/}
+            {/*                    selected={location.pathname === '/dashboard/itinerary/add'}*/}
+            {/*                >Add New Itinerary</ListItemButton>*/}
+            {/*            </ListItem>*/}
+            {/*            <ListItem sx={{ mt: 0.5 }}>*/}
+            {/*                <ListItemButton*/}
+            {/*                    role="menuitem"*/}
+            {/*                    component="a"*/}
+            {/*                    href="/dashboard/itinerary/list"*/}
+            {/*                    selected={location.pathname === '/dashboard/itinerary/list'}*/}
+            {/*                >Manage Itinerary</ListItemButton>*/}
+            {/*            </ListItem>*/}
 
-                    </List>
-                </Toggler>
-            </ListItem>
+            {/*        </List>*/}
+            {/*    </Toggler>*/}
+            {/*</ListItem>*/}
 
             <ListItem nested>
                 <Toggler
@@ -336,7 +336,7 @@ export default function Sidebar() {
                         <ListItemButton onClick={() => setOpen(!open)}>
                             <QuestionAnswerRoundedIcon />
                             <ListItemContent>
-                                <Typography level="title-sm">Reviews</Typography>
+                                <Typography level="title-sm">Tip/Information</Typography>
                             </ListItemContent>
 
                             <KeyboardArrowDownIcon
@@ -352,7 +352,7 @@ export default function Sidebar() {
                                 component="a"
                                 href="/dashboard/information/add"
                                 selected={location.pathname === '/dashboard/information/add'}
-                            >Add New Review</ListItemButton>
+                            >Add New Tips/Information</ListItemButton>
                         </ListItem>
                         <ListItem sx={{ mt: 0.5 }}>
                             <ListItemButton
@@ -360,7 +360,7 @@ export default function Sidebar() {
                                 component="a"
                                 href="/dashboard/information/list"
                                 selected={location.pathname === '/dashboard/information/list'}
-                            >Manage Reviews</ListItemButton>
+                            >Manage Tips/Information</ListItemButton>
                         </ListItem>
                     </List>
                 </Toggler>
@@ -402,41 +402,7 @@ export default function Sidebar() {
                 </Toggler>
             </ListItem>
 
-            <ListItem nested>
-                <Toggler
-                    defaultExpanded = {false}
-                    renderToggle={({ open, setOpen }) => (
-                        <ListItemButton onClick={() => setOpen(!open)}>
-                            <GroupRoundedIcon />
-                            <ListItemContent>
-                                <Typography level="title-sm">Shop (Coming Soon!)</Typography>
-                            </ListItemContent>
-                            <KeyboardArrowDownIcon
-                                sx={{ transform: open ? 'rotate(180deg)' : 'none' }}
-                            />
-                        </ListItemButton>
-                    )}
-                >
-                    <List sx={{ gap: 0.5 }}>
-                        <ListItem sx={{ mt: 0.5 }}>
-                            <ListItemButton
-                                role="menuitem"
-                                component="a"
-                                href="/dashboard/user/list"
-                                selected={location.pathname === '/dashboard/user/list'}
-                            >Manage Shop</ListItemButton>
-                        </ListItem>
-                        <ListItem>
-                            <ListItemButton
-                                role="menuitem"
-                                component="a"
-                                href="/dashboard/user/add"
-                                selected={location.pathname === '/dashboard/user/add'}
-                            >Add Product</ListItemButton>
-                        </ListItem>
-                    </List>
-                </Toggler>
-            </ListItem>
+
         </List>
       </Box>
       <Divider />
@@ -447,7 +413,7 @@ export default function Sidebar() {
         {/*  src="https://scontent.fktm7-1.fna.fbcdn.net/v/t39.30808-6/335908168_603305641661553_7305707784394286074_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=efb6e6&_nc_ohc=c6hfRpmIHwAAX9glMNw&_nc_ht=scontent.fktm7-1.fna&oh=00_AfCob5UWM8Nb_NgdKSy8_6a1RYo1KyYcloen592nCeCvjQ&oe=65CF32D6"*/}
         {/*/>*/}
         <Box sx={{ minWidth: 0, flex: 1 }}>
-          <Typography level="title-sm">Ashish Mool</Typography>
+          <Typography level="title-sm">Manager</Typography>
           <Typography level="body-xs">bikerxnepal@gmail.com</Typography>
         </Box>
         <IconButton size="sm" variant="plain" color="neutral" onClick={handleLogout}>

@@ -111,12 +111,13 @@ export const MyTour = () => {
                     <>
                         {/* Table Header */}
                         <div className="w-full flex justify-between items-center py-2 border-b border-white font-bold">
-                            <span className="w-[16.6%] text-center">Booking No.</span>
-                            <span className="w-[16.6%] text-center">Tour Name</span>
-                            <span className="w-[16.6%] text-center">Start Date</span>
-                            <span className="w-[16.6%] text-center">Duration</span>
-                            <span className="w-[16.6%] text-center text-yellow-500">Days to Go</span>
-                            <span className="w-[16.6%] text-center">Request Change</span>
+                            <span className="w-[14%] text-center">Booking No.</span>
+                            <span className="w-[14%] text-center">Tour Name</span>
+                            <span className="w-[14%] text-center">Start Date</span>
+                            <span className="w-[14%] text-center">Duration</span>
+                            <span className="w-[14%] text-center text-yellow-500">Days to Go</span>
+                            <span className="w-[14%] text-center text-yellow-500">Booking Status</span>
+                            <span className="w-[16%] text-center">Request Change</span>
                         </div>
 
                         {/* Table Rows (Mapped Bookings) */}
@@ -129,17 +130,17 @@ export const MyTour = () => {
                                 viewport={{ once: true }}
                                 className="w-full flex justify-between items-center py-4 border-b border-white"
                             >
-                                <span className="w-[16.6%] text-center">{booking.purchaseId}</span>
-                                <span className="w-[16.6%] text-center font-semibold">
+                                <span className="w-[14%] text-center">{booking.purchaseId}</span>
+                                <span className="w-[14%] text-center font-semibold">
                                     {tourDetails[booking.tourId] ? tourDetails[booking.tourId].tourName : "Loading..."}
                                 </span>
-                                <span className="w-[16.6%] text-center">
+                                <span className="w-[14%] text-center">
                                     {tourDetails[booking.tourId] ? new Date(tourDetails[booking.tourId].startDate).toLocaleDateString() : "Loading..."}
                                 </span>
-                                <span className="w-[16.6%] text-center">
+                                <span className="w-[14%] text-center">
                                     {tourDetails[booking.tourId] ? `${calculateDuration(tourDetails[booking.tourId].startDate, tourDetails[booking.tourId].endDate)} days` : "Loading..."}
                                 </span>
-                                <span className="w-[16.6%] text-center text-yellow-500">
+                                <span className="w-[14%] text-center text-yellow-500">
                                     {tourDetails[booking.tourId] ? (
                                         calculateDaysToGo(tourDetails[booking.tourId].startDate) <= 0 ?
                                             "Complete" :
@@ -147,7 +148,13 @@ export const MyTour = () => {
                                     ) : "Loading..."}
                                 </span>
 
-                                <span className="w-[16.6%] text-center cursor-pointer">
+                                <span
+                                    className={`w-[14%] text-center ${booking.paymentStatus === 'COMPLETED' ? 'text-yellow-500' : 'text-red-500'}`}>
+                                    {booking.paymentStatus === 'COMPLETED' ? 'Confirmed' : 'Pending'}
+                                </span>
+
+
+                                <span className="w-[16%] text-center cursor-pointer">
                                     {tourDetails[booking.tourId] && calculateDaysToGo(tourDetails[booking.tourId].startDate) > 45 ? (
                                         // Enable Link Button if Days To Go > 45
                                         <Link
@@ -169,6 +176,9 @@ export const MyTour = () => {
                                         </div>
                                     )}
                                 </span>
+
+
+
                             </motion.div>
                         ))}
                     </>

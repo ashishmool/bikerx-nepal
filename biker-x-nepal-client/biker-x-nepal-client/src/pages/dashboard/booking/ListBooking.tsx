@@ -22,7 +22,14 @@ function ListBooking() {
 
     const markAsDone = async (id) => {
         try {
-            await axios.put(`http://localhost:8080/booking/update/${id}`, { paymentStatus: 'COMPLETED' });
+            // Retrieve the existing booking to get the current startDate
+            const { data: existingBooking } = await axios.get(`http://localhost:8080/booking/get/${id}`);
+
+            await axios.put(`http://localhost:8080/booking/update/${id}`, {
+                paymentStatus: 'COMPLETED',
+                startDate: existingBooking.startDate,
+                endDate: existingBooking.endDate // set endDate as needed
+            });
             toast.success('Payment Marked Complete');
             refetch();
         } catch (error) {
@@ -30,6 +37,7 @@ function ListBooking() {
             console.error('Error marking booking as done:', error);
         }
     };
+
 
 
 
