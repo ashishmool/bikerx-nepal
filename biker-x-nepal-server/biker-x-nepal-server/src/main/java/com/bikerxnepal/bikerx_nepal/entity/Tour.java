@@ -58,6 +58,8 @@ public class Tour {
 
     private String image;
 
-    @OneToOne(mappedBy = "tour", cascade = CascadeType.ALL)
-    private Itinerary itinerary; // Assuming Itinerary is another entity
+    @Column(name = "pdf_file", columnDefinition = "BYTEA")
+    private byte[] pdfFile;
+
+
 }

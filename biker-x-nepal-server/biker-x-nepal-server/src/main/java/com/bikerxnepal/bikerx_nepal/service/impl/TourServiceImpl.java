@@ -1,11 +1,11 @@
 package com.bikerxnepal.bikerx_nepal.service.impl;
 
-import com.bikerxnepal.bikerx_nepal.entity.Bike;
 import com.bikerxnepal.bikerx_nepal.entity.Tour;
 import com.bikerxnepal.bikerx_nepal.pojo.TourPojo;
 import com.bikerxnepal.bikerx_nepal.repo.TourRepo;
 import com.bikerxnepal.bikerx_nepal.service.TourService;
 import com.bikerxnepal.bikerx_nepal.utils.ImageToBase64;
+import com.bikerxnepal.bikerx_nepal.utils.PdfUtility;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -26,20 +26,33 @@ import java.util.stream.Collectors;
 public class TourServiceImpl implements TourService {
 
     private static final Logger log = LoggerFactory.getLogger(TourServiceImpl.class);
-
-
     private final TourRepo tourRepo;
+    private final ImageToBase64 imageToBase64 = new ImageToBase64();
+    private final PdfUtility pdfUtility = new PdfUtility();  // Declare PdfUtility instance
 
-    ImageToBase64 imageToBase64=new ImageToBase64();
+    private static final String IMAGE_UPLOAD_DIR = "image_uploads/";
+    private static final String PDF_UPLOAD_DIR = "pdf_uploads/";
 
     @Override
     public String save(TourPojo tourPojo) throws IOException {
         Tour tour = new Tour();
+
+        // Handle image file upload
         if (tourPojo.getImage() != null && !tourPojo.getImage().isEmpty()) {
-            Path fileNameAndPath = Paths.get("image_uploads/", tourPojo.getImage().getOriginalFilename());
-            Files.write(fileNameAndPath, tourPojo.getImage().getBytes());
+            Path imagePath = Paths.get(IMAGE_UPLOAD_DIR, tourPojo.getImage().getOriginalFilename());
+            Files.write(imagePath, tourPojo.getImage().getBytes());
             tour.setImage(tourPojo.getImage().getOriginalFilename());
         }
+
+        // Handle PDF file upload
+        if (tourPojo.getPdfFile() != null && !tourPojo.getPdfFile().isEmpty()) {
+            tour.setPdfFile(tourPojo.getPdfFile().getBytes());
+            // Store the PDF file in a directory if needed
+            Path pdfPath = Paths.get(PDF_UPLOAD_DIR, tourPojo.getPdfFile().getOriginalFilename());
+            Files.write(pdfPath, tourPojo.getPdfFile().getBytes());
+        }
+
+        // Set other tour properties
         tour.setTourName(tourPojo.getTourName());
         tour.setTourDescription(tourPojo.getTourDescription());
         tour.setTourItinerary(tourPojo.getTourItinerary());
@@ -51,6 +64,8 @@ public class TourServiceImpl implements TourService {
         tour.setTourPrice(tourPojo.getTourPrice());
         tour.setTourRating(tourPojo.getTourRating());
         tour.setComfortRating(tourPojo.getComfortRating());
+
+        // Save tour to repository
         tourRepo.save(tour);
         return "Tour saved successfully!";
     }
@@ -146,14 +161,22 @@ public class TourServiceImpl implements TourService {
             existingTour.setTourPrice(tourPojo.getTourPrice());
         }
 
-
         // Handle image update if provided
         if (tourPojo.getImage() != null && !tourPojo.getImage().isEmpty()) {
-            Path fileNameAndPath = Paths.get("image_uploads", tourPojo.getImage().getOriginalFilename());
-            Files.write(fileNameAndPath, tourPojo.getImage().getBytes());
+            Path imagePath = Paths.get(IMAGE_UPLOAD_DIR, tourPojo.getImage().getOriginalFilename());
+            Files.write(imagePath, tourPojo.getImage().getBytes());
             existingTour.setImage(tourPojo.getImage().getOriginalFilename());
         }
 
+        // Handle PDF file update if provided
+        if (tourPojo.getPdfFile() != null && !tourPojo.getPdfFile().isEmpty()) {
+            existingTour.setPdfFile(tourPojo.getPdfFile().getBytes());
+            // Store the PDF file in a directory if needed
+            Path pdfPath = Paths.get(PDF_UPLOAD_DIR, tourPojo.getPdfFile().getOriginalFilename());
+            Files.write(pdfPath, tourPojo.getPdfFile().getBytes());
+        }
+
+        // Save the updated tour
         tourRepo.save(existingTour);
         return "Updated Successfully!";
     }

@@ -8,7 +8,7 @@ interface ItinerarySection {
   tourId: number;
   noOfDays: number;
   tourItinerary: string;
-  tourPdf: string; // URL to the uploaded PDF file
+  tourPdf: string; // This will store the binary data
 }
 
 export const Itinerary = () => {
@@ -36,6 +36,30 @@ export const Itinerary = () => {
       fetchItinerary();
     }
   }, [tourId]);
+
+  const handleDownload = async () => {
+    try {
+      const response = await axios.get(`http://localhost:8080/tour/getPdf/${tourId}`, {
+        responseType: 'arraybuffer', // Important: fetch as binary data
+      });
+
+      // Create a Blob from the PDF response
+      const blob = new Blob([response.data], { type: 'application/pdf' });
+
+      // Create a URL for the Blob
+      const url = window.URL.createObjectURL(blob);
+
+      // Open the PDF in a new tab
+      window.open(url, '_blank');
+
+      // Optionally revoke the object URL after some time to free up memory
+      setTimeout(() => {
+        window.URL.revokeObjectURL(url);
+      }, 1000);
+    } catch (error) {
+      console.error("Error downloading PDF:", error);
+    }
+  };
 
   if (loading) {
     return <div>Loading...</div>;
@@ -68,10 +92,9 @@ export const Itinerary = () => {
         </div>
 
         {/* Right Section: Download button */}
-        <div className="flex items-start cursor-pointer hover:text-yellow-500">
+        <div className="flex items-start cursor-pointer hover:text-yellow-500" onClick={handleDownload}>
           <FaDownload className="mr-2" />Detailed Itinerary
         </div>
-
       </div>
   );
 };

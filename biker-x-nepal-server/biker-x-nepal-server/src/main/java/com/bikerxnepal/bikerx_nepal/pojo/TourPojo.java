@@ -55,5 +55,8 @@ public class TourPojo {
     @Positive(message = "Tour price must be positive")
     private double tourPrice;
 
-    private MultipartFile image; // Add custom validators if needed
+    private MultipartFile image;
+
+    private MultipartFile pdfFile;
+
 }

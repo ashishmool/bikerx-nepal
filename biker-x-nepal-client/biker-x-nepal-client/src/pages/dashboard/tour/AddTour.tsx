@@ -23,6 +23,8 @@ import { toast } from 'react-toastify';
 function AddTour() {
     const navigate = useNavigate();
     const [image, setImage] = useState(null);
+    const [pdfFile, setPdfFile] = useState(null); // PDF state
+
     const { register, handleSubmit, formState } = useForm();
     const { errors } = formState;
 
@@ -33,6 +35,7 @@ function AddTour() {
             Object.entries(payload).forEach(([key, value]) => {
                 formData.append(key, value);
             });
+            if (pdfFile) formData.append("pdfFile", pdfFile);
             return axios.post("http://localhost:8080/tour/save", formData);
         },
         onSuccess() {
@@ -51,6 +54,10 @@ function AddTour() {
 
     const handleImageUpload = (event) => {
         setImage(event?.target?.files[0]);
+    };
+
+    const handlePdfUpload = (event) => {
+        setPdfFile(event?.target?.files[0]);
     };
 
     return (
@@ -119,6 +126,22 @@ function AddTour() {
                                     <Input type="number" {...register("maxParticipants", { required: "Max participants is required" })} />
                                     <p>{errors?.maxParticipants?.message}</p>
                                 </Stack>
+                                {/* Tour Price Field */}
+                                <Stack sx={{ flex: 1 }}>
+                                    <FormLabel>Tour Price *</FormLabel>
+                                    <Input
+                                        type="text" // Allows decimal input
+                                        inputMode="decimal"
+                                        {...register("tourPrice", {
+                                            required: "Tour Price is required",
+                                            pattern: {
+                                                value: /^[0-9]+(\.[0-9]{1,2})?$/, // Allows integers and up to 2 decimal places
+                                                message: "Please enter a valid price (e.g., 200.99)"
+                                            }
+                                        })}
+                                    />
+                                    <p>{errors?.tourPrice?.message}</p>
+                                </Stack>
                             </Stack>
                             <Stack direction="row" spacing={1}>
                                 <Stack sx={{ flex: 1 }}>
@@ -159,25 +182,14 @@ function AddTour() {
                                 </Stack>
                             </Stack>
                             <Stack direction="row" spacing={1}>
-                                {/* Tour Price Field */}
-                                <Stack sx={{ flex: 1 }}>
-                                    <FormLabel>Tour Price *</FormLabel>
-                                    <Input
-                                        type="text" // Allows decimal input
-                                        inputMode="decimal"
-                                        {...register("tourPrice", {
-                                            required: "Tour Price is required",
-                                            pattern: {
-                                                value: /^[0-9]+(\.[0-9]{1,2})?$/, // Allows integers and up to 2 decimal places
-                                                message: "Please enter a valid price (e.g., 200.99)"
-                                            }
-                                        })}
-                                    />
-                                    <p>{errors?.tourPrice?.message}</p>
-                                </Stack>
+
                                 <Stack sx={{ flex: 1 }}>
                                     <FormLabel>Image</FormLabel>
                                     <Input type="file" onChange={handleImageUpload} />
+                                </Stack>
+                                <Stack sx={{ flex: 1 }}>
+                                    <FormLabel>Detalied PDF</FormLabel>
+                                    <Input type="file" accept=".pdf" onChange={handlePdfUpload} /> {/* PDF upload field */}
                                 </Stack>
                             </Stack>
                         </Stack>

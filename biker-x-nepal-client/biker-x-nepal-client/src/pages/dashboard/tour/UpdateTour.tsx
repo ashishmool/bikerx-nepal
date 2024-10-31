@@ -24,6 +24,8 @@ function UpdateTour() {
     const { id } = useParams();
     const navigate = useNavigate();
     const [image, setImage] = useState(null);
+    const [pdf, setPdf] = useState(null); // State to hold the selected PDF file
+
     const { register, handleSubmit, setValue, formState } = useForm();
     const { errors } = formState;
 
@@ -47,7 +49,10 @@ function UpdateTour() {
                 comfortRating,
                 tourMap,
                 tourPrice,
+                imageUrl, // Assuming you get image URL from the backend
+                pdfUrl // Assuming you get pdf URL from the backend
             } = tourByIdData.data;
+
             setValue("tourName", tourName);
             setValue("tourDescription", tourDescription);
             setValue("tourItinerary", tourItinerary);
@@ -59,6 +64,10 @@ function UpdateTour() {
             setValue("comfortRating", comfortRating);
             setValue("tourMap", tourMap);
             setValue("tourPrice", tourPrice);
+
+            // Set the state with existing values
+            setImage(imageUrl || null);
+            setPdf(pdfUrl || null);
         }
     }, [tourByIdData, setValue]);
 
@@ -66,11 +75,26 @@ function UpdateTour() {
         mutationKey: ["UPDATE_TOUR"],
         mutationFn(formData) {
             const updatedData = new FormData();
+
+            // Append existing values if no new files are provided
             if (image) updatedData.append("image", image);
+            if (pdf) updatedData.append("pdf", pdf);
+
+            // Append all form data fields
             Object.entries(formData).forEach(([key, value]) => {
                 updatedData.append(key, value);
             });
-            return axios.put(`http://localhost:8080/tour/update/${id}`, updatedData);
+
+            // Log the FormData to see what is being sent
+            for (const [key, value] of updatedData.entries()) {
+                console.log(key, value);
+            }
+
+            return axios.put(`http://localhost:8080/tour/update/${id}`, updatedData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data', // Set header for file upload
+                },
+            });
         },
         onSuccess() {
             toast.success("Tour updated successfully!");
@@ -82,11 +106,16 @@ function UpdateTour() {
     });
 
     const onSubmit = (formData) => {
-        updateTourMutation.mutate(formData);
+        const payload = { ...formData }; // Don't include image/pdf here, handled in mutation
+        updateTourMutation.mutate(payload); // Make sure you are using the correct mutate function here
     };
 
     const handleImageUpload = (event) => {
         setImage(event?.target?.files[0]);
+    };
+
+    const handlePdfUpload = (event) => {
+        setPdf(event?.target?.files[0]);
     };
 
     if (isLoading) return <p>Loading...</p>;
@@ -137,8 +166,8 @@ function UpdateTour() {
                                 <p>{errors?.tourDescription?.message}</p>
                             </Stack>
                             <Stack spacing={2}>
-                                <FormLabel>Itinerary *</FormLabel>
-                                <Textarea {...register("tourItinerary", { required: "Brief Itinerary is required" })} />
+                                <FormLabel>Itinerary (Optional)</FormLabel>
+                                <Textarea {...register("tourItinerary")} />
                                 <p>{errors?.tourItinerary?.message}</p>
                             </Stack>
                             <Stack direction="row" spacing={1}>
@@ -151,6 +180,22 @@ function UpdateTour() {
                                     <FormLabel>End Date *</FormLabel>
                                     <Input type="date" {...register("endDate", { required: "End date is required" })} />
                                     <p>{errors?.endDate?.message}</p>
+                                </Stack>
+                                {/* Tour Price Field */}
+                                <Stack sx={{ flex: 1 }}>
+                                    <FormLabel>Tour Price *</FormLabel>
+                                    <Input
+                                        type="text" // Allows decimal input
+                                        inputMode="decimal"
+                                        {...register("tourPrice", {
+                                            required: "Tour Price is required",
+                                            pattern: {
+                                                value: /^[0-9]+(\.[0-9]{1,2})?$/, // Allows integers and up to 2 decimal places
+                                                message: "Please enter a valid price (e.g., 200.99)"
+                                            }
+                                        })}
+                                    />
+                                    <p>{errors?.tourPrice?.message}</p>
                                 </Stack>
                             </Stack>
                             <Stack direction="row" spacing={1}>
@@ -189,7 +234,6 @@ function UpdateTour() {
                                     />
                                     <p>{errors?.comfortRating?.message}</p>
                                 </Stack>
-
                             </Stack>
                             <Stack direction="row" spacing={1}>
                                 <Stack sx={{ flex: 1 }}>
@@ -198,25 +242,13 @@ function UpdateTour() {
                                 </Stack>
                             </Stack>
                             <Stack direction="row" spacing={1}>
-                                {/* Tour Price Field */}
-                                <Stack sx={{ flex: 1 }}>
-                                    <FormLabel>Tour Price *</FormLabel>
-                                    <Input
-                                        type="text" // Allows decimal input
-                                        inputMode="decimal"
-                                        {...register("tourPrice", {
-                                            required: "Tour Price is required",
-                                            pattern: {
-                                                value: /^[0-9]+(\.[0-9]{1,2})?$/, // Allows integers and up to 2 decimal places
-                                                message: "Please enter a valid price (e.g., 200.99)"
-                                            }
-                                        })}
-                                    />
-                                    <p>{errors?.tourPrice?.message}</p>
-                                </Stack>
                                 <Stack sx={{ flex: 1 }}>
                                     <FormLabel>Choose New Image</FormLabel>
                                     <Input type="file" onChange={handleImageUpload} />
+                                </Stack>
+                                <Stack sx={{ flex: 1 }}>
+                                    <FormLabel>Upload PDF (Optional)</FormLabel>
+                                    <Input type="file" accept="application/pdf" onChange={handlePdfUpload} />
                                 </Stack>
                             </Stack>
                         </Stack>
