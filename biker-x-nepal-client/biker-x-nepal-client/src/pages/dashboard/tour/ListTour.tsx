@@ -1,11 +1,13 @@
 import * as React from 'react';
-import { useState } from 'react';
 import { useMutation, useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
+import AddIcon from '@mui/icons-material/Add';
 import {toast, ToastContainer} from "react-toastify";
+
+
 
 function ListTour() {
     const navigate = useNavigate();
@@ -33,7 +35,26 @@ function ListTour() {
 
 
     return (
+
         <>
+            <div style={{ marginBottom: '16px', textAlign: 'left' }}>
+                <button
+                    style={{
+                        padding: '8px 16px',
+                        fontSize: '16px',
+                        cursor: 'pointer',
+                        backgroundColor: location.pathname === '/dashboard/tour/create' ? '#4CAF50' : '#007BFF',
+                        color: '#fff',
+                        border: 'none',
+                        borderRadius: '4px'
+                    }}
+                    onClick={() => navigate('/dashboard/tour/create')}
+                >
+                    <AddIcon style={{ marginRight: '8px', color: 'white'}} />
+
+                    Add New Tour
+                </button>
+            </div>
             <table border={1} style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'center' }}>
                 <thead>
                 <tr>
@@ -83,6 +104,7 @@ function ListTour() {
                 ))}
                 </tbody>
             </table>
+
     <ToastContainer/>
         </>
     );

@@ -219,151 +219,47 @@ export default function Sidebar() {
 
             </ListItem>
 
-          <ListItem nested>
-            <Toggler
-              defaultExpanded = {false}
-              renderToggle={({ open, setOpen }) => (
-                <ListItemButton onClick={() => setOpen(!open)}>
-                  <AssignmentRoundedIcon />
-                  <ListItemContent>
-                    <Typography level="title-sm">Tours</Typography>
-                  </ListItemContent>
-                  <KeyboardArrowDownIcon
-                    sx={{ transform: open ? 'rotate(180deg)' : 'none' }}
-                  />
-                </ListItemButton>
-              )}
-            >
-              <List sx={{ gap: 0.5 }}>
-                <ListItem>
-                  <ListItemButton
-                      role="menuitem"
-                      component="a"
-                      href="/dashboard/tour/create"
-                      selected={location.pathname === '/dashboard/tour/create'}
-                  >Create New Tour</ListItemButton>
-                </ListItem>
-                  <ListItem sx={{ mt: 0.5 }}>
-                      <ListItemButton
-                          role="menuitem"
-                          component="a"
-                          href="/dashboard/tour/list"
-                          selected={location.pathname === '/dashboard/tour/list'}
-                      >Manage Tours</ListItemButton>
-                  </ListItem>
-              </List>
-            </Toggler>
-          </ListItem>
-
-            {/*<ListItem nested>*/}
-            {/*    <Toggler*/}
-            {/*        defaultExpanded = {false}*/}
-            {/*        renderToggle={({ open, setOpen }) => (*/}
-            {/*            <ListItemButton onClick={() => setOpen(!open)}>*/}
-            {/*                <MapIcon />*/}
-            {/*                <ListItemContent>*/}
-            {/*                    <Typography level="title-sm">Itineraries</Typography>*/}
-            {/*                </ListItemContent>*/}
-            {/*                <KeyboardArrowDownIcon*/}
-            {/*                    sx={{ transform: open ? 'rotate(180deg)' : 'none' }}*/}
-            {/*                />*/}
-            {/*            </ListItemButton>*/}
-            {/*        )}*/}
-            {/*    >*/}
-            {/*        <List sx={{ gap: 0.5 }}>*/}
-            {/*            <ListItem>*/}
-            {/*                <ListItemButton*/}
-            {/*                    role="menuitem"*/}
-            {/*                    component="a"*/}
-            {/*                    href="/dashboard/itinerary/add"*/}
-            {/*                    selected={location.pathname === '/dashboard/itinerary/add'}*/}
-            {/*                >Add New Itinerary</ListItemButton>*/}
-            {/*            </ListItem>*/}
-            {/*            <ListItem sx={{ mt: 0.5 }}>*/}
-            {/*                <ListItemButton*/}
-            {/*                    role="menuitem"*/}
-            {/*                    component="a"*/}
-            {/*                    href="/dashboard/itinerary/list"*/}
-            {/*                    selected={location.pathname === '/dashboard/itinerary/list'}*/}
-            {/*                >Manage Itinerary</ListItemButton>*/}
-            {/*            </ListItem>*/}
-
-            {/*        </List>*/}
-            {/*    </Toggler>*/}
-            {/*</ListItem>*/}
-
-            <ListItem nested>
-                <Toggler
-                    defaultExpanded = {false}
-                    renderToggle={({ open, setOpen }) => (
-                        <ListItemButton onClick={() => setOpen(!open)}>
-                            <SportsMotorsportsIcon />
-                            <ListItemContent>
-                                <Typography level="title-sm">Bikes</Typography>
-                            </ListItemContent>
-                            <KeyboardArrowDownIcon
-                                sx={{ transform: open ? 'rotate(180deg)' : 'none' }}
-                            />
-                        </ListItemButton>
-                    )}
+            <ListItem>
+                <ListItemButton
+                    role="menuitem"
+                    component="a"
+                    href="/dashboard/tour/list"
+                    selected={location.pathname === '/dashboard/tour/list'}
                 >
-                    <List sx={{ gap: 0.5 }}>
-                        <ListItem>
-                            <ListItemButton
-                                role="menuitem"
-                                component="a"
-                                href="/dashboard/bike/add"
-                                selected={location.pathname === '/dashboard/bike/add'}
-                            >Add New Bike</ListItemButton>
-                        </ListItem>
-                        <ListItem sx={{ mt: 0.5 }}>
-                            <ListItemButton
-                                role="menuitem"
-                                component="a"
-                                href="/dashboard/bike/list"
-                                selected={location.pathname === '/dashboard/bike/list'}
-                            >Manage Bikes</ListItemButton>
-                        </ListItem>
-
-                    </List>
-                </Toggler>
+                    <AssignmentRoundedIcon />
+                    <Typography level="title-sm" sx={{ flexGrow: 1 }}>
+                        Manage Tours
+                    </Typography>
+                </ListItemButton>
             </ListItem>
 
-            <ListItem nested>
-                <Toggler
-                    defaultExpanded = {false}
-                    renderToggle={({ open, setOpen }) => (
-                        <ListItemButton onClick={() => setOpen(!open)}>
-                            <QuestionAnswerRoundedIcon />
-                            <ListItemContent>
-                                <Typography level="title-sm">Tip/Information</Typography>
-                            </ListItemContent>
 
-                            <KeyboardArrowDownIcon
-                                sx={{ transform: open ? 'rotate(180deg)' : 'none' }}
-                            />
-                        </ListItemButton>
-                    )}
+            <ListItem>
+                <ListItemButton
+                    role="menuitem"
+                    component="a"
+                    href="/dashboard/bike/list"
+                    selected={location.pathname === '/dashboard/bike/list'}
                 >
-                    <List sx={{ gap: 0.5 }}>
-                        <ListItem>
-                            <ListItemButton
-                                role="menuitem"
-                                component="a"
-                                href="/dashboard/information/add"
-                                selected={location.pathname === '/dashboard/information/add'}
-                            >Add New Tips/Information</ListItemButton>
-                        </ListItem>
-                        <ListItem sx={{ mt: 0.5 }}>
-                            <ListItemButton
-                                role="menuitem"
-                                component="a"
-                                href="/dashboard/information/list"
-                                selected={location.pathname === '/dashboard/information/list'}
-                            >Manage Tips/Information</ListItemButton>
-                        </ListItem>
-                    </List>
-                </Toggler>
+                    <SportsMotorsportsIcon />
+                    <Typography level="title-sm" sx={{ flexGrow: 1 }}>
+                        Manage Bikes
+                    </Typography>
+                </ListItemButton>
+            </ListItem>
+
+            <ListItem>
+                <ListItemButton
+                    role="menuitem"
+                    component="a"
+                    href="/dashboard/information/list"
+                    selected={location.pathname === '/dashboard/information/list'}
+                >
+                    <QuestionAnswerRoundedIcon />
+                    <Typography level="title-sm" sx={{ flexGrow: 1 }}>
+                        Manage Tips/Information
+                    </Typography>
+                </ListItemButton>
             </ListItem>
 
             <ListItem nested>

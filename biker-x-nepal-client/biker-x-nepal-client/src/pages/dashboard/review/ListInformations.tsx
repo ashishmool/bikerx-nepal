@@ -8,6 +8,7 @@ import { toast, ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import { Stars } from "@mui/icons-material";
 import { Rate } from "antd";
+import AddIcon from "@mui/icons-material/Add";
 
 function ListInformations() {
     const navigate = useNavigate();
@@ -32,6 +33,24 @@ function ListInformations() {
 
     return (
         <>
+            <div style={{ marginBottom: '16px', textAlign: 'left' }}>
+                <button
+                    style={{
+                        padding: '8px 16px',
+                        fontSize: '16px',
+                        cursor: 'pointer',
+                        backgroundColor: location.pathname === '/dashboard/tour/add' ? '#4CAF50' : '#007BFF',
+                        color: '#fff',
+                        border: 'none',
+                        borderRadius: '4px'
+                    }}
+                    onClick={() => navigate('/dashboard/information/add')}
+                >
+                    <AddIcon style={{ marginRight: '8px', color: 'white'}} />
+
+                    Add New Information
+                </button>
+            </div>
             <table border={1} style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left' }}>
                 <thead>
                 <tr>

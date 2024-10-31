@@ -161,7 +161,12 @@ function AddBike() {
 
                             <CardOverflow sx={{ borderTop: '1px solid', borderColor: 'divider' }}>
                                 <CardActions sx={{ alignSelf: 'flex-end', pt: 2 }}>
-                                    <Button size="sm" variant="outlined" color="neutral">
+                                    <Button
+                                        size="sm"
+                                        variant="outlined"
+                                        color="neutral"
+                                        onClick={() => navigate("/dashboard/bike/list")}
+                                    >
                                         Cancel
                                     </Button>
                                     <Button size="sm" variant="solid" type="submit">

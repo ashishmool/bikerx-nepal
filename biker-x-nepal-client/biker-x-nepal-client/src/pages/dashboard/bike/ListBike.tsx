@@ -6,6 +6,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import {toast, ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import AddIcon from "@mui/icons-material/Add";
 
 function ListBike() {
     const navigate = useNavigate();
@@ -30,6 +31,25 @@ function ListBike() {
 
     return (
         <>
+            <div style={{ marginBottom: '16px', textAlign: 'left' }}>
+                <button
+                    style={{
+                        padding: '8px 16px',
+                        fontSize: '16px',
+                        cursor: 'pointer',
+                        backgroundColor: location.pathname === '/dashboard/bike/add' ? '#4CAF50' : '#007BFF',
+                        color: '#fff',
+                        border: 'none',
+                        borderRadius: '4px'
+                    }}
+                    onClick={() => navigate('/dashboard/bike/add')}
+                >
+                    <AddIcon style={{ marginRight: '8px', color: 'white'}} />
+
+                    Add New Bike
+                </button>
+            </div>
+
             <table border={1} style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'center' }}>
                 <thead>
                 <tr>
