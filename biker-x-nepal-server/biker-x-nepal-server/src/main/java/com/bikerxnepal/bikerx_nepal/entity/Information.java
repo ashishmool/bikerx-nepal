@@ -21,10 +21,10 @@ public class Information {
     @GeneratedValue(generator = "informations_seq_gen", strategy = GenerationType.SEQUENCE)
     private Long informationId;
 
-    @Column(name = "title", nullable = false)
+    @Column(name = "title", nullable = false, length = 500)
     private String title;
 
-    @Column(name = "description", nullable = false)
+    @Column(name = "description", nullable = false, columnDefinition = "TEXT")
     private String description;
 
     @Column(name = "date", nullable = false)

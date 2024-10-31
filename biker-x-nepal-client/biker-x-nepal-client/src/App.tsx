@@ -27,9 +27,9 @@ import UpdateBike from "./pages/dashboard/bike/UpdateBike.tsx";
 import ListUser from "./pages/dashboard/user/ListUser.tsx";
 import AddNewUser from "./pages/dashboard/user/AddNewUser.tsx";
 import DashboardReport from "./pages/dashboard/DashboardReport.tsx";
-import AddReview from "./pages/dashboard/review/AddReview.tsx";
-import ListReviews from "./pages/dashboard/review/ListReviews.tsx";
-import UpdateReviews from "./pages/dashboard/review/UpdateReviews.tsx";
+import AddInformation from "./pages/dashboard/review/AddInformation.tsx";
+import ListInformations from "./pages/dashboard/review/ListInformations.tsx";
+import UpdateInformation from "./pages/dashboard/review/UpdateInformation.tsx";
 import UpdateUser from "./pages/dashboard/user/UpdateUser.tsx";
 import * as React from "react";
 import ListBooking from "./pages/dashboard/booking/ListBooking.tsx";
@@ -90,9 +90,9 @@ function App() {
           <Route path="bike/list" element={<ListBike />} />
           <Route path="bike/update/:id" element={<UpdateBike/>} />
 
-          <Route path="information/add" element={<AddReview />} />
-          <Route path="information/list" element={<ListReviews />} />
-          <Route path="information/update/:id" element={<UpdateReviews/>} />
+          <Route path="information/add" element={<AddInformation />} />
+          <Route path="information/list" element={<ListInformations />} />
+          <Route path="information/update/:id" element={<UpdateInformation/>} />
 
           <Route path="user/list" element={<ListUser />} />
           <Route path="user/add" element={<AddNewUser />} />

@@ -163,10 +163,21 @@ function UpdateBike() {
                                 </Stack>
                             </Stack>
                             <Stack direction="row" spacing={1}>
+                                {/* Bike Price Field */}
                                 <Stack sx={{ flex: 1 }}>
-                                    <FormLabel>Price *</FormLabel>
-                                    <Input type="number" {...register("bikePrice", { required: "Bike Price is required." })} />
-                                    <p>{errors.bikePrice?.message}</p>
+                                    <FormLabel>Bike Price *</FormLabel>
+                                    <Input
+                                        type="text" // Allows decimal input
+                                        inputMode="decimal"
+                                        {...register("bikePrice", {
+                                            required: "Bike Price is required",
+                                            pattern: {
+                                                value: /^[0-9]+(\.[0-9]{1,2})?$/, // Allows integers and up to 2 decimal places
+                                                message: "Please enter a valid price (e.g., 1000.50)"
+                                            }
+                                        })}
+                                    />
+                                    <p>{errors?.bikePrice?.message}</p>
                                 </Stack>
                                 <Stack sx={{ flex: 1 }}>
                                     <FormLabel>Quantity *</FormLabel>

@@ -23,6 +23,11 @@ public class InformationController {
         return "Saved Successfully!";
     }
 
+    @PutMapping("/update/{id}")
+    public String updateInformation(@PathVariable Long id, @RequestBody InformationPojo informationPojo) {
+        return informationService.update(id, informationPojo);
+    }
+
     @GetMapping("/getAll")
     public List<Information> getAll() {
         return informationService.getAll();

@@ -39,6 +39,20 @@ public class InformationServiceImpl implements InformationService {
         return "Saved Successfully!";
     }
 
+
+    @Override
+    public String update(Long id, InformationPojo informationPojo) {
+        Information information = informationRepo.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Information not found with ID: " + id));
+
+        information.setTitle(informationPojo.getTitle());
+        information.setDescription(informationPojo.getDescription());
+        information.setDate(new Date());  // Update with current date
+
+        informationRepo.save(information);
+        return "Updated Successfully!";
+    }
+
     @Override
     public List<Information> getAll() {
         return informationRepo.findAll();

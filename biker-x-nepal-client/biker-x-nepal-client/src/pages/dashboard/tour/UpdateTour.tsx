@@ -198,9 +198,20 @@ function UpdateTour() {
                                 </Stack>
                             </Stack>
                             <Stack direction="row" spacing={1}>
+                                {/* Tour Price Field */}
                                 <Stack sx={{ flex: 1 }}>
                                     <FormLabel>Tour Price *</FormLabel>
-                                    <Input type="number" {...register("tourPrice", { required: "Tour Price is required" })} />
+                                    <Input
+                                        type="text" // Allows decimal input
+                                        inputMode="decimal"
+                                        {...register("tourPrice", {
+                                            required: "Tour Price is required",
+                                            pattern: {
+                                                value: /^[0-9]+(\.[0-9]{1,2})?$/, // Allows integers and up to 2 decimal places
+                                                message: "Please enter a valid price (e.g., 200.99)"
+                                            }
+                                        })}
+                                    />
                                     <p>{errors?.tourPrice?.message}</p>
                                 </Stack>
                                 <Stack sx={{ flex: 1 }}>

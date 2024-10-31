@@ -21,9 +21,9 @@ import UpdateBike from "../dashboard/bike/UpdateBike.tsx";
 import ListUser from "../dashboard/user/ListUser.tsx";
 import AddNewUser from "../dashboard/user/AddNewUser.tsx";
 import DashboardReport from "../dashboard/DashboardReport.tsx";
-import AddReview from "../dashboard/review/AddReview.tsx";
-import ListReviews from "../dashboard/review/ListReviews.tsx";
-import UpdateReviews from "../dashboard/review/UpdateReviews.tsx";
+import AddInformation from "../dashboard/review/AddInformation.tsx";
+import ListInformations from "../dashboard/review/ListInformations.tsx";
+import UpdateInformation from "../dashboard/review/UpdateInformation.tsx";
 import UpdateUser from "../dashboard/user/UpdateUser.tsx";
 import ListBooking from "../dashboard/booking/ListBooking.tsx";
 import AddItinerary from "../dashboard/itinerary/AddItinerary.tsx";
@@ -128,9 +128,9 @@ export default function DashboardRouting() {
                     <Route path="bike/list" element={<ListBike />} />
                     <Route path="bike/update/:id" element={<UpdateBike/>} />
 
-                    <Route path="information/add" element={<AddReview />} />
-                    <Route path="information/list" element={<ListReviews />} />
-                    <Route path="information/update/:id" element={<UpdateReviews/>} />
+                    <Route path="information/add" element={<AddInformation />} />
+                    <Route path="information/list" element={<ListInformations />} />
+                    <Route path="information/update/:id" element={<UpdateInformation/>} />
 
                     <Route path="user/list" element={<ListUser />} />
                     <Route path="user/add" element={<AddNewUser />} />

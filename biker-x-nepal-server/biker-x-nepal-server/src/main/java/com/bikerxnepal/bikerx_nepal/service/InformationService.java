@@ -19,4 +19,6 @@ public interface InformationService {
 
     List<Information> getByDate(Date date);
 
+    String update(Long id, InformationPojo informationPojo);
+
 }

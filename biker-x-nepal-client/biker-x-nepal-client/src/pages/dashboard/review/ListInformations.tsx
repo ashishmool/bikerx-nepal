@@ -4,12 +4,12 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
-import {toast, ToastContainer} from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
-import {Stars} from "@mui/icons-material";
-import {Rate} from "antd";
+import { Stars } from "@mui/icons-material";
+import { Rate } from "antd";
 
-function ListReviews() {
+function ListInformations() {
     const navigate = useNavigate();
 
     const { data, refetch } = useQuery({
@@ -25,24 +25,20 @@ function ListReviews() {
             return axios.delete(`http://localhost:8080/information/delete/${id}`);
         },
         onSuccess() {
-            toast.success('Review Delete Success');
+            toast.success('Information deleted successfully');
             refetch();
         }
     });
 
     return (
         <>
-            <table border={1} style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left'}}>
+            <table border={1} style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left' }}>
                 <thead>
                 <tr>
                     <th>ID</th>
                     <th>Title</th>
                     <th>Description</th>
-                    <th>Full Name</th>
-                    <th>Designation</th>
-                    <th>Company</th>
-                    <th style={{ wordWrap: 'break-word', maxWidth: '80px' , textAlign:'center'}}>Review Rating</th>
-                    <th style={{ textAlign:'center'}}>Action</th>
+                    <th style={{ textAlign: 'center' }}>Action</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -51,19 +47,7 @@ function ListReviews() {
                         <td style={{ wordWrap: 'break-word', maxWidth: '30px' }}>{information.informationId}</td>
                         <td style={{ wordWrap: 'break-word', maxWidth: '80px' }}>{information.title}</td>
                         <td style={{ wordWrap: 'break-word', maxWidth: '80px' }}>{information.description}</td>
-                        <td style={{ wordWrap: 'break-word', maxWidth: '50px' }}>{information.fullName}</td>
-                        <td style={{ wordWrap: 'break-word', maxWidth: '50px' }}>{information.designation}</td>
-                        <td style={{ wordWrap: 'break-word', maxWidth: '50px' }}>{information.company}</td>
-                        <td style={{ wordWrap: 'break-word', maxWidth: '50px' , textAlign:'center'}}>
-
-                            <Rate
-                                value={information.reviewRating}
-                                disabled={true}
-                                className="justify-evenly block text-center"
-                            />
-
-                            </td>
-                        <td style={{ textAlign:'center'}}>
+                        <td style={{ textAlign: 'center' }}>
                             <button onClick={() => navigate(`/dashboard/information/update/${information.informationId}`)}>
                                 <EditIcon />
                                 Edit
@@ -76,10 +60,10 @@ function ListReviews() {
                     </tr>
                 ))}
                 </tbody>
-                <ToastContainer/>
             </table>
+            <ToastContainer />
         </>
     );
 }
 
-export default ListReviews;
+export default ListInformations;
